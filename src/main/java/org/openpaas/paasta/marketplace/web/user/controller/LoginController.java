@@ -1,9 +1,7 @@
 package org.openpaas.paasta.marketplace.web.user.controller;
 
-import org.openpaas.paasta.marketplace.web.user.service.OrgService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,9 +31,6 @@ public class LoginController {
 
     @Value("${market.place.web.seller.uri}")
     private String marketWebSellerUri;
-
-    @Autowired
-    OrgService orgService;
 
     /**
      * Market 사용자 포탈 인덱스 페이지
