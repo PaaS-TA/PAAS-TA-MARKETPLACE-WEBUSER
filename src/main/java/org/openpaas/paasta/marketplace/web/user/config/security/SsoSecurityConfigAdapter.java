@@ -1,6 +1,6 @@
 package org.openpaas.paasta.marketplace.web.user.config.security;
 
-import org.openpaas.paasta.marketplace.web.user.common.Constants;
+import org.openpaas.paasta.marketplace.web.user.common.UserConstants;
 import org.openpaas.paasta.marketplace.web.user.config.security.userdetail.CustomUserDetailsService;
 import org.openpaas.paasta.marketplace.web.user.security.SsoAuthenticationProvider;
 import org.slf4j.Logger;
@@ -117,8 +117,8 @@ public class SsoSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
                     .authorizeRequests()
                     .antMatchers("/").permitAll()
                     .antMatchers("/seller").permitAll()
-                    .antMatchers(Constants.MARKET_INIT_URL).access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-                    .antMatchers(Constants.MARKET_INIT_URL + "/**").authenticated()
+                    .antMatchers(UserConstants.MARKET_INIT_URL).access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+                    .antMatchers(UserConstants.MARKET_INIT_URL + "/**").authenticated()
                     //.antMatchers("/caas/users").access("hasRole('ROLE_ADMIN')")
                     .antMatchers("/resources/**").permitAll()
                     .and()

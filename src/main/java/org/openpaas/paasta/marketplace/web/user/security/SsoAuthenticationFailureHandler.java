@@ -1,6 +1,6 @@
 package org.openpaas.paasta.marketplace.web.user.security;
 
-import org.openpaas.paasta.marketplace.web.user.common.Constants;
+import org.openpaas.paasta.marketplace.web.user.common.UserConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.AuthenticationException;
@@ -31,7 +31,7 @@ public class SsoAuthenticationFailureHandler implements AuthenticationFailureHan
         request.getSession().invalidate();
         SecurityContextHolder.clearContext();
 
-        response.sendRedirect(Constants.MARKET_INIT_URL);
+        response.sendRedirect(UserConstants.MARKET_INIT_URL);
 
         LOGGER.info("** onAuthenticationFailure out");
     }

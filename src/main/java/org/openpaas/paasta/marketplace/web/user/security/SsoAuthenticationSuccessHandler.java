@@ -1,6 +1,6 @@
 package org.openpaas.paasta.marketplace.web.user.security;
 
-import org.openpaas.paasta.marketplace.web.user.common.Constants;
+import org.openpaas.paasta.marketplace.web.user.common.UserConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -43,7 +43,7 @@ public class SsoAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
         if(request.getSession() != null && sessionRedirectUrl != "") {
             LOGGER.info("[onAuthenticationSuccess] Process Start - sessionRedirectUrl:" + sessionRedirectUrl);
 
-            sessionRedirectUrl = Constants.MARKET_INIT_URL;
+            sessionRedirectUrl = UserConstants.MARKET_INIT_URL;
 
         }
 
