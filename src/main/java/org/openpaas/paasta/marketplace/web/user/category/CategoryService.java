@@ -15,14 +15,12 @@ public class CategoryService {
     private RestTemplateService marketApiRest;
 
     /**
-     * GroupCode로 단위코드 목록 조회
+     * 카테고리 목록 조회
      *
-     * @param groupCode
-     * @return CustomCodeList
+     * @return CategoryList
      */
-    public List<Category> getCategoryListByDeleteYn() {
-    	CategoryList categoryList = marketApiRest.send(UserConstants.TARGET_API_MARKET, UserConstants.URI_API_CATEGORY, HttpMethod.GET, null, CategoryList.class);
-    	return categoryList.getItems();
+    public CategoryList getCategoryListByDeleteYn() {
+    	return marketApiRest.send(UserConstants.TARGET_API_MARKET, UserConstants.URI_API_CATEGORY, HttpMethod.GET, null, CategoryList.class);
     }
 
 }

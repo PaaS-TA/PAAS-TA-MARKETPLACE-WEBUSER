@@ -23,14 +23,14 @@ public class CategoryController {
 	@Autowired
     private CategoryService categoryService;
 
+
     /**
-     * GroupCode로 단위코드 목록 조회
+     * 카테고리 목록 조회
      *
-     * @param groupCode
-     * @return List<CustomCode>
+     * @return CategoryList
      */
     @GetMapping(value = UserConstants.URI_WEB_CATEGORY_LIST)
-    public List<Category> getCategoryList(){
+    public CategoryList getCategoryList(){
     	log.info("category...");
         return categoryService.getCategoryListByDeleteYn();
     }
