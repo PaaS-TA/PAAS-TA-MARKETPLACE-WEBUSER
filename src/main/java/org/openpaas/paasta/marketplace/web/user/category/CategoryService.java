@@ -19,8 +19,19 @@ public class CategoryService {
      *
      * @return CategoryList
      */
-    public CategoryList getCategoryListByDeleteYn() {
-    	return marketApiRest.send(UserConstants.TARGET_API_MARKET, UserConstants.URI_API_CATEGORY, HttpMethod.GET, null, CategoryList.class);
+    public List<Category> getCategoryListByDeleteYn() {
+    	CategoryList categories = marketApiRest.send(UserConstants.TARGET_API_MARKET, UserConstants.URI_API_CATEGORY, null, HttpMethod.GET, null, CategoryList.class);
+    	return categories.getItems();
+    }
+
+    /**
+     * 카테고리 상세 조회
+     * 
+     * @param id
+     * @return
+     */
+    public Category getCategory(Long id) {
+        return marketApiRest.send(UserConstants.TARGET_API_MARKET, UserConstants.URI_API_CATEGORY + "/" + id, null, HttpMethod.GET, null, Category.class);
     }
 
 }

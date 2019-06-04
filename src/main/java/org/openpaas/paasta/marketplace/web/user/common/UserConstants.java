@@ -3,9 +3,9 @@ package org.openpaas.paasta.marketplace.web.user.common;
 /**
  * Constants 클래스
  *
- * @author REX
+ * @author peter
  * @version 1.0
- * @since 2018.08.02
+ * @since 2019.06.03
  */
 public class UserConstants {
 
@@ -14,7 +14,7 @@ public class UserConstants {
     public static final String RESULT_STATUS_FAIL = "FAIL";
 
     public static final String AUTHORIZATION_HEADER_KEY = "Authorization";
-//  public static final String CF_AUTHORIZATION_HEADER_KEY = "cf-Authorization";
+    public static final String CF_AUTHORIZATION_HEADER_KEY = "cf-Authorization";
     public static final String CONTENT_TYPE = "Content-Type";
 
     public static final String TARGET_API_CF = "cfApi";
@@ -24,10 +24,11 @@ public class UserConstants {
     public static final String MARKET_INIT_URL = "/market";
 
     // general data
-    public static final String URI_WEB_CUSTOM_CODE_LIST = "/customCode/{groupCode}";
-    public static final String URI_WEB_CATEGORY_LIST = "/category/list";
-
     public static final String GROUP_CODE_BUSINESS_TYPE = "BUSINESS_TYPE";
+
+    public static final String URI_DB_CUSTOM_CODE_LIST = "/db/customCode/{groupCode}";
+    public static final String URI_DB_CATEGORY_LIST = "/db/category/list";
+    public static final String URI_DB_CATEGORY_DETAIL = "/db/category/detail/{id}";
 
     // cf api uri
     public static final String MARKET_USER_URL = "/user";
@@ -38,7 +39,7 @@ public class UserConstants {
     public static final String URI_API_CATEGORY = "/api/category";
     public static final String URI_API_SELLER_PROFILE = "/api/seller/profile";
 
-    // TODO :: Market WEB URI
+    // market web user uri
     public static final String URI_INTRO_OVERVIEW = "/caas/intro/overview";
     public static final String URI_INTRO_ACCESS_INFO = "/caas/intro/accessInfo";
 
@@ -52,10 +53,6 @@ public class UserConstants {
     public static final String URI_USERS = "/caas/users";
 
     public static final String URI_ROLES = "/caas/roles";
-
-
-    // TODO :: Market API URI
-
 
 
     private UserConstants() {
