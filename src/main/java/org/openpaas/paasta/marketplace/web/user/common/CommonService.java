@@ -1,10 +1,15 @@
 package org.openpaas.paasta.marketplace.web.user.common;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -14,8 +19,68 @@ import java.util.Map;
  * @version 1.0
  * @since 2018.08.02
  */
+@Slf4j
 @Service
 public class CommonService {
+
+    @Value("${cf.admin.name}")
+    private String cfAdminName;
+
+    @Value("${cf.admin.password}")
+    private String cfAdminPassword;
+
+    @Autowired
+    private RestTemplateService cfApiRest;
+
+    /**
+     * CF admin token 받아오는 로직
+     *
+     * @return String
+     */
+    public String getAdminToken(){
+        Map<String, Object> cfAdminInfo = new HashMap<>();
+        cfAdminInfo.put("id", cfAdminName);
+        cfAdminInfo.put("password", cfAdminPassword);
+
+        Map result = cfApiRest.send(UserConstants.TARGET_API_CF, "/login", null, HttpMethod.POST, cfAdminInfo, Map.class);
+
+        log.info("admin token ::: {}", result.get("token"));
+
+        return (String) result.get("token");
+    }
+
+
+    /**
+     * Sets parameters.
+     *
+     * @param httpServletRequest the http servlet request
+     * @return the parameters
+     */
+    public String setParameters(HttpServletRequest httpServletRequest) {
+        Map<String, String[]> parametersMap = httpServletRequest.getParameterMap();
+        String[] parametersObject;
+        String parametersKey;
+        String resultString = "";
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < ParametersList.values().length; i++) {
+            parametersKey = ParametersList.values()[i].actualValue;
+            parametersObject = parametersMap.get(parametersKey);
+
+            if (parametersObject != null && !"".equals(parametersObject[0])) {
+                stringBuilder.append("&").append(parametersKey).append("=").append(parametersObject[0]);
+            }
+        }
+
+        if (stringBuilder.length() > 0) {
+            resultString = "?" + stringBuilder.substring(1);
+        }
+
+        return resultString;
+    }
+
+
 
     /**
      * Sets path variables.

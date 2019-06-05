@@ -29,6 +29,7 @@ public class UserConstants {
     public static final String URI_DB_CUSTOM_CODE_LIST = "/db/customCode/{groupCode}";
     public static final String URI_DB_CATEGORY_LIST = "/db/category/list";
     public static final String URI_DB_CATEGORY_DETAIL = "/db/category/detail/{id}";
+    public static final String URI_DB_PRODUCT_LIST = "/db/product/list";
 
     // cf api uri
     public static final String MARKET_USER_URL = "/user";

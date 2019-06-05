@@ -1,7 +1,10 @@
 package org.openpaas.paasta.marketplace.web.user.login;
 
+import org.openpaas.paasta.marketplace.web.user.common.CommonService;
+import org.openpaas.paasta.marketplace.web.user.common.OrgService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,6 +35,13 @@ public class LoginController {
     @Value("${market.place.web.seller.uri}")
     private String marketWebSellerUri;
 
+
+    @Autowired
+    private OrgService orgService;
+
+    @Autowired
+    private CommonService commonService;
+
     /**
      * Market 사용자 포탈 인덱스 페이지
      *
@@ -48,24 +58,6 @@ public class LoginController {
     }
 
 
-//    @GetMapping(value = "/market")
-//    public ModelAndView main() {
-//        // 고정된 Org 가 있는지 판별 후 그에 따라 화면 분기.
-//        String fixedOrgName = marketOrgName;
-//        LOGGER.info("market 이름 ::: " + fixedOrgName);
-//        boolean result = orgService.isExistOrgByOrgName(fixedOrgName);
-//        LOGGER.info("result 결과 ::: " + result);
-//
-//        ModelAndView mv = new ModelAndView();
-//        if (result) {
-//            mv.setViewName("/test/test");
-//        } else {
-//            mv.setViewName("/common/ready");
-//        }
-//        return mv;
-//    }
-
-
     /**
      * Market 사용자 포탈 로그인 후 보이는 메인 화면
      *
@@ -73,10 +65,29 @@ public class LoginController {
      */
     @GetMapping(value = "/market")
     public ModelAndView main() {
+        // 고정된 Org 가 있는지 판별 후 그에 따라 화면 분기.
+        String fixedOrgName = marketOrgName;
+        LOGGER.info("market 이름 ::: " + fixedOrgName);
+        boolean result = orgService.isExistOrgByOrgName(fixedOrgName, commonService.getAdminToken());
+        LOGGER.info("result 결과 ::: " + result);
+
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("/test/test");
+        if (result) {
+            mv.setViewName("/test/test");
+        } else {
+            mv.setViewName("/common/ready");
+        }
         return mv;
     }
+
+
+
+//    @GetMapping(value = "/market")
+//    public ModelAndView main() {
+//        ModelAndView mv = new ModelAndView();
+//        mv.setViewName("/test/test");
+//        return mv;
+//    }
 
     /**
      * Market 판매자 포탈로 이동
