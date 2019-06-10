@@ -43,8 +43,6 @@
 <script type="text/javascript">
 
     var CATEGORY_LIST = [];
-    var categoryValue;
-
     var PRODUCT_LIST = [];
 
     var getCategoryList = function () {
@@ -68,11 +66,9 @@
         categoryListArea.html(htmlArray);
     };
 
+    // sort(Category)
     var selectBox = function () {
-        var selectedCategory = $("#categoryList option:selected").val();
-        console.log("선택된 값은? " + selectedCategory);
-
-        sortCategoryProductList(selectedCategory);
+        getProductList();
 
     };
 
@@ -83,36 +79,27 @@
 
     // SEARCH
     var search = function(){
-        var searchKeywordObject = $("#search_keyword");
-        var searchKeyword = searchKeywordObject.val();
-
-        searchProductList(searchKeyword);
-
+        getProductList();
     };
 
-    var sortCategoryProductList = function (categoryId) {
-        var reqUrl = "<%=UserConstants.URI_DB_PRODUCT_LIST%>";
-
-        if (categoryId !== "ALL" && categoryId !== undefined) {
-            reqUrl +="?categoryId=" + categoryId;
-        }
-
-        procCallAjax(reqUrl, "GET", null, null, callbackGetProductList);
-    };
-
-    var searchProductList = function (searchKeyword) {
-        var reqUrl = "<%=UserConstants.URI_DB_PRODUCT_LIST%>";
-
-        if ("" !== searchKeyword) {
-            reqUrl +="?productName=" + searchKeyword;
-        }
-
-        procCallAjax(reqUrl, "GET", null, null, callbackGetProductList);
-    };
 
     // GET LIST
     var getProductList = function() {
-        var reqUrl = "<%=UserConstants.URI_DB_PRODUCT_LIST%>";
+        var selectedCategory = $("#categoryList option:selected").val();
+        var searchKeyword = $("#search_keyword").val();
+
+        console.log("선택된 카테고리는? ::: " + selectedCategory + " ::: 검색 키워드는? ::: " + searchKeyword);
+
+        if (selectedCategory === "ALL" || selectedCategory === '') {
+            selectedCategory = '';
+        }
+
+        if(searchKeyword === null || searchKeyword === ''){
+            searchKeyword = '';
+        }
+
+        var reqUrl = "<%=UserConstants.URI_DB_PRODUCT_LIST%>" + "?categoryId=" + selectedCategory + "&productName=" + searchKeyword;
+
         procCallAjax(reqUrl, "GET", null, null, callbackGetProductList);
     };
 
