@@ -39,21 +39,14 @@ public class UserConstants {
     public static final String URI_API_CUSTOM_CODE = "/api/customCode";
     public static final String URI_API_CATEGORY = "/api/category";
     public static final String URI_API_SELLER_PROFILE = "/api/seller/profile";
+    public static final String URI_API_PRODUCT = "/api/seller/product";
 
-    // market web user uri
-    public static final String URI_INTRO_OVERVIEW = "/caas/intro/overview";
-    public static final String URI_INTRO_ACCESS_INFO = "/caas/intro/accessInfo";
+    // market web user page uri
+    public static final String URI_WEB_USER_PRODUCT_LIST = "/market/product";
 
-    public static final String URI_WORKLOAD_OVERVIEW = "/caas/workloads/overview";
-    public static final String URI_WORKLOAD_DEPLOYMENTS = "/caas/workloads/deployments";
-    public static final String URI_WORKLOAD_PODS = "/caas/workloads/pods";
-    public static final String URI_WORKLOAD_REPLICA_SETS = "/caas/workloads/replicaSets";
 
-    public static final String URI_SERVICES = "/caas/services";
-
-    public static final String URI_USERS = "/caas/users";
-
-    public static final String URI_ROLES = "/caas/roles";
+    // market web user view file uri
+    public static final String URI_VIEW_PRODUCT = "/product";
 
 
     private UserConstants() {
