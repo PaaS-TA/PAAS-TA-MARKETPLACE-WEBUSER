@@ -59,6 +59,10 @@
             </tr>
         </ul>
     </table>
+    <div>
+        <button type="button" class="button btn_default" title="구매하기" id="buyProduct">구매하기</button>
+        <button type="button" class="button btn_default" title="목록" id="goProductList">목록</button>
+    </div>
 </body>
 </html>
 <input type="hidden" id="id" value="<c:out value='${id}' default="" />"/>
@@ -85,6 +89,10 @@
         $("#productDetailDesc").html(data.detailDescription);
 
     };
+
+    $("#goProductList").on("click", function () {
+       procMovePage("<%=UserConstants.URI_WEB_USER_PRODUCT_LIST%>");
+    });
 
     $(document.body).ready(function () {
         getProduct();
