@@ -28,4 +28,15 @@ public class ProductService {
     ProductList getProductList(String paramString) {
         return marketApiRest.send(UserConstants.TARGET_API_MARKET, UserConstants.URI_API_PRODUCT + paramString, null, HttpMethod.GET, null, ProductList.class);
     }
+
+
+    /**
+     * 상품 상세 조회
+     *
+     * @param id the id
+     * @return Product
+     */
+    Product getProduct(Long id) {
+        return marketApiRest.send(UserConstants.TARGET_API_MARKET, UserConstants.URI_API_PRODUCT + "/" + id, null, HttpMethod.GET, null, Product.class);
+    }
 }
