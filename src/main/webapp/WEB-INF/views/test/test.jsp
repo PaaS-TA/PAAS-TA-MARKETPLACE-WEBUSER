@@ -10,10 +10,20 @@
 </head>
 <body>
     <div>
-        <h1>Hello World hrjin!!!</h1>
+        <h1>마켓플레이스에 오신 것을 환영합니다!</h1>
     </div>
     <div>
-        <a href="/market/product">상품 목록 조회</a>
+        <a href="/market/product">상품 목록</a>
+    </div>
+    <br>
+    <div>
+        <span>마이페이지</span>
+        <ul>
+            <a href="">사용 상품</a>
+        </ul>
+        <ul>
+            <a href="">요금 계산</a>
+        </ul>
     </div>
 </body>
 </html>

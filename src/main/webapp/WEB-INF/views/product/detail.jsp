@@ -115,6 +115,12 @@
        procMovePage("<%=UserConstants.URI_WEB_USER_PRODUCT_LIST%>");
     });
 
+
+    // TODO :: 구매하기 BUTTON
+    // $("#buyProduct").on("click", function () {
+    //
+    // });
+
     $(document.body).ready(function () {
         getProduct();
     });

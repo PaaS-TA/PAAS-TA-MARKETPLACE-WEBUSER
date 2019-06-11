@@ -38,6 +38,10 @@
         </div>
     </div>
 </div>
+<br>
+<div>
+    <button type="button" href="javascript:void(0);" onclick="procMovePage('/market')">메인으로</button>
+</div>
 </body>
 </html>
 <script type="text/javascript">
