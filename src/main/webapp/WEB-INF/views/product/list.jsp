@@ -133,10 +133,10 @@
         var htmlString = [];
         var listLength = PRODUCT_LIST.length;
 
-        // 기간 코드 변환
-        getCustomCode(PRODUCT_LIST[0].meteringType);
-
         if(listLength > 0){
+            // 기간 코드 변환
+            getCustomCode(PRODUCT_LIST[0].meteringType);
+
             for(var i = 0; i < listLength; i++){
                 var goDetailUrl = "<%=UserConstants.URI_WEB_USER_PRODUCT_DETAIL%>".replace("{id}", PRODUCT_LIST[i].id);
                 htmlString.push(
