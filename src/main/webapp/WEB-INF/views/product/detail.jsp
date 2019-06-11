@@ -68,6 +68,22 @@
 <input type="hidden" id="id" value="<c:out value='${id}' default="" />"/>
 <script type="text/javascript">
 
+    var periodUnitName;
+
+    // CUSTOM CODE GET
+    var getCustomCode = function (unitCode) {
+        var reqUrl = "<%=UserConstants.URI_DB_CUSTOM_CODE_DETAIL_BY_UNIT_CODE%>".replace("{unitCode}", unitCode);
+
+        procCallAjax(reqUrl, "GET", null, null, callbackCustomCode);
+    };
+
+    // CUSTOM CODE GET CALLBACK
+    var callbackCustomCode = function (data) {
+        console.log("이 코드의 정보는? " + JSON.stringify(data));
+        periodUnitName = data.unitCodeName;
+    };
+
+    // 상품 조회
     var getProduct = function() {
         var productId = $("#id").val();
         var reqUrl = "<%=UserConstants.URI_DB_PRODUCT_DETAIL%>".replace("{id}", productId);
@@ -75,10 +91,13 @@
         procCallAjax(reqUrl,"GET",null, null, callbackGetProduct);
     };
 
+    // 상품 조회 CALLBACK
     var callbackGetProduct = function(data) {
         console.log("product detail ::: " + JSON.stringify(data));
 
-        var pricePerDay = data.unitPrice + "원/" + data.meteringType;
+        // 기간 코드 변환
+        getCustomCode(data.meteringType);
+        var pricePerDay = data.unitPrice + "원/" + periodUnitName;
 
         $("#productName").html(data.productName);
         $("#category").html(data.category.categoryName);
@@ -90,6 +109,8 @@
 
     };
 
+
+    // BUTTON
     $("#goProductList").on("click", function () {
        procMovePage("<%=UserConstants.URI_WEB_USER_PRODUCT_LIST%>");
     });

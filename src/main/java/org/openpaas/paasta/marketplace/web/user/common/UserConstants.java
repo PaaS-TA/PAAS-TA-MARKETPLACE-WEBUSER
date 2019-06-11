@@ -27,6 +27,7 @@ public class UserConstants {
     public static final String GROUP_CODE_BUSINESS_TYPE = "BUSINESS_TYPE";
 
     public static final String URI_DB_CUSTOM_CODE_LIST = "/db/customCode/{groupCode}";
+    public static final String URI_DB_CUSTOM_CODE_DETAIL_BY_UNIT_CODE = "/db/customCode/unitCode/{unitCode}";
     public static final String URI_DB_CATEGORY_LIST = "/db/category/list";
     public static final String URI_DB_CATEGORY_DETAIL = "/db/category/{id}/detail";
     public static final String URI_DB_PRODUCT_LIST = "/db/product/list";

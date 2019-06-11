@@ -31,4 +31,13 @@ public class CustomCodeService {
     	return marketApiRest.send(UserConstants.TARGET_API_MARKET, UserConstants.URI_API_CUSTOM_CODE + "/" + groupCode, null, HttpMethod.GET, null, CustomCodeList.class);
     }
 
+    /**
+     * UnitCode 로 단위코드 상세 조회
+     *
+     * @param unitCode the unit code
+     * @return CustomCode
+     */
+    public CustomCode getCodeByUnitCode(String unitCode) {
+        return marketApiRest.send(UserConstants.TARGET_API_MARKET, UserConstants.URI_API_CUSTOM_CODE + "/unitCode/" + unitCode, null, HttpMethod.GET, null, CustomCode.class);
+    }
 }

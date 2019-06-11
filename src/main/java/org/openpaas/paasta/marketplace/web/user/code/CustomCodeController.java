@@ -36,4 +36,14 @@ public class CustomCodeController {
         return customCodeService.getUnitCodeListByGroupCode(groupCode);
     }
 
+    /**
+     * UnitCode 로 단위코드 상세 조회
+     *
+     * @param unitCode the unit code
+     * @return CustomCode
+     */
+    @GetMapping(value = UserConstants.URI_DB_CUSTOM_CODE_DETAIL_BY_UNIT_CODE)
+    public CustomCode getCodeByUnitCode(@PathVariable String unitCode){
+        return customCodeService.getCodeByUnitCode(unitCode);
+    }
 }

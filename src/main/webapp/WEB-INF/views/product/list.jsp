@@ -44,13 +44,16 @@
 
     var CATEGORY_LIST = [];
     var PRODUCT_LIST = [];
+    var periodUnitName;
 
+    // 카테고리 목록 조회
     var getCategoryList = function () {
         var reqUrl = "<%=UserConstants.URI_DB_CATEGORY_LIST%>";
 
         procCallAjax(reqUrl, "GET", null, null, callbackCategoryList);
     };
 
+    // 카테고리 목록 CALLBACK
     var callbackCategoryList = function (data) {
         CATEGORY_LIST = data;
 
@@ -66,11 +69,28 @@
         categoryListArea.html(htmlArray);
     };
 
-    // sort(Category)
+
+    // CUSTOM CODE GET
+    var getCustomCode = function (unitCode) {
+        var reqUrl = "<%=UserConstants.URI_DB_CUSTOM_CODE_DETAIL_BY_UNIT_CODE%>".replace("{unitCode}", unitCode);
+
+        procCallAjax(reqUrl, "GET", null, null, callbackCustomCode);
+    };
+
+
+    // CUSTOM CODE GET CALLBACK
+    var callbackCustomCode = function (data) {
+        console.log("이 코드의 정보는? " + JSON.stringify(data));
+        periodUnitName = data.unitCodeName;
+    };
+
+
+    // SORT(Category)
     var selectBox = function () {
         getProductList();
 
     };
+
 
     // BIND
     $("#btnSearch").on("click", function() {
@@ -83,7 +103,7 @@
     };
 
 
-    // GET LIST
+    // 상품 목록 조회
     var getProductList = function() {
         var selectedCategory = $("#categoryList option:selected").val();
         var searchKeyword = $("#search_keyword").val();
@@ -104,7 +124,7 @@
     };
 
 
-    // CALLBACK
+    // 상품 목록 CALLBACK
     var callbackGetProductList = function(data) {
         console.log("상품 조회 ::: " + JSON.stringify(data));
         PRODUCT_LIST = data.items;
@@ -112,6 +132,9 @@
         var productListArea = $("#productListArea");
         var htmlString = [];
         var listLength = PRODUCT_LIST.length;
+
+        // 기간 코드 변환
+        getCustomCode(PRODUCT_LIST[0].meteringType);
 
         if(listLength > 0){
             for(var i = 0; i < listLength; i++){
@@ -122,7 +145,7 @@
                     + "<td>" + PRODUCT_LIST[i].versionInfo + "</td>"
                     + "<td>" + PRODUCT_LIST[i].category.categoryName + "</td>"
                     + "<td>" + PRODUCT_LIST[i].seller.sellerName + "</td>"
-                    + "<td>" + PRODUCT_LIST[i].unitPrice + "원/" + PRODUCT_LIST[i].meteringType + "</td>"
+                    + "<td>" + PRODUCT_LIST[i].unitPrice + "원/" + periodUnitName + "</td>"
                     +"</tr>"
                 );
             }
