@@ -31,7 +31,7 @@ public class CustomCodeController {
      * @return CustomCodeList
      */
     @GetMapping(value = UserConstants.URI_DB_CUSTOM_CODE_LIST)
-    public List<CustomCode> getUnitCodeListByGroupCode(@PathVariable String groupCode){
+    public CustomCodeList getUnitCodeListByGroupCode(@PathVariable String groupCode){
     	log.info("custom code");
         return customCodeService.getUnitCodeListByGroupCode(groupCode);
     }
