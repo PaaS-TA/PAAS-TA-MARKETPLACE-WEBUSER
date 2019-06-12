@@ -59,14 +59,14 @@
 
     // 카테고리 목록 CALLBACK
     var callbackCategoryList = function (data) {
-        CATEGORY_LIST = data;
+        CATEGORY_LIST = data.items;
 
         var categoryListArea = $("#categoryList");
         var htmlArray = [];
         var option = "<option selected='selected' value='ALL'>전체</option>";
 
-        for(var i = 0; i < data.length; i++){
-            option += "<option value=" + data[i].id + ">" + data[i].categoryName + "</option>"
+        for(var i = 0; i < CATEGORY_LIST.length; i++){
+            option += "<option value=" + CATEGORY_LIST[i].id + ">" + CATEGORY_LIST[i].categoryName + "</option>"
         }
 
         htmlArray.push(option);
