@@ -19,7 +19,7 @@ public class CategoryService {
      *
      * @return CategoryList
      */
-    public CategoryList getCategoryListByDeleteYn() {
+    public CategoryList getCategoryList() {
     	return marketApiRest.send(UserConstants.TARGET_API_MARKET, UserConstants.URI_API_CATEGORY, null, HttpMethod.GET, null, CategoryList.class);
     }
 

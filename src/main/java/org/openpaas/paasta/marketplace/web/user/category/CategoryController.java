@@ -33,7 +33,7 @@ public class CategoryController {
     @GetMapping(value = UserConstants.URI_DB_CATEGORY_LIST)
     public CategoryList getCategoryList(){
     	log.info("category...");
-        return categoryService.getCategoryListByDeleteYn();
+        return categoryService.getCategoryList();
     }
 
     /**
