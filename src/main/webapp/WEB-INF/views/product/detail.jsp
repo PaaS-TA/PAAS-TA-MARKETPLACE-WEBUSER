@@ -116,10 +116,23 @@
     });
 
 
-    // TODO :: 구매하기 BUTTON
-    // $("#buyProduct").on("click", function () {
-    //
-    // });
+    // 구매하기 BUTTON
+    $("#buyProduct").on("click", function () {
+        var productId = $("#id").val();
+        var reqUrl = "<%=UserConstants.URI_DB_USER_PRODUCT_CREATE%>";
+
+        var reqParam = {
+            "productId": productId,
+            "userId": USER_ID,
+            "userName": USER_NAME
+        };
+
+        procCallAjax(reqUrl,"POST", JSON.stringify(reqParam), null, callbackCreateUserProduct);
+    });
+
+    var callbackCreateUserProduct = function(data) {
+        console.log("data ::: " + JSON.stringify(data));
+    };
 
     $(document.body).ready(function () {
         getProduct();
