@@ -32,6 +32,7 @@ public class UserConstants {
     public static final String URI_DB_CATEGORY_DETAIL = "/db/category/{id}/detail";
     public static final String URI_DB_PRODUCT_LIST = "/db/product/list";
     public static final String URI_DB_PRODUCT_DETAIL = "/db/product/{id}/detail";
+    public static final String URI_DB_USER_PRODUCT_CREATE = "/db/user/product/create";
 
     // cf api uri
     public static final String MARKET_USER_URL = "/user";
@@ -42,6 +43,7 @@ public class UserConstants {
     public static final String URI_API_CATEGORY = "/api/category";
     public static final String URI_API_SELLER_PROFILE = "/api/seller/profile";
     public static final String URI_API_PRODUCT = "/api/seller/product";
+    public static final String URI_API_USER_PRODUCT = "/api/user/product";
 
     // market web user page uri
     public static final String URI_WEB_USER_PRODUCT_LIST = "/market/product";
