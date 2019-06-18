@@ -122,13 +122,11 @@
         var listLength = USER_PRODUCT_LIST.length;
 
         if(listLength > 0){
-
-
             for(var i = 0; i < listLength; i++){
-                //var goDetailUrl = "".replace("{id}", USER_PRODUCT_LIST[i].id);
+                var goDetailUrl = "<%=UserConstants.URI_WEB_USER_PRODUCT_DETAIL%>".replace("{id}", USER_PRODUCT_LIST[i].id);
                 htmlString.push(
                     "<tr>"
-                    + "<td>" + USER_PRODUCT_LIST[i].productName + "&nbsp;&nbsp;</td>"
+                    + "<td><a href='javascript:void(0);' onclick=\"procMovePage(\'" + goDetailUrl + "')\">" + USER_PRODUCT_LIST[i].productName + "&nbsp;&nbsp;</a></td>"
                     + "<td>" + USER_PRODUCT_LIST[i].product.versionInfo + "&nbsp;&nbsp;&nbsp;</td>"
                     + "<td>" + USER_PRODUCT_LIST[i].product.category.categoryName + "&nbsp;&nbsp;&nbsp;</td>"
                     + "<td>" + USER_PRODUCT_LIST[i].strUseStartDate + "&nbsp;&nbsp;</td>"

@@ -33,6 +33,7 @@ public class UserConstants {
     public static final String URI_DB_PRODUCT_LIST = "/db/product/list";
     public static final String URI_DB_PRODUCT_DETAIL = "/db/product/{id}/detail";
     public static final String URI_DB_USER_PRODUCT_LIST = "/db/user/product/list";
+    public static final String URI_DB_USER_PRODUCT_DETAIL = "/db/user/product/{id}/detail";
     public static final String URI_DB_USER_PRODUCT_CREATE = "/db/user/product/create";
 
     // cf api uri
@@ -50,6 +51,7 @@ public class UserConstants {
     public static final String URI_WEB_PRODUCT_LIST = "/market/product";
     public static final String URI_WEB_PRODUCT_DETAIL = "/market/product/{id}/detail";
     public static final String URI_WEB_USER_PRODUCT_LIST = "/market/user/product";
+    public static final String URI_WEB_USER_PRODUCT_DETAIL = "/market/user/product/{id}/detail";
 
 
     // market web user view file uri

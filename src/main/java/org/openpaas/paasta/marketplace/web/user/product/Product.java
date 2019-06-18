@@ -7,6 +7,7 @@ import org.openpaas.paasta.marketplace.web.user.common.BaseModel;
 import org.openpaas.paasta.marketplace.web.user.sellerProfile.SellerProfile;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 상품 도메인
@@ -22,7 +23,13 @@ public class Product extends BaseModel {
 
     private Category category;
 
+    private Long categoryId;
+
     private SellerProfile seller;
+
+    private String sellerId;
+
+    private List<Screenshot> screenshots;
 
     // 상품명
     private String productName;

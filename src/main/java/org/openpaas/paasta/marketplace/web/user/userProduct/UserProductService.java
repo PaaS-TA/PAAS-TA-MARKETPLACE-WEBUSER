@@ -45,6 +45,17 @@ public class UserProductService {
 
 
     /**
+     * 사용자 구매 상품 상세 조회
+     *
+     * @param id the id
+     * @return UserProduct
+     */
+    public UserProduct getUserProduct(Long id) {
+        return restTemplateService.send(UserConstants.TARGET_API_MARKET, UserConstants.URI_API_USER_PRODUCT + "/" + id, null, HttpMethod.GET, null, UserProduct.class);
+    }
+
+
+    /**
      * 사용자 구매상품 등록
      *
      * @param userProduct the user product

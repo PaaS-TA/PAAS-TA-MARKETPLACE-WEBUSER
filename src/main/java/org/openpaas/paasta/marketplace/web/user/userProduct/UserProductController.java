@@ -34,7 +34,7 @@ public class UserProductController {
      * @return ModelAndView
      */
     @GetMapping(value = UserConstants.URI_WEB_USER_PRODUCT_LIST)
-    public ModelAndView getProductListPage(HttpServletRequest httpServletRequest,
+    public ModelAndView getUserProductListPage(HttpServletRequest httpServletRequest,
                                            @RequestParam(value = "userId", defaultValue = "") String userId,
                                            @RequestParam(value = "categoryId", required = false) Long categoryId,
                                            @RequestParam(value = "productName", required = false) String productName) {
@@ -49,8 +49,33 @@ public class UserProductController {
      * @return UserProductList
      */
     @GetMapping(value = UserConstants.URI_DB_USER_PRODUCT_LIST)
-    public UserProductList getProductList(HttpServletRequest httpServletRequest){
+    public UserProductList getUserProductList(HttpServletRequest httpServletRequest){
         return userProductService.getUserProductList(commonService.setParameters(httpServletRequest));
+    }
+
+
+    /**
+     * 사용자 구매 상품 상세 조회 페이지 이동
+     *
+     * @param httpServletRequest the http servlet request
+     * @param id the id
+     * @return ModelAndView
+     */
+    @GetMapping(value = UserConstants.URI_WEB_USER_PRODUCT_DETAIL)
+    public ModelAndView getUserProduct(HttpServletRequest httpServletRequest, @PathVariable(value = "id") Long id){
+        return commonService.setPathVariables(httpServletRequest, UserConstants.URI_VIEW_USER_PRODUCT + "/detail", new ModelAndView());
+    }
+
+
+    /**
+     * 사용자 구매 상품 상세 조회
+     *
+     * @param id the id
+     * @return UserProduct
+     */
+    @GetMapping(value = UserConstants.URI_DB_USER_PRODUCT_DETAIL)
+    public UserProduct getUserProduct(@PathVariable(value = "id") Long id){
+        return userProductService.getUserProduct(id);
     }
 
 
