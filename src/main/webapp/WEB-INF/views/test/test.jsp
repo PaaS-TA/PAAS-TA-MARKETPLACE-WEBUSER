@@ -19,7 +19,7 @@
     <div>
         <span>마이페이지</span>
         <ul>
-            <a href="">사용 상품</a>
+            <a href="/market/user/product">사용 상품</a>
         </ul>
         <ul>
             <a href="">요금 계산</a>

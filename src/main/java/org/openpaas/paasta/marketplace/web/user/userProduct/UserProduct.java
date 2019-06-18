@@ -1,12 +1,15 @@
 package org.openpaas.paasta.marketplace.web.user.userProduct;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.openpaas.paasta.marketplace.web.user.common.BaseModel;
 import org.openpaas.paasta.marketplace.web.user.product.Product;
 
 import java.time.LocalDateTime;
 
 @Data
-public class UserProduct {
+@EqualsAndHashCode(callSuper = true)
+public class UserProduct extends BaseModel {
 
     private Long id;
 
@@ -39,6 +42,10 @@ public class UserProduct {
     
     // 사용종료일자
     private LocalDateTime useEnddate;
+
+    protected String strUseStartDate;
+
+    protected String strUseEndDate;
     
     // 접속URL
     private String accessUrl;

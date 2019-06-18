@@ -149,6 +149,8 @@ public class CommonService {
      */
     enum ParametersList {
 
+        PARAMETERS_USER_ID("userId"),
+
         PARAMETERS_CATEGORY_ID("categoryId"),
 
         PARAMETERS_PRODUCT_NAME("productName"),

@@ -1,11 +1,13 @@
 package org.openpaas.paasta.marketplace.web.user.userProduct;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openpaas.paasta.marketplace.web.user.common.CommonService;
 import org.openpaas.paasta.marketplace.web.user.common.UserConstants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 사용자가 구매한 상품 Controller
@@ -20,6 +22,36 @@ public class UserProductController {
 
     @Autowired
     private UserProductService userProductService;
+
+    @Autowired
+    private CommonService commonService;
+
+
+    /**
+     * 사용자 구매 상품 목록 조회 페이지 이동
+     *
+     * @param httpServletRequest the http servlet request
+     * @return ModelAndView
+     */
+    @GetMapping(value = UserConstants.URI_WEB_USER_PRODUCT_LIST)
+    public ModelAndView getProductListPage(HttpServletRequest httpServletRequest,
+                                           @RequestParam(value = "userId", defaultValue = "") String userId,
+                                           @RequestParam(value = "categoryId", required = false) Long categoryId,
+                                           @RequestParam(value = "productName", required = false) String productName) {
+        return commonService.setPathVariables(httpServletRequest, UserConstants.URI_VIEW_USER_PRODUCT + "/list", new ModelAndView());
+    }
+
+
+    /**
+     * 사용자 구매 상품 목록 조회
+     *
+     * @param httpServletRequest the http servlet request
+     * @return UserProductList
+     */
+    @GetMapping(value = UserConstants.URI_DB_USER_PRODUCT_LIST)
+    public UserProductList getProductList(HttpServletRequest httpServletRequest){
+        return userProductService.getUserProductList(commonService.setParameters(httpServletRequest));
+    }
 
 
     /**
