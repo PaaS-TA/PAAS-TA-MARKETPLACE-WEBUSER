@@ -112,7 +112,7 @@
 
     // BUTTON
     $("#goProductList").on("click", function () {
-       procMovePage("<%=UserConstants.URI_WEB_USER_PRODUCT_LIST%>");
+       procMovePage("<%=UserConstants.URI_WEB_PRODUCT_LIST%>");
     });
 
 

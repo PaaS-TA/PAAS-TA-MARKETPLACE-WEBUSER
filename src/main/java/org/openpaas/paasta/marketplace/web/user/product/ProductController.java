@@ -31,7 +31,7 @@ public class ProductController {
      * @param httpServletRequest the http servlet request
      * @return ModelAndView
      */
-    @GetMapping(value = UserConstants.URI_WEB_USER_PRODUCT_LIST)
+    @GetMapping(value = UserConstants.URI_WEB_PRODUCT_LIST)
     public ModelAndView getProductListPage(HttpServletRequest httpServletRequest,
                                            @RequestParam(value = "categoryId", required = false) Long categoryId,
                                            @RequestParam(value = "productName", required = false) String productName){
@@ -56,7 +56,7 @@ public class ProductController {
      * @param id the id
      * @return ModelAndView
      */
-    @GetMapping(value = UserConstants.URI_WEB_USER_PRODUCT_DETAIL)
+    @GetMapping(value = UserConstants.URI_WEB_PRODUCT_DETAIL)
     public ModelAndView getProductPage(HttpServletRequest httpServletRequest, @PathVariable(value = "id") Long id){
         return commonService.setPathVariables(httpServletRequest, UserConstants.URI_VIEW_PRODUCT + "/detail", new ModelAndView());
     }

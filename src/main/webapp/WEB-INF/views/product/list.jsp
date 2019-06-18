@@ -142,7 +142,7 @@
             getCustomCode(PRODUCT_LIST[0].meteringType);
 
             for(var i = 0; i < listLength; i++){
-                var goDetailUrl = "<%=UserConstants.URI_WEB_USER_PRODUCT_DETAIL%>".replace("{id}", PRODUCT_LIST[i].id);
+                var goDetailUrl = "<%=UserConstants.URI_WEB_PRODUCT_DETAIL%>".replace("{id}", PRODUCT_LIST[i].id);
                 htmlString.push(
                     "<tr>"
                     + "<td><a href='javascript:void(0);' onclick=\"procMovePage(\'" + goDetailUrl + "')\">" + PRODUCT_LIST[i].productName + "</a></td>"
