@@ -43,6 +43,9 @@ dependencies {
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     compile('org.springframework.boot:spring-boot-devtools')
 
+    // file
+    compile group: 'commons-io', name: 'commons-io', version: '2.5'
+    
     // Oauth
     compile "org.springframework.security:spring-security-taglibs:${springSecurityTagLibsVersion}"
     compile group: 'org.springframework.security.oauth.boot', name: 'spring-security-oauth2-autoconfigure', version: '2.0.3.RELEASE'
