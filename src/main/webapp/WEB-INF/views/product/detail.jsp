@@ -131,7 +131,8 @@
     });
 
     var callbackCreateUserProduct = function(data) {
-        console.log("data ::: " + JSON.stringify(data));
+        // TODO ::: data 결과 값으로 분기
+        procMovePage("<%=UserConstants.URI_WEB_USER_PRODUCT_LIST%>");
     };
 
     $(document.body).ready(function () {
