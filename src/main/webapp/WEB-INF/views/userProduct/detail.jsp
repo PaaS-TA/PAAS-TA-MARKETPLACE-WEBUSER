@@ -18,6 +18,12 @@
     <table>
         <ul>
             <tr>
+                <td>아이콘</td>
+                <td id="iconArea"></td>
+            </tr>
+        </ul>
+        <ul>
+            <tr>
                 <td>상품 이름 : </td>
                 <td id="productName"></td>
             </tr>
@@ -52,7 +58,11 @@
                 <td id="sellerName"></td>
             </tr>
         </ul>
-        <ul id="screenshotArea">
+        <ul>
+            <tr>
+                <td>스크린 샷</td>
+                <td id="screenshotArea"></td>
+            </tr>
         </ul>
         <ul>
             <tr>
@@ -64,7 +74,7 @@
     <div>
         <button type="button" class="button btn_default" title="연결" id="connectUrl">접속 URL 연결</button>
         <button type="button" class="button btn_default" title="정지" id="stopProduct">정지</button>
-        <button type="button" class="button btn_default" title="목록" id="goProductList">목록</button>
+        <button type="button" class="button btn_default" title="목록" id="goUserProductList">목록</button>
     </div>
 </body>
 </html>
@@ -109,6 +119,14 @@
         $("#sellerName").html(data.product.seller.sellerName);
         $("#productDetailDesc").html(data.product.detailDescription);
 
+        // 아이콘
+        var iconArea = $("#iconArea");
+        var iconImagePath = "/icon?" + "filePath=" + data.product.filePath + "&iconFileName=" + data.product.iconFileName;
+        console.log("아이콘 경로 ::: " + iconImagePath);
+
+        var htmlStr = "<tr><td><img src='" + iconImagePath + "' width='100' height='100'" + "></td></tr>";
+        iconArea.html(htmlStr);
+
 
         // 스크린샷
         var screenshotArea = $("#screenshotArea");
@@ -118,10 +136,11 @@
 
         if(listLength > 0) {
             for (var i = 0; i < listLength; i++) {
-                var imagePath = data.filePath + screenshotList[i].screenshotFileName;
+                var screenshotImagePath = "/screenshots?" + "filePath=" + data.product.filePath + "&screenshotFileName=" + screenshotList[i].screenshotFileName;
+                console.log("스크린샷 경로 ::: " + screenshotImagePath);
                 htmlString.push(
                     "<tr>"
-                    + "<td><img src='" + imagePath + "' width='100' height='100'" + "></td>"
+                    + "<td><img src='" + screenshotImagePath + "' width='100' height='100'" + "></td>"
                     + "</tr>"
                 );
             }
@@ -136,8 +155,8 @@
 
 
     // BUTTON
-    $("#goProductList").on("click", function () {
-        procMovePage("<%=UserConstants.URI_WEB_PRODUCT_LIST%>");
+    $("#goUserProductList").on("click", function () {
+        procMovePage("<%=UserConstants.URI_WEB_USER_PRODUCT_LIST%>");
     });
 
 
