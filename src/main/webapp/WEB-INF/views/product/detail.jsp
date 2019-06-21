@@ -131,8 +131,12 @@
     });
 
     var callbackCreateUserProduct = function(data) {
-        // TODO ::: data 결과 값으로 분기
-        procMovePage("<%=UserConstants.URI_WEB_USER_PRODUCT_LIST%>");
+        if (data.resultCode === "SUCCESS") {
+            procMovePage("<%=UserConstants.URI_WEB_USER_PRODUCT_LIST%>");
+        } else {
+            alert("오류 발생!!! : [" + data.resultMessage + "]");
+            return;
+        }
     };
 
     $(document.body).ready(function () {
