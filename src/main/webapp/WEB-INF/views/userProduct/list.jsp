@@ -103,7 +103,7 @@
             selectedCategory = '';
         }
 
-        if(searchKeyword === null || searchKeyword === ''){
+        if(searchKeyword === null || searchKeyword === '') {
             searchKeyword = '';
         }
 
@@ -116,7 +116,7 @@
     // 상품 목록 CALLBACK
     var callbackGetUserProductList = function(data) {
         USER_PRODUCT_LIST = data.items;
-        console.log("사용자별 구매한 상품 조회 ::: " + JSON.stringify(USER_PRODUCT_LIST));
+
         var productListArea = $("#productListArea");
         var htmlString = [];
         var listLength = USER_PRODUCT_LIST.length;

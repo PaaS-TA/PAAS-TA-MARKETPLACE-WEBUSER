@@ -130,7 +130,6 @@
 
     // 상품 목록 CALLBACK
     var callbackGetProductList = function(data) {
-        console.log("상품 조회 ::: " + JSON.stringify(data));
         PRODUCT_LIST = data.items;
 
         var productListArea = $("#productListArea");
