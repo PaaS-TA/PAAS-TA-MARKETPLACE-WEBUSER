@@ -156,7 +156,7 @@
             		+				'<span class="pn_cate type3">' + PRODUCT_LIST[i].category.categoryName + '</span>'
             		+				'<div class="pn_tit">'
             		+					'<span class="pn_tit_txt">' + PRODUCT_LIST[i].productName + '<span class="point5">(' + PRODUCT_LIST[i].versionInfo + ')</span></span>'
-            		+					'<span class="price_info">가격: ' + PRODUCT_LIST[i].unit_price + '원/' + periodUnitName + '</span>'
+            		+					'<span class="price_info">가격: ' + PRODUCT_LIST[i].unitPrice + '원/' + periodUnitName + '</span>'
             		+				'</div>'
             		+				'<div class="seller_info"><span class="ico_person"></span><span class="txt">판매자: ' + PRODUCT_LIST[i].seller.sellerName + '</span></div>'
             		+			'</div>'
