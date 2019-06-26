@@ -4,9 +4,9 @@
 	<!-- Top 비주얼 -->
 	<div class="top_visualWrap">
 		<div class="top_visual">
-			<p class="top_title">Welcome to LOTELLE Cloud Market place</p>
+			<p class="top_title">Welcome to PaaS-TA Market place</p>
 			<p class="top_stitle">
-				Thanks to our partnership with ROTELLE, we have the ability to gain new revenues, and our customers will gain<br />
+				Thanks to our partnership with PaaS-TA, we have the ability to gain new revenues, and our customers will gain<br />
 				access to all the new technologies and benefits those technologies bring. They are exceptionally forward thinking.<br />
 				they've built their business around the cloud.
 			</p>
