@@ -131,7 +131,6 @@
     var callbackGetProductList = function(data) {
         var PRODUCT_LIST = data.items;
 
-        var productListArea = $("#productListArea");
         var htmlString = [];
         var listLength = PRODUCT_LIST.length;
 
@@ -143,7 +142,7 @@
 
                 htmlString.push(
                 	'<li>'
-            		+	'<div class="panelWrap">'
+            		+	'<div class="panelWrap" onclick="moveDetail(' + PRODUCT_LIST[i].id + ')">'
             		+		'<div class="panel type3">'
             		+			'<div class="panelBox">'
             		+				'<div class="pn_thumBox">'
@@ -173,8 +172,12 @@
 			);
         }
 
-        productListArea.html(htmlString);
+        $("#productListArea").html(htmlString);
     };
+    
+    var moveDetail = function(id) {
+    	procMovePage("<%= UserConstants.URI_WEB_PRODUCT_DETAIL %>".replace("{id}", id));
+    }
 
 
     // ON LOAD

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="org.openpaas.paasta.marketplace.web.user.common.UserConstants" %>
+
 <div class="content">
 
 	<!-- cBox1 -->
@@ -14,8 +17,8 @@
 				<div class="l_box type1">
 					<div class="pn_thumBox">
 						<div class="pn_thum">
-							<div class="thum_img">
-								<img src="../common/images/thum_ico06.png" alt="" />
+							<div class="thum_img" id="icon">
+								
 							</div>
 							<!-- <div class="package_bg"></div> -->
 						</div>
@@ -45,15 +48,15 @@
 				</div>
 				<div class="r_box">
 					<div class="cnt_titBox">
-						<span class="cnt_tit">영카트</span>
-						<span class="pn_cate type4">커머스</span>
+						<span class="cnt_tit" id="productName"></span>
+						<span class="pn_cate type4" id="category"></span>
 					</div>
 					<div class="cnt_infoBox">
 						<ul>
-							<li><div class="tit_area"><span class="ico ico01"></span><span class="tit">버전 :</span><span class="txt">1.0</span></div></li>
-							<li><div class="tit_area"><span class="ico ico04"></span><span class="tit">개요 :</span><span class="txt m_line">그누보드의 쇼핑몰 플러그인 프로그램으로 주문, 결제 등의 기능을 포함하고 있어 홈페이지에서 쇼핑몰을 직접 운영</span></div></li>
-							<li><div class="tit_area"><span class="ico ico05"></span><span class="tit">가격 :</span><span class="txt">1,000원/일</span></div></li>
-							<li><div class="tit_area"><span class="ico ico02"></span><span class="tit">판매자 :</span><span class="txt">에스아이알소프트</span></div></li>
+							<li><div class="tit_area"><span class="ico ico01"></span><span class="tit">버전 :</span><span class="txt" id="version"></span></div></li>
+							<li><div class="tit_area"><span class="ico ico04"></span><span class="tit">개요 :</span><span class="txt m_line" id="simpleDesc"></span></div></li>
+							<li><div class="tit_area"><span class="ico ico05"></span><span class="tit">가격 :</span><span class="txt" id="price"></span></div></li>
+							<li><div class="tit_area"><span class="ico ico02"></span><span class="tit">판매자 :</span><span class="txt" id="sellerName"></span></div></li>
 						</ul>
 					</div>
 				</div>
@@ -62,19 +65,7 @@
 				<ul>
 					<li>
 						<div class="tit_area"><span class="ico ico03"></span><span class="tit">상품 상세 정보</span></div>
-						<div class="info_inner_txt">
-							<pre>
-							● 회원관리
-							  - 회원관리, 회원메일발송, 접속자집계, 접속자 검색, 접속자로그관리, 포인트관리, 투표관리
-							
-							● 쇼핑몰관리
-							  - 쇼핑몰설정, 분류관리, 상품관리, 주문관리, 주문개별관리, 주문통합관리, 배송일괄처리, 온라인견적, 상품유형관리, 상품재고관리, 이벤트관리, 사용후기, 상품문의, 내용관리, FAQ관리, 새창관리, 배너관리, 배송회사관리
-							
-							● 게시판관리
-							  - 게시판관리, 게시판그룹관리, 인기검색어관리, 인기검색어순위, 1대1 문의설정, 내용관리, FAQ 관리
-
-							</pre>
-						</div>
+						<div class="info_inner_txt" id="productDetailDesc"></div>
 					</li>
 				</ul>
 			</div>
@@ -85,17 +76,16 @@
 				<h4>미리보기</h4>
 				<div class="slideWrap">
 					<div class="slide_list">
-						<ul class="nav nav-tabs">
-							<li><a href=""><img src="../common/images/thum_test01.png" alt="" /></a></li>
-							<li><a href=""><img src="../common/images/thum_test02.png" alt="" /></a></li>
-							<li><a href="" class="video"><img src="../common/images/thum_test05.png" alt="" /></a></li>
-							<li><a href=""><img src="../common/images/thum_test03.png" alt="" /></a></li>
-							<li><a href=""><img src="../common/images/thum_test04.png" alt="" /></a></li>
-							<li><a href=""><img src="../common/images/thum_test05.png" alt="" /></a></li>
-							<li><a href=""><img src="../common/images/thum_test01.png" alt="" /></a></li>
-							<li><a href=""><img src="../common/images/thum_test02.png" alt="" /></a></li>
-							<li><a href=""><img src="../common/images/thum_test03.png" alt="" /></a></li>
-							<li><a href=""><img src="../common/images/thum_test04.png" alt="" /></a></li>
+						<ul class="nav nav-tabs" id="screenshots">
+							<li><a href=""><img src="/resources/images/thum_test01.png" alt="" /></a></li>
+							<li><a href=""><img src="/resources/images/thum_test02.png" alt="" /></a></li>
+							<li><a href=""><img src="/resources/images/thum_test03.png" alt="" /></a></li>
+							<li><a href=""><img src="/resources/images/thum_test04.png" alt="" /></a></li>
+							<li><a href=""><img src="/resources/images/thum_test05.png" alt="" /></a></li>
+							<li><a href=""><img src="/resources/images/thum_test01.png" alt="" /></a></li>
+							<li><a href=""><img src="/resources/images/thum_test02.png" alt="" /></a></li>
+							<li><a href=""><img src="/resources/images/thum_test03.png" alt="" /></a></li>
+							<li><a href=""><img src="/resources/images/thum_test04.png" alt="" /></a></li>
 						</ul>
 					</div>
 				</div>
@@ -110,3 +100,93 @@
 	</div>
 
 </div>
+<input type="hidden" id="id" value="<c:out value='${id}' default="" />"/>
+<script type="text/javascript">
+    var periodUnitName;
+
+    // CUSTOM CODE GET
+    var getCustomCode = function(unitCode) {
+        var reqUrl = "<%= UserConstants.URI_DB_CUSTOM_CODE_DETAIL_BY_UNIT_CODE %>".replace("{unitCode}", unitCode);
+
+        procCallAjax(reqUrl, "GET", null, null, callbackCustomCode);
+    };
+
+    // CUSTOM CODE GET CALLBACK
+    var callbackCustomCode = function(data) {
+        console.log("이 코드의 정보는? " + JSON.stringify(data));
+        periodUnitName = data.unitCodeName;
+    };
+
+    // 상품 조회
+    var getProduct = function() {
+        var productId = $("#id").val();
+        var reqUrl = "<%= UserConstants.URI_DB_PRODUCT_DETAIL %>".replace("{id}", productId);
+
+        procCallAjax(reqUrl,"GET",null, null, callbackGetProduct);
+    };
+
+    // 상품 조회 CALLBACK
+    var callbackGetProduct = function(data) {
+        console.log("product detail ::: " + JSON.stringify(data));
+        
+        var filePath = data.filePath;
+        // 기간 코드 변환
+        getCustomCode(data.meteringType);
+        // 가격
+        var pricePerDay = data.unitPrice + "원/" + periodUnitName;
+        // 아이콘이미지
+        var iconImage = '<img src="' + filePath + data.iconFileName + '" alt="" />'
+
+        $("#icon").html(iconImage)
+        $("#productName").html(data.productName);
+        $("#category").html(data.category.categoryName);
+        $("#version").html(data.versionInfo);
+        $("#simpleDesc").html(data.simpleDescription);
+        $("#price").html(pricePerDay);
+        $("#sellerName").html(data.seller.sellerName);
+        $("#productDetailDesc").html('<pre>' + data.detailDescription + '</pre>');
+        
+        var htmlString = [];
+        var listLength = data.screenshots.length;
+        for (var i = 0; i < listLength; i++) {
+        	htmlString.push(
+        		'<li><a href=""><img src="' + filePath + data.screenshots[i].screenshotFileName + '" alt="" /></a></li>'
+        	);
+        }
+        $("#screenshots").html(htmlString);
+    };
+
+
+    // BUTTON
+    $("#goProductList").on("click", function () {
+       procMovePage("<%= UserConstants.URI_WEB_PRODUCT_LIST %>");
+    });
+
+
+    // 구매하기 BUTTON
+    $("#buyProduct").on("click", function () {
+        var productId = $("#id").val();
+        var reqUrl = "<%= UserConstants.URI_DB_USER_PRODUCT_CREATE %>";
+
+        var reqParam = {
+            "productId": productId,
+            "userId": USER_ID,
+            "userName": USER_NAME
+        };
+
+        procCallAjax(reqUrl,"POST", JSON.stringify(reqParam), null, callbackCreateUserProduct);
+    });
+
+    var callbackCreateUserProduct = function(data) {
+        if (data.resultCode === "SUCCESS") {
+            procMovePage("<%=UserConstants.URI_WEB_USER_PRODUCT_LIST%>");
+        } else {
+            alert("오류 발생!!! : [" + data.resultMessage + "]");
+            return;
+        }
+    };
+
+    $(document.body).ready(function () {
+        getProduct();
+    });
+</script>
