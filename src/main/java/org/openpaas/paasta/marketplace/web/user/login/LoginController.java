@@ -42,6 +42,7 @@ public class LoginController {
     @Autowired
     private CommonService commonService;
 
+    
     /**
      * Market 사용자 포탈 인덱스 페이지
      *
@@ -57,37 +58,27 @@ public class LoginController {
         return null;
     }
 
-
     /**
      * Market 사용자 포탈 로그인 후 보이는 메인 화면
      *
      * @return the model and view
      */
     @GetMapping(value = "/market")
-    public ModelAndView main() {
+    public String main() {
         // 고정된 Org 가 있는지 판별 후 그에 따라 화면 분기.
         String fixedOrgName = marketOrgName;
         LOGGER.info("market 이름 ::: " + fixedOrgName);
         boolean result = orgService.isExistOrgByOrgName(fixedOrgName, commonService.getAdminToken());
         LOGGER.info("result 결과 ::: " + result);
 
-        ModelAndView mv = new ModelAndView();
+        String move = "";
         if (result) {
-            mv.setViewName("/test/test");
+        	move = "redirect:/market/product";
         } else {
-            mv.setViewName("/common/ready");
+        	move = "/common/ready";
         }
-        return mv;
+        return move;
     }
-
-
-
-//    @GetMapping(value = "/market")
-//    public ModelAndView main() {
-//        ModelAndView mv = new ModelAndView();
-//        mv.setViewName("/test/test");
-//        return mv;
-//    }
 
     /**
      * Market 판매자 포탈로 이동
@@ -100,7 +91,6 @@ public class LoginController {
         mv.setViewName("redirect:" + marketWebSellerUri);
         return mv;
     }
-
 
     /**
      * 로그인 화면
@@ -146,7 +136,5 @@ public class LoginController {
 
         return model;
     }
-
-
 
 }
