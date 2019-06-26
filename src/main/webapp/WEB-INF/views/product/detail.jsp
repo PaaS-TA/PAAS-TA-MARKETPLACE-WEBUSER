@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="org.openpaas.paasta.marketplace.web.user.common.UserConstants" %>
@@ -18,7 +18,6 @@
 					<div class="pn_thumBox">
 						<div class="pn_thum">
 							<div class="thum_img" id="icon">
-								
 							</div>
 							<!-- <div class="package_bg"></div> -->
 						</div>
@@ -77,15 +76,6 @@
 				<div class="slideWrap">
 					<div class="slide_list">
 						<ul class="nav nav-tabs" id="screenshots">
-							<li><a href=""><img src="/resources/images/thum_test01.png" alt="" /></a></li>
-							<li><a href=""><img src="/resources/images/thum_test02.png" alt="" /></a></li>
-							<li><a href=""><img src="/resources/images/thum_test03.png" alt="" /></a></li>
-							<li><a href=""><img src="/resources/images/thum_test04.png" alt="" /></a></li>
-							<li><a href=""><img src="/resources/images/thum_test05.png" alt="" /></a></li>
-							<li><a href=""><img src="/resources/images/thum_test01.png" alt="" /></a></li>
-							<li><a href=""><img src="/resources/images/thum_test02.png" alt="" /></a></li>
-							<li><a href=""><img src="/resources/images/thum_test03.png" alt="" /></a></li>
-							<li><a href=""><img src="/resources/images/thum_test04.png" alt="" /></a></li>
 						</ul>
 					</div>
 				</div>
@@ -96,7 +86,7 @@
 	<!-- //cBox1 -->
 
 	<div class="cont_btnBox">
-		<button name="button" class="btn btn-color1 btn-md" type="button" onclick="location.href='ProdList.html'">목록</button>
+		<button name="button" class="btn btn-color1 btn-md" type="button" onclick="location.href='/market/product'">목록</button>
 	</div>
 
 </div>
