@@ -41,6 +41,7 @@
 <script type="text/javascript" src="/resources/js/jquery.jscrollpane.min.js"></script>
 
 <!-- custom -->
+<script type="text/javascript" src="/resources/js/common.js"></script>
 <script type="text/javascript" src="/resources/js/user.js"></script>
 
 <script type="text/javascript">

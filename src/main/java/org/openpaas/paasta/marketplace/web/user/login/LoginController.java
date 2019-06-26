@@ -68,7 +68,8 @@ public class LoginController {
         // 고정된 Org 가 있는지 판별 후 그에 따라 화면 분기.
         String fixedOrgName = marketOrgName;
         LOGGER.info("market 이름 ::: " + fixedOrgName);
-        boolean result = orgService.isExistOrgByOrgName(fixedOrgName, commonService.getAdminToken());
+//        boolean result = orgService.isExistOrgByOrgName(fixedOrgName, commonService.getAdminToken());
+        boolean result = true;
         LOGGER.info("result 결과 ::: " + result);
 
         String move = "";
