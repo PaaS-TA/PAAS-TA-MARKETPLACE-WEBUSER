@@ -139,6 +139,7 @@
 	            // 기간 코드 변환
 	            getCustomCode(PRODUCT_LIST[0].meteringType);
                 var goDetailUrl = "<%=UserConstants.URI_WEB_PRODUCT_DETAIL%>".replace("{id}", PRODUCT_LIST[i].id);
+				var iconImagePath = "/icon?" + "filePath=" + PRODUCT_LIST[i].filePath + "&iconFileName=" + PRODUCT_LIST[i].iconFileName;
 
                 htmlString.push(
                 	'<li>'
@@ -148,7 +149,7 @@
             		+				'<div class="pn_thumBox">'
             		+					'<div class="pn_thum">'
             		+						'<div class="thum_img">'
-            		+							'<img src="' + PRODUCT_LIST[i].filePath + PRODUCT_LIST[i].iconFileName + '" alt="" />'
+            		+							'<img src="' + iconImagePath + '" alt="" />'
             		+						'</div>'
             		+					'</div>'
             		+				'</div>'
