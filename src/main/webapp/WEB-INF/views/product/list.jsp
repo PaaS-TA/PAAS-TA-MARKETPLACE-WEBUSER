@@ -139,7 +139,7 @@
 	            // 기간 코드 변환
 	            getCustomCode(PRODUCT_LIST[0].meteringType);
                 var goDetailUrl = "<%=UserConstants.URI_WEB_PRODUCT_DETAIL%>".replace("{id}", PRODUCT_LIST[i].id);
-				var iconImagePath = "/icon?" + "filePath=" + PRODUCT_LIST[i].filePath + "&iconFileName=" + PRODUCT_LIST[i].iconFileName;
+				var iconImagePath = "/icon?filePath=" + PRODUCT_LIST[i].filePath + "&iconFileName=" + PRODUCT_LIST[i].iconFileName;
 
                 htmlString.push(
                 	'<li>'

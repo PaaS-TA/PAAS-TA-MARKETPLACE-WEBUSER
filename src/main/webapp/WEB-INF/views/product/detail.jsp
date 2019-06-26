@@ -125,7 +125,7 @@
         // 가격
         var pricePerDay = data.unitPrice + "원/" + periodUnitName;
         // 아이콘이미지
-        var iconImage = '<img src="' + filePath + data.iconFileName + '" alt="" />'
+        var iconImage = '<img src="/icon?filePath=' + filePath + '&iconFileName=' + data.iconFileName + '" alt="" />'
 
         $("#icon").html(iconImage)
         $("#productName").html(data.productName);
@@ -140,7 +140,7 @@
         var listLength = data.screenshots.length;
         for (var i = 0; i < listLength; i++) {
         	htmlString.push(
-        		'<li><a href=""><img src="' + filePath + data.screenshots[i].screenshotFileName + '" alt="" /></a></li>'
+        		'<li><a href=""><img src="/screenshots?filePath=' + filePath + '&screenshotFileName=' + data.screenshots[i].screenshotFileName + '" alt="" /></a></li>'
         	);
         }
         $("#screenshots").html(htmlString);
