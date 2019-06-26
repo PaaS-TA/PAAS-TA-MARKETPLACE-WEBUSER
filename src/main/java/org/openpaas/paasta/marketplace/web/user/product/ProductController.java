@@ -65,7 +65,7 @@ public class ProductController {
      */
     @GetMapping(value = UserConstants.URI_WEB_PRODUCT_DETAIL)
     public ModelAndView getProductPage(HttpServletRequest httpServletRequest, @PathVariable(value = "id") Long id){
-        return commonService.setPathVariables(httpServletRequest, UserConstants.URI_VIEW_PRODUCT + "/productDetail", new ModelAndView());
+        return commonService.setPathVariables(httpServletRequest, UserConstants.URI_VIEW_PRODUCT + "/detail", new ModelAndView());
     }
 
 
