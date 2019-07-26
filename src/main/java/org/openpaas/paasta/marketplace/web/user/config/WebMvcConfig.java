@@ -1,3 +1,4 @@
+/*
 package org.openpaas.paasta.marketplace.web.user.config;
 
 import java.util.concurrent.TimeUnit;
@@ -24,11 +25,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/resources/fonts/**").addResourceLocations("/resources/fonts/").setCacheControl(CacheControl.maxAge(86400, TimeUnit.SECONDS));
     }
 
-    /**
+    */
+/**
      * View resolver view resolver.
      *
      * @return the view resolver
-     */
+     *//*
+
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -43,4 +46,4 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		registry.addInterceptor(new LoggerInterceptor());
 	}
 
-}
+}*/

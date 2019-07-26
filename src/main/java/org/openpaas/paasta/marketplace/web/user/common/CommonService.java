@@ -23,11 +23,11 @@ import java.util.Map;
 @Service
 public class CommonService {
 
-    @Value("${cf.admin.name}")
-    private String cfAdminName;
-
-    @Value("${cf.admin.password}")
-    private String cfAdminPassword;
+//    @Value("${cf.admin.name}")
+//    private String cfAdminName;
+//
+//    @Value("${cf.admin.password}")
+//    private String cfAdminPassword;
 
     @Autowired
     private RestTemplateService cfApiRest;
@@ -39,8 +39,8 @@ public class CommonService {
      */
     public String getAdminToken(){
         Map<String, Object> cfAdminInfo = new HashMap<>();
-        cfAdminInfo.put("id", cfAdminName);
-        cfAdminInfo.put("password", cfAdminPassword);
+//        cfAdminInfo.put("id", cfAdminName);
+//        cfAdminInfo.put("password", cfAdminPassword);
 
         Map result = cfApiRest.send(UserConstants.TARGET_API_CF, "/login", null, HttpMethod.POST, cfAdminInfo, Map.class);
 

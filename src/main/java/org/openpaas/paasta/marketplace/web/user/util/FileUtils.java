@@ -1,7 +1,7 @@
 package org.openpaas.paasta.marketplace.web.user.util;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
+//import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -39,7 +39,8 @@ public class FileUtils {
                 headers.add("Content-Disposition", "attachment; filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO-8859-1"));
             }
 
-            entity = new ResponseEntity<>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+//            entity = new ResponseEntity<>();
+            entity = null;
 
         }catch (Exception e){
             e.printStackTrace();

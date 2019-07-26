@@ -32,10 +32,10 @@ public class RestTemplateService {
 	
     private final RestTemplate restTemplate;
     
-	@Autowired
-	public RestTemplateService(PropertyService property, RestTemplate restTemplate) {
+//	@Autowired
+	public RestTemplateService(PropertyService property) {
 		this.property = property;
-		this.restTemplate = restTemplate;
+		this.restTemplate = new RestTemplate();
 	}
 	
 	public <T> T send(String targetApi, String restUrl, String token, HttpMethod httpMethod, Object bodyObject, Class<T> responseType) {
@@ -87,9 +87,9 @@ public class RestTemplateService {
 
         // Cf API
         if (UserConstants.TARGET_API_CF.equals(targetApi)) {
-            requestMap.put("apiUrl", property.getCfJavaClientApiUri());
+//            requestMap.put("apiUrl", property.getCfJavaClientApiUri());
             requestMap.put("authorizationCf", "bearer " + token);
-            requestMap.put("authorizationBasic", "Basic " + Base64Utils.encodeToString((property.getCfJavaClientApiUsername() + ":" + property.getCfJavaClientApiPassword()).getBytes(StandardCharsets.UTF_8)));
+//            requestMap.put("authorizationBasic", "Basic " + Base64Utils.encodeToString((property.getCfJavaClientApiUsername() + ":" + property.getCfJavaClientApiPassword()).getBytes(StandardCharsets.UTF_8)));
         }
 
         // Market API

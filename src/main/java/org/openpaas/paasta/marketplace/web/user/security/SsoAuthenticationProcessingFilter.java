@@ -1,3 +1,4 @@
+/*
 package org.openpaas.paasta.marketplace.web.user.security;
 
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+*/
 /**
  * Extension of {@link OAuth2ClientAuthenticationProcessingFilter} that uses the
  * {@link AuthenticationManager}.
@@ -22,7 +24,8 @@ import java.io.IOException;
  * if the current request requires authentication.
  *
  * @author Sebastien Gerard
- */
+ *//*
+
 public class SsoAuthenticationProcessingFilter extends OAuth2ClientAuthenticationProcessingFilter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SsoAuthenticationProcessingFilter.class);
@@ -70,12 +73,15 @@ public class SsoAuthenticationProcessingFilter extends OAuth2ClientAuthenticatio
         return authenticationManager.authenticate(authentication);
     }
 
-    /**
+    */
+/**
      * Sets the optional source providing {@link Authentication#getDetails() authentication details}.
-     */
+     *//*
+
     public void setDetailsSource(AuthenticationDetailsSource<HttpServletRequest, ?> detailsSource) {
         this.detailsSource = detailsSource;
     }
 
 
 }
+*/

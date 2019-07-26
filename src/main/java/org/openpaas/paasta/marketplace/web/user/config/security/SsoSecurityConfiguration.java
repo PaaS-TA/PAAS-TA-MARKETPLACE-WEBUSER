@@ -1,23 +1,10 @@
+/*
 package org.openpaas.paasta.marketplace.web.user.config.security;
 
-import static java.util.Arrays.asList;
-
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Enumeration;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import lombok.extern.slf4j.Slf4j;
 import org.openpaas.paasta.marketplace.web.user.common.PropertyService;
 import org.openpaas.paasta.marketplace.web.user.common.UserConstants;
-import org.openpaas.paasta.marketplace.web.user.security.SSLUtils;
-import org.openpaas.paasta.marketplace.web.user.security.SsoAuthenticationDetails;
-import org.openpaas.paasta.marketplace.web.user.security.SsoAuthenticationDetailsSource;
-import org.openpaas.paasta.marketplace.web.user.security.SsoAuthenticationFailureHandler;
-import org.openpaas.paasta.marketplace.web.user.security.SsoAuthenticationProcessingFilter;
-import org.openpaas.paasta.marketplace.web.user.security.SsoAuthenticationSuccessHandler;
-import org.openpaas.paasta.marketplace.web.user.security.SsoLogoutRedirectStrategy;
+import org.openpaas.paasta.marketplace.web.user.security.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -33,26 +20,30 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilt
 import org.springframework.security.oauth2.client.token.AccessTokenRequest;
 import org.springframework.security.oauth2.client.token.DefaultAccessTokenRequest;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
-import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.DefaultUserAuthenticationConverter;
-import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
-import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
+import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.context.WebApplicationContext;
 
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Enumeration;
 
+import static java.util.Arrays.asList;
+
+*/
 /**
  * SsoSecurityConfiguration 클래스.
  *
  * @author hrjin
  * @version 1.0
  * @since 2019.03.21
- */
+ *//*
+
 @Configuration
 @Slf4j
 public class SsoSecurityConfiguration {
@@ -68,9 +59,9 @@ public class SsoSecurityConfiguration {
     @Autowired
     private PropertyService property;
 
-    @Autowired
-    @Qualifier("authenticationManager")
-    private AuthenticationManager authenticationManager;
+//    @Autowired
+//    @Qualifier("authenticationManager")
+//    private AuthenticationManager authenticationManager;
 
     @Autowired
     private HttpServletRequest httpServletRequest;
@@ -103,12 +94,14 @@ public class SsoSecurityConfiguration {
         return SsoFilterWrapper.wrap(filter);
     }
 
-    /**
+    */
+/**
      * 1) Oauth 인증 (/oauth/authorize)
      * 2) 토큰을 부여받는다. (/oauth/token)
      *
      * @return the authorizationCodeResourceDetails
-     */
+     *//*
+
     @Bean(name = "ssoProtectedResourceDetails")
     @Scope(value = WebApplicationContext.SCOPE_SESSION)
     @Autowired
@@ -150,11 +143,13 @@ public class SsoSecurityConfiguration {
         return request;
     }
 
-    /**
+    */
+/**
      * Oauth 인증으로 CF Rest
      *
      * @return the OAuth2RestTemplate
-     */
+     *//*
+
     @Bean(name = "ssoRestOperations")
     @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
     @Autowired
@@ -182,11 +177,13 @@ public class SsoSecurityConfiguration {
         return defaultAccessTokenConverter;
     }
 
-    /**
+    */
+/**
      * 3) 토큰의 정상 여부를 확인한다. (/check_token)
      *
      * @return the ResourceServerTokenServices
-     */
+     *//*
+
     @Bean(name = "ssoResourceServerTokenServices")
     @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
     @Autowired
@@ -269,3 +266,4 @@ public class SsoSecurityConfiguration {
     }
 
 }
+*/
