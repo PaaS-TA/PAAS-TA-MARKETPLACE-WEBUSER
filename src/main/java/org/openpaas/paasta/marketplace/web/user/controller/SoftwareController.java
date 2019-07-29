@@ -3,6 +3,7 @@ package org.openpaas.paasta.marketplace.web.user.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openpaas.paasta.marketplace.web.user.domain.Software;
+import org.openpaas.paasta.marketplace.web.user.domain.SoftwareSpecification;
 import org.openpaas.paasta.marketplace.web.user.domain.Type;
 import org.openpaas.paasta.marketplace.web.user.domain.Yn;
 import org.openpaas.paasta.marketplace.web.user.service.SoftwareService;
@@ -27,11 +28,11 @@ public class SoftwareController {
     private final SoftwareService softwareService;
 
     @GetMapping
-    public String getSoftwares(Model model, @AuthenticationPrincipal OAuth2User oauth2User, HttpSession httpSession, Software software, Authentication authentication) {
-
+    public String getSoftwares(Model model, @AuthenticationPrincipal OAuth2User oauth2User, HttpSession httpSession, SoftwareSpecification spec, Authentication authentication) {
 //        httpSession.setAttribute("yourName", oauth2User.getAttributes().get("user_name"));
         model.addAttribute("categories", softwareService.getCategories());
-        model.addAttribute("softwares", softwareService.getSoftwares().getContent());
+        model.addAttribute("spec", new SoftwareSpecification());
+        model.addAttribute("softwares", softwareService.getSoftwares(spec).getContent());
         return "contents/software-list";
     }
 

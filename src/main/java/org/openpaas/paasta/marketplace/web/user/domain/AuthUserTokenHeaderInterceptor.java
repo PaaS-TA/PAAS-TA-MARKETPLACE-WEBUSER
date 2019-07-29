@@ -1,5 +1,6 @@
 package org.openpaas.paasta.marketplace.web.user.domain;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpRequest;
@@ -9,14 +10,13 @@ import org.springframework.http.client.ClientHttpResponse;
 
 import java.io.IOException;
 
+@Slf4j
 public class AuthUserTokenHeaderInterceptor implements ClientHttpRequestInterceptor {
-
-    private static final Logger logger = LoggerFactory.getLogger(AuthUserTokenHeaderInterceptor.class);
 
     private String authTokenHeaderName;
 
     public AuthUserTokenHeaderInterceptor(String authTokenHeaderName) {
-        logger.info("AuthUserTokenHeaderInterceptor: init");
+        log.info("AuthUserTokenHeaderInterceptor: init");
 
         this.authTokenHeaderName = authTokenHeaderName;
     }
@@ -25,7 +25,7 @@ public class AuthUserTokenHeaderInterceptor implements ClientHttpRequestIntercep
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
         User user = SecurityUtils.getUser();
 
-        logger.info("user: {}", user);
+        log.info("user: {}", user);
 
         if (user != null) {
             request.getHeaders().set(authTokenHeaderName, user.getToken());

@@ -43,14 +43,14 @@
 <!--        <form th:action="@{/softwares}" th:object="${software}" action="#" id="createSoftwareForm" method="post" enctype="multipart/form-data">-->
         <!-- 검색 Form -->
         <div class="searchWrap">
-            <form th:action="@{/softwares}" th:object="${software}" action="#" id="searchSoftwaresForm" method="get">
+            <form th:action="@{/softwares}" th:object="${spec}" action="#" id="searchSoftwaresForm" method="get">
             <div class="searchBox">
                 <!-- Form 그룹 -->
                 <div class="form-group">
                     <div class="form-group-area">
                         <div class="fm_label"><label for="" class="label">카테고리</label></div>
                         <div class="fm_box">
-                            <select th:field="*{category.id}">
+                            <select th:field="*{categoryId}">
                                 <option value="">선택</option>
                                 <option th:each="category : ${categories}"
                                         th:value="${category.id}"
@@ -66,13 +66,14 @@
                     <div class="form-group-area">
                         <div class="fm_label"><label for="" class="label">상품명</label></div>
                         <div class="fm_box">
-                            <input type="text" placeholder="검색어를 입력해 주세요." th:field="*{name}" style="width:400px;">
+                            <input type="text" placeholder="검색어를 입력해 주세요." th:field="*{nameLike}" style="width:400px;">
                         </div>
                     </div>
                 </div>
                 <!-- //Form 그룹 -->
                 <button type="submit" class="btn btn-sch" title="검색"><span class="ico">검색</span></button>
             </div>
+            </form>
         </div>
         <!-- //검색 Form -->
 

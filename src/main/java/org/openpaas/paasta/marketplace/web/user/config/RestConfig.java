@@ -26,7 +26,6 @@ public class RestConfig {
     @Bean
     AuthUserTokenHeaderInterceptor paasUserInterceptor() {
         AuthUserTokenHeaderInterceptor tokenHeaderInterceptor = new AuthUserTokenHeaderInterceptor(AUTH_TOKEN_HEADER_NAME);
-
         return tokenHeaderInterceptor;
     }
 }
