@@ -46,13 +46,13 @@
                             <tbody>
                             <tr>
                                 <th scope="row">카테고리</th>
-                                <td>의료</td>
+                                <td th:text="${software.category.name}"></td>
                             </tr>
                             <tr>
                                 <th scope="row">개요</th>
                                 <td>
                                     <div class="tbw_inner_txt">
-                                        <pre th:text="${software.description}"></pre>
+                                        <pre th:text="${software.summary}"></pre>
                                     </div>
                                 </td>
                             </tr>
@@ -81,7 +81,7 @@
                                 <th scope="row">상세설명</th>
                                 <td>
                                     <div class="tbw_inner_txt">
-                                        <pre th:text="${software.detailDescription}"></pre>
+                                        <pre th:text="${software.description}"></pre>
                                     </div>
                                 </td>
                             </tr>
@@ -91,27 +91,27 @@
                             </tr>
                             <tr>
                                 <th scope="row">상품파일</th>
-                                <td>spring-medical.war</td>
+                                <td th:text="${software.app}"></td>
                             </tr>
                             <tr>
                                 <th scope="row">환경파일</th>
-                                <td>manifest.yml</td>
+                                <td th:text="${software.manifest}"></td>
                             </tr>
                             <tr>
                                 <th scope="row">판매가격</th>
-                                <td><span class="price">1,000</span>원 / <span class="month">12</span>일</td>
+                                <td><span class="price" th:text="'가격 :' + ${software.pricePerDay} + ' 월/일'"></span></td>
                             </tr>
                             <tr>
                                 <th scope="row">전시여부</th>
-                                <td th:text="${software.yn}"></td>
+                                <td th:text="${software.inUse}"></td>
                             </tr>
                             <tr>
                                 <th scope="row">버전</th>
-                                <td>1.0</td>
+                                <td th:text="${software.version}"></td>
                             </tr>
                             <tr>
                                 <th scope="row">등록일자</th>
-                                <td>2018.12.23</td>
+                                <td th:text="${software.createdDate}"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -210,7 +210,8 @@
                 <!-- //Modal -->
             </div>
             <div class="pull-right">
-                <button name="button" class="btn btn-color7 btn-md" type="button">수정</button>
+<!--                <a th:href="@{'/softwares/' + ${software.id}}"  th:onclick="'location.href=\'\/softwares\''+ ${software.id} + '/update'">-->
+                <button name="button" class="btn btn-color7 btn-md" type="button" th:onclick="'location.href = \'' + @{/softwares/{id}(id=${software.id})} + '/update\''">수정</button>
                 <button name="button" class="btn btn-color1 btn-md" type="button" onclick="location.href='/softwares'">목록</button>
             </div>
         </div>

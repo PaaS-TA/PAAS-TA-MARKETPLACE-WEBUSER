@@ -37,15 +37,21 @@ public class SoftwareController {
     }
 
     @GetMapping(value = "/{id}")
-    public String getSoftware(Model model, @PathVariable Integer id) {
-//        model.addAttribute("software", testData.get(id));
+    public String getSoftware(Model model, @PathVariable Long id) {
+        model.addAttribute("software", softwareService.getSoftware(id));
         softwareService.getCategories();
         return "contents/software-detail";
     }
 
-    @PostMapping(value = "/{id}")
-    public String updateSoftware(Model model, @PathVariable Integer id) {
-//        model.addAttribute("software", testData.get(id));
+    @GetMapping(value = "/{id}/update")
+    public String updateSoftwareHtml(Model model, @PathVariable Long id) {
+        model.addAttribute("software", softwareService.getSoftware(id));
+        return "contents/software-update";
+    }
+
+    @PutMapping(value = "/{id}")
+    public String updateSoftware(Model model, @PathVariable Long id) {
+        model.addAttribute("software", softwareService.getSoftware(id));
         return "redirect:/softwares/" + id;
     }
 

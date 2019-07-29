@@ -41,4 +41,12 @@ public class SoftwareService {
     }
 
 
+    public Software getSoftware(Long id) {
+        String url = UriComponentsBuilder.newInstance().path("/softwares/{id}")
+                .build()
+                .expand(id)
+                .toString();
+
+        return paasApiRest.getForObject(url, Software.class);
+    }
 }
