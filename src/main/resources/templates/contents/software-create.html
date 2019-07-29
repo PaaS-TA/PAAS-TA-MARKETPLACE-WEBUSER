@@ -65,7 +65,7 @@
                             <tr>
                                 <th scope="row">카테고리<i class="i_star">필수입력</i></th>
                                 <td>
-                                    <select th:field="*{categoryName}">
+                                    <select th:field="*{category.id}">
                                         <option value="">선택</option>
                                         <option th:each="category : ${categories}"
                                                 th:value="${category.id}"
@@ -76,7 +76,7 @@
                             </tr>
                             <tr>
                                 <th scope="row">개요<i class="i_star">필수입력</i></th>
-                                <td><textarea name="name" th:field="*{description}" style="height:150px;"></textarea></td>
+                                <td><textarea name="name" th:field="*{summary}" style="height:150px;"></textarea></td>
                             </tr>
                             <tr>
                                 <th scope="row">아이콘<i class="i_star">필수입력</i></th>
@@ -126,7 +126,7 @@
                             </tr>
                             <tr>
                                 <th scope="row">상세설명<i class="i_star">필수입력</i></th>
-                                <td><textarea name="name" th:field="*{detailDescription}" style="height:150px;"></textarea></td>
+                                <td><textarea name="name" th:field="*{description}" style="height:150px;"></textarea></td>
                             </tr>
                             <tr>
                                 <th scope="row">파일유형<i class="i_star">필수입력</i></th>
@@ -170,7 +170,7 @@
                                         <div class="bootstrap-filestyle input-group">
                                             <input name="userfile" disabled="" class="form-control" id="environmentFile" type="text">
                                             <span tabindex="0" class="group-span-filestyle input-group-btn">
-                                                <label class="btn btn-default" for="environmentFileInput">
+                                                <label class="btn btn-dfefault" for="environmentFileInput">
                                                     <span class="btn btn-md btn-color1">파일찾기</span>
                                                 </label>
                                             </span>
@@ -193,7 +193,7 @@
 <!--                                            <option value="">-</option>-->
 <!--                                            <option value="">-</option>-->
 <!--                                        </select>-->
-                                        <input style="width:100px;" type="text" th:field="*{price}"> 원 / 일
+                                        <input style="width:100px;" type="number" th:field="*{pricePerDay}"> 원 / 일
                                     </div>
                                 </td>
                             </tr>
@@ -201,7 +201,7 @@
                                 <th scope="row">전시여부<i class="i_star">필수입력</i></th>
                                 <td>
                                     <div class="radio radio-inline" th:each="yn : ${yns}">
-                                        <input name="radio19" th:id="'radio1-' + ${yn}" type="radio" th:field="*{yn}" th:value="${yn}" >
+                                        <input name="radio19" th:id="'radio1-' + ${yn}" type="radio" th:field="*{inUse}" th:value="${yn}" >
                                         <label class="label" th:for="'radio1-' + ${yn}" th:text="${yn}"></label>
                                     </div>
                                 </td>

@@ -2,12 +2,14 @@ package org.openpaas.paasta.marketplace.web.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 public class Category extends AbstractEntity {
 
     private Long id;
@@ -20,9 +22,4 @@ public class Category extends AbstractEntity {
 
     @JsonIgnore
     private List<Software> softwareList;
-
-    public Category(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 }
