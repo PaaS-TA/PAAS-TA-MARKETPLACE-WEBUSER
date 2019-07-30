@@ -79,10 +79,7 @@ dependencies {
 
     // for using Page class
     compile "org.springframework.boot:spring-boot-starter-data-jpa"
-
-//    compile 'org.openpaas.paasta:marketplace-domain:0.0.1-SNAPSHOT'
-
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    
+    compileOnly 'org.projectlombok:lombok:1.18.8'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
