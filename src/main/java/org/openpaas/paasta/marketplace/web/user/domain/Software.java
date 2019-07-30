@@ -16,8 +16,6 @@ public class Software extends AbstractEntity {
 
     private Category category;
 
-    private String categoryId;
-
     private List<Screenshot> screenshotList;
 
     private String description;

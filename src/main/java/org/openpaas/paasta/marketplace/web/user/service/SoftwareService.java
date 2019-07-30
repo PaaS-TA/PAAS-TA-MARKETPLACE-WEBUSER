@@ -49,4 +49,13 @@ public class SoftwareService {
 
         return paasApiRest.getForObject(url, Software.class);
     }
+
+    public void updateSoftware(Software software) {
+        String url = UriComponentsBuilder.newInstance().path("/softwares/{id}")
+                .build()
+                .expand(software.getId())
+                .toString();
+
+        paasApiRest.put(url, software);
+    }
 }
