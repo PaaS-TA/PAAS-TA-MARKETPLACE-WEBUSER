@@ -5,6 +5,7 @@ import org.openpaas.paasta.marketplace.web.user.common.UserConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 상품 Service
@@ -18,6 +19,12 @@ public class ProductService {
 
     @Autowired
     private RestTemplateService marketApiRest;
+
+    public static ModelAndView getUserInfoMain() {
+        return new ModelAndView() {{
+            setViewName("/product/prodListMain.html");
+        }};
+    }
 
     /**
      * 상품 목록 조회
