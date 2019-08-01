@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout-user}">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+
+</th:block>
+
+<div class="rightCnt" layout:fragment="content">
+    <!-- title area -->
+    <div class="titWrap">
+        <h2 class="h2">사용 상품</h2>
+        <div class="breadWrap">
+            <ol class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">마이 페이지</a></li>
+                <li class="active">사용 상품</li><!-- 마지막 li -->
+            </ol>
+        </div>
+    </div>
+    <!-- //title area -->
+
+    <!-- content -->
+    <div class="content">
+        <!-- Top 비주얼 -->
+        <div class="top_visualWrap">
+            <div class="top_visual">
+                <p class="top_title">Welcome to PaaS-TA Market place</p>
+                <p class="top_stitle">
+                    Thanks to our partnership with PaaS-TA, we have the ability to gain new revenues, and our customers will gain<br />
+                    access to all the new technologies and benefits those technologies bring. They are exceptionally forward thinking.<br />
+                    they've built their business around the cloud.
+                </p>
+            </div>
+        </div>
+        <!-- //Top 비주얼 -->
+
+        <!-- 검색 Form -->
+        <div class="searchWrap">
+            <div class="searchBox">
+                <!-- Form 그룹 -->
+                <div class="form-group">
+                    <div class="form-group-area">
+                        <div class="fm_label"><label for="" class="label">카테고리</label></div>
+                        <div class="fm_box">
+                            <select id="" name="">
+                                <option value="">전체</option>
+                                <option value="">보안</option>
+                                <option value="">ERP</option>
+                                <option value="">게임</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- //Form 그룹 -->
+                <!-- Form 그룹 -->
+                <div class="form-group">
+                    <div class="form-group-area">
+                        <div class="fm_label"><label for="" class="label">상품명</label></div>
+                        <div class="fm_box">
+                            <input type="text" placeholder="검색어를 입력해 주세요." style="width:400px;">
+                        </div>
+                    </div>
+                </div>
+                <!-- //Form 그룹 -->
+                <button type="button" name="button" class="btn btn-sch" title="검색"><span class="ico">검색</span></button>
+            </div>
+        </div>
+        <!-- //검색 Form -->
+
+        <div class="cont-titWrap mt30">
+            <h3 class="h-tit3">총 건수 <span class="point4">(10)</span><span class="point_txt"> / 총 금액(77,000원)</span></h3>
+        </div>
+
+        <!-- 테이블 -->
+        <div class="tbl type1 pt20">
+            <table class="table">
+                <colgroup>
+                    <col style="width:8%;">
+                    <col style="width:10%;">
+                    <col style="width:15%;">
+                    <col style="width:auto;">
+                    <col style="width:8%;">
+                    <col style="width:10%;">
+                    <col style="width:10%;">
+                    <col style="width:10%;">
+                    <col style="width:10%;">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">사용 연월</th>
+                    <th scope="col">카테고리</th>
+                    <th scope="col">상품 명</th>
+                    <th scope="col">버전</th>
+                    <th scope="col">가격</th>
+                    <th scope="col">구매일</th>
+                    <th scope="col">상태</th>
+                    <th scope="col">사용 요금</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>10</td>
+                    <td>2019. 05</td>
+                    <td><span class="pn_cate type4">커머스</span></td>
+                    <td>영카트</td>
+                    <td>1.0</td>
+                    <td>1,000원/일</td>
+                    <td>2019-04-01</td>
+                    <td>사용</td>
+                    <td>10,000</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>2019. 05</td>
+                    <td><span class="pn_cate type4">커머스</span></td>
+                    <td>마젠토</td>
+                    <td>1.5</td>
+                    <td>1,000원/일</td>
+                    <td>2019-04-01</td>
+                    <td>종료</td>
+                    <td>5,000</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>2019. 05</td>
+                    <td><span class="pn_cate type5">보안</span></td>
+                    <td>테드폴허브</td>
+                    <td>1.0</td>
+                    <td>1,000원/일</td>
+                    <td>2019-03-01</td>
+                    <td>종료</td>
+                    <td>10,000</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>2019. 05</td>
+                    <td><span class="pn_cate type5">보안</span></td>
+                    <td>영카트</td>
+                    <td>1.0</td>
+                    <td>1,000원/일</td>
+                    <td>2019-04-01</td>
+                    <td>사용</td>
+                    <td>10,000</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>2019. 05</td>
+                    <td><span class="pn_cate type3">의료</span></td>
+                    <td>영카트</td>
+                    <td>1.0</td>
+                    <td>1,000원/일</td>
+                    <td>2019-04-01</td>
+                    <td>사용</td>
+                    <td>10,000</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>2019. 05</td>
+                    <td><span class="pn_cate type2">ERP</span></td>
+                    <td>영카트</td>
+                    <td>1.0</td>
+                    <td>1,000원/일</td>
+                    <td>2019-04-01</td>
+                    <td>사용</td>
+                    <td>10,000</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>2019. 05</td>
+                    <td><span class="pn_cate type2">ERP</span></td>
+                    <td>영카트</td>
+                    <td>1.0</td>
+                    <td>1,000원/일</td>
+                    <td>2019-04-01</td>
+                    <td>사용</td>
+                    <td>10,000</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>2019. 05</td>
+                    <td><span class="pn_cate type1">CRM</span></td>
+                    <td>영카트</td>
+                    <td>1.0</td>
+                    <td>1,000원/일</td>
+                    <td>2019-04-01</td>
+                    <td>사용</td>
+                    <td>10,000</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>2019. 05</td>
+                    <td><span class="pn_cate type6">게임</span></td>
+                    <td>영카트</td>
+                    <td>1.0</td>
+                    <td>1,000원/일</td>
+                    <td>2019-04-01</td>
+                    <td>사용</td>
+                    <td>10,000</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>2019. 05</td>
+                    <td><span class="pn_cate type6">게임</span></td>
+                    <td>영카트</td>
+                    <td>1.0</td>
+                    <td>1,000원/일</td>
+                    <td>2019-04-01</td>
+                    <td>사용</td>
+                    <td>10,000</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- //테이블 -->
+
+        <!-- page -->
+        <nav class="pagiWrap">
+            <ul class="pagination">
+                <li class="first disabled"><a href="#">맨 처음</a></li>
+                <li class="prev"><a href="#">이전</a></li>
+                <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                <li class=" disabled"><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">6</a></li>
+                <li><a href="#">7</a></li>
+                <li><a href="#">8</a></li>
+                <li><a href="#">9</a></li>
+                <li class="next"><a href="#">다음</a></li>
+                <li class="end"><a href="#">맨 끝</a></li>
+            </ul>
+        </nav>
+        <!-- //page -->
+    </div>
+    <!-- //content -->
+    <script th:inline="javascript" type="text/javascript" layout:fragment="custom-script">
+
+        /*<![CDATA[*/
+        var REST_URL = "/priceCalculation";
+        var LOADED_LIST_COUNT = 0;
+        var BOOLEN_SEARCH = false;
+
+        var usersObj = new Object();
+
+        // ON LOAD
+        $(document.body).ready(function () {
+            console.log('::useProdList init::');
+        });
+
+
+        /*]]>*/
+    </script>
+</div>
+</html>
