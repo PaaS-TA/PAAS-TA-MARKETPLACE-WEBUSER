@@ -19,6 +19,7 @@ war {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -28,37 +29,10 @@ ext {
     jstlVersion = '1.2'
     gsonVersion = '2.8.5'
     springSecurityTagLibsVersion = '5.0.7.RELEASE'
+    marketVersion = '0.0.1-SNAPSHOT';
 }
 
 dependencies {
-//    implementation 'org.springframework.boot:spring-boot-starter-aop'
-//    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
-//    implementation 'org.springframework.boot:spring-boot-starter-validation'
-//    implementation 'org.springframework.boot:spring-boot-starter-web'
-//
-////    compile "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatEmbedJasperVersion}"
-////    compile "javax.servlet:jstl:${jstlVersion}"
-//    compile "com.google.code.gson:gson:${gsonVersion}"
-//    compileOnly "org.projectlombok:lombok:${lombokVersion}"
-//    compile "org.springframework.boot:spring-boot-devtools"
-//
-//    // file
-//    compile group: 'commons-io', name: 'commons-io', version: '2.5'
-//
-//    // Oauth
-////    compile "org.springframework.security:spring-security-taglibs:${springSecurityTagLibsVersion}"
-//    compile group: 'org.springframework.security.oauth.boot', name: 'spring-security-oauth2-autoconfigure', version: '2.0.3.RELEASE'
-//    compile "org.springframework.security.oauth:spring-security-oauth2:2.0.10.RELEASE"
-//
-//    compile group: 'org.apache.tiles', name: 'tiles-jsp', version: '3.0.7'
-//	compile group: 'org.apache.tiles', name: 'tiles-core', version: '3.0.7'
-//
-//    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//    testImplementation 'org.springframework.security:spring-security-test'
-
-
-    // hyerin add
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -66,6 +40,9 @@ dependencies {
     compile group: 'org.springframework.security.oauth.boot', name: 'spring-security-oauth2-autoconfigure', version: '2.1.6.RELEASE'
     compile group: 'org.springframework.security', name: 'spring-security-oauth2-client', version: '5.1.5.RELEASE'
 
+    // PAAS-TA-MARKETPLACE-DOMAIN dependency
+    compile "org.openpaas.paasta:PAAS-TA-MARKETPLACE-DOMAIN:${marketVersion}"
+    
     // for parsing jwt
     compile group: 'org.springframework.security', name: 'spring-security-oauth2-jose', version: '5.1.5.RELEASE'
 
