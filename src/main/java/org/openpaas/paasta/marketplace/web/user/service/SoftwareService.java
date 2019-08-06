@@ -3,11 +3,14 @@ package org.openpaas.paasta.marketplace.web.user.service;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.openpaas.paasta.marketplace.web.user.domain.Category;
-import org.openpaas.paasta.marketplace.web.user.domain.RestPageImpl;
-import org.openpaas.paasta.marketplace.web.user.domain.Software;
-import org.openpaas.paasta.marketplace.web.user.domain.SoftwareSpecification;
+import org.openpaas.paasta.marketplace.api.domain.Category;
+import org.openpaas.paasta.marketplace.api.domain.CustomPage;
+import org.openpaas.paasta.marketplace.api.domain.Software;
+import org.openpaas.paasta.marketplace.api.domain.SoftwareSpecification;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -23,39 +26,49 @@ public class SoftwareService {
 
     @SneakyThrows
     public void createSoftware(Software software) {
-        Object response = paasApiRest.postForObject("http://localhost:8000/softwares", software, Void.class);
+        Object response = paasApiRest.postForObject("http://localhost:8777/softwares", software, Void.class);
     }
 
     @SneakyThrows
     public List<Category> getCategories() {
-        return paasApiRest.getForObject("http://localhost:8000/categories", List.class);
+        return paasApiRest.getForObject("/categories", List.class);
     }
 
-    public Page<Software> getSoftwares(SoftwareSpecification spec) {
-        String url = UriComponentsBuilder.newInstance().path("/softwares/page")
-                .queryParam("categoryId", spec.getCategoryId())
-                .queryParam("nameLike", spec.getNameLike())
-                .build().encode()
-                .toString();
-        return paasApiRest.getForObject(url, RestPageImpl.class);
+    //Page
+    public CustomPage<Software> getSoftwareList(String queryParamString) {
+        ResponseEntity<CustomPage<Software>> responseEntity = paasApiRest.exchange("/softwares/page" + queryParamString, HttpMethod.GET, null, new ParameterizedTypeReference<CustomPage<Software>>() {});
+        CustomPage<Software> customPage = responseEntity.getBody();
+        Page<Software> page = customPage.toPage();
+
+        System.out.println("getContent ::: " + customPage.getContent());
+        System.out.println("getTotalElements ::: " + customPage.getTotalElements());
+        return customPage;
     }
 
+//    public Page<Software> getSoftwares(SoftwareSpecification spec) {
+//        String url = UriComponentsBuilder.newInstance().path("/softwares/page")
+////                .queryParam("categoryId", spec.getCategoryId())
+//                .queryParam("nameLike", spec.getNameLike())
+//                .build().encode()
+//                .toString();
+//        return paasApiRest.getForObject(url, RestPageImpl.class); //TODO: 우수석님 RestPageImpl
+//    }
 
-    public Software getSoftware(Long id) {
-        String url = UriComponentsBuilder.newInstance().path("/softwares/{id}")
-                .build()
-                .expand(id)
-                .toString();
-
-        return paasApiRest.getForObject(url, Software.class);
-    }
-
-    public void updateSoftware(Software software) {
-        String url = UriComponentsBuilder.newInstance().path("/softwares/{id}")
-                .build()
-                .expand(software.getId())
-                .toString();
-
-        paasApiRest.put(url, software);
-    }
+//    public Software getSoftware(Long id) {
+//        String url = UriComponentsBuilder.newInstance().path("/softwares/{id}")
+//                .build()
+//                .expand(id)
+//                .toString();
+//
+//        return paasApiRest.getForObject(url, Software.class);
+//    }
+//
+//    public void updateSoftware(Software software) {
+//        String url = UriComponentsBuilder.newInstance().path("/softwares/{id}")
+//                .build()
+//                .expand(software.getId())
+//                .toString();
+//
+//        paasApiRest.put(url, software);
+//    }
 }

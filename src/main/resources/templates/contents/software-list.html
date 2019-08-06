@@ -50,7 +50,7 @@
                     <div class="form-group-area">
                         <div class="fm_label"><label for="" class="label">카테고리</label></div>
                         <div class="fm_box">
-                            <select th:field="*{categoryId}">
+                            <select th:field="*{categoryId}" id="categoryId">
                                 <option value="">선택</option>
                                 <option th:each="category : ${categories}"
                                         th:value="${category.id}"
@@ -66,79 +66,111 @@
                     <div class="form-group-area">
                         <div class="fm_label"><label for="" class="label">상품명</label></div>
                         <div class="fm_box">
-                            <input type="text" placeholder="검색어를 입력해 주세요." th:field="*{nameLike}" style="width:400px;">
+                            <input type="text" placeholder="검색어를 입력해 주세요." th:field="*{nameLike}" id="nameLike" style="width:400px;">
                         </div>
                     </div>
                 </div>
                 <!-- //Form 그룹 -->
-                <button type="submit" class="btn btn-sch" title="검색"><span class="ico">검색</span></button>
+                <button type="button" class="btn btn-sch" title="검색" id="searchBtn"><span class="ico">검색</span></button>
             </div>
             </form>
         </div>
         <!-- //검색 Form -->
-
         <div class="cont-titWrap mt30">
-            <h3 class="h-tit3">최근 등록 상품 <span class="point4">(20)</span></h3>
+            <h3 class="h-tit3">최근 등록 상품 <span class="point4" id="totalElements"></span></h3>
         </div>
-
         <!-- panel area-->
-        <ul class="ul-panel">
-            <li th:each="software, index : ${softwares}">
-                <!-- panel -->
-                <div class="panelWrap">
-                    <a th:href="@{'/softwares/' + ${software.id}}">
-                    <div class="panel type3">
-                        <!-- panelBox-->
-                        <div class="panelBox">
-                            <div class="pn_thumBox">
-                                <div class="pn_thum">
-                                    <div class="thum_img">
-                                        <img src="/static/images/thum_ico01.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                            <span class="pn_cate type3">보안</span>
-                            <div class="pn_tit">
-                                <span class="pn_tit_txt" th:text="${software.name}"><span class="point5" th:text="'(' + ${software.version} + ')'"></span></span>
-                                <span class="price_info" th:text="'가격 :' + ${software.pricePerDay} + ' 월/일'"></span>
-                            </div>
-                            <div class="seller_info"><span class="ico_person"></span><span class="txt" th:text="'판매자 : (' + ${software.createdBy} + ')'"></span></div>
-                            <!-- //panelBox-->
-                        </div>
-                    </div>
-                    </a>
-                </div>
-                <!-- //panel -->
-            </li>
-
-            <li>
-                <!-- panel -->
-                <div class="panelWrap">
-                    <div class="panel type3">
-                        <!-- panelBox-->
-                        <div class="panelBox">
-                            <div class="pn_thumBox">
-                                <div class="pn_thum">
-                                    <div class="thum_img">
-                                        <img src="/static/images/thum_ico01.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                            <span class="pn_cate type3">보안</span>
-                            <div class="pn_tit">
-                                <span class="pn_tit_txt">테드폴허브<span class="point5">(v1.0)</span></span>
-                                <span class="price_info">가격: 1,000원/일</span>
-                            </div>
-                            <div class="seller_info"><span class="ico_person"></span><span class="txt">판매자: 테드폴허브</span></div>
-                            <!-- //panelBox-->
-                        </div>
-                    </div>
-                </div>
-                <!-- //panel -->
-            </li>
-        </ul>
+        <ul class="ul-panel" id="sofrwareBox"></ul>
         <!-- //panel area-->
     </div>
     <!-- //content -->
+    <script type="text/javascript">
+        /*<![CDATA[*/
+        var BOOLEN_SEARCH = false;
+
+        // ON LOAD
+        $(document).ready(function() {
+            getSoftwares();
+        });
+
+        var getSoftwares = function () {
+            var categoryId = $("#categoryId option:selected").val();
+            var nameLike = $("#nameLike").val();
+
+            console.log("categoryId ::: " + categoryId + " ::: nameLike ::: " + nameLike);
+
+            if (categoryId === 'ALL' || categoryId === '') {
+                categoryId = '';
+            }
+
+            if(nameLike === null || nameLike === '') {
+                nameLike = '';
+            }
+
+            var reqUrl = "/softwares" + "?categoryId=" + categoryId + "&nameLike=" + nameLike;
+            procCallAjax(reqUrl, "GET", null, null, callbackSoftwares);
+        };
+
+        var callbackSoftwares = function(data){
+            $("#totalElements").text("(" + data.totalElements + ")");
+
+            var sofrwareList = $("#sofrwareBox");
+            var htmlString = [];
+            var content = data.content;
+
+            var listLength = content.length;
+
+            if(listLength > 0 ){
+
+                for(var i = 0; i < listLength; i++){
+                    htmlString.push(
+                   '<li>'
+                        + '<div class="panelWrap">'
+                        + '<div class="panel type3">'
+                        + '<div class="panelBox">'
+                        + '<div class="pn_thumBox">'
+                        + '<div class="pn_thum">'
+                        + '<div class="thum_img">'
+                        + '<img src="/static/images/thum_ico01.png" alt="" />'
+                        + '</div>'
+                        + '</div>'
+                        + '</div>'
+                        + '<span class="pn_cate type3"> '+ content[i].category.name+' </span>'
+                        + '<div class="pn_tit">'
+                        + '<span class="pn_tit_txt">'+ content[i].name+' <span class="point5">(v'+ content[i].version+')</span></span>'
+                        + '<span class="price_info">가격:'+ content[i].pricePerDay+' 원/일</span>'
+                        + '</div>'
+                        + '<div class="seller_info"><span class="ico_person"></span><span class="txt">판매자: '+ content[i].createdBy +'</span></div>'
+                        + '</div>'
+                        + '</div>'
+                        + '</div>'
+                 + '</li>'
+                    );
+                }
+
+            }else{
+                htmlString = '<li>'
+                  +'<div class="search_resultBox">'
+                    +' <p class="txt_sm">등록된 상품이 존재하지 않습니다.</p>'
+                  + '</div>'
+                 +'</li>'
+
+            }
+            sofrwareList.html(htmlString);
+        };
+
+        //eventBtn
+        $("#searchBtn").on("click", function () {
+            getSoftwares();
+        });
+
+        //eventnNameLike
+        $("#nameLike").keypress(function(e) {
+            if (e.keyCode === 13) {
+                e.preventDefault(getSoftwares());
+            }
+        });
+        /*]]>*/
+    </script>
 </div>
 </html>

@@ -7,10 +7,9 @@
  * @param callback    : after function
  * @description
  *      async: false 동기 처리
- * @author hrjin
- * @since 2019.05.07
  */
 var procCallAjax = function(reqUrl, reqMethod, param, preFunc, callback) {
+    console.log("procCallAjax Init");
     var reqData = "";
     if (param != null) {
         reqData = param;

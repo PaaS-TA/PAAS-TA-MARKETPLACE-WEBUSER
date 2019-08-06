@@ -4,11 +4,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 @Service
-public class UseProductService {
+public class StatusSoftwareService {
 
     public ModelAndView getUserInfoMain() {
         return new ModelAndView() {{
-            setViewName("contents/useProdList");
+            setViewName("useStatusSoftware");
         }};
     }
 }
