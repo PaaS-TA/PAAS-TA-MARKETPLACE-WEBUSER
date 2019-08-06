@@ -1,6 +1,7 @@
-package org.openpaas.paasta.marketplace.web.user.domain;
+package org.openpaas.paasta.marketplace.web.user.util;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openpaas.paasta.marketplace.api.domain.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 

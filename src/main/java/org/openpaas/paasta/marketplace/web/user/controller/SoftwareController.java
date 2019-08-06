@@ -43,15 +43,14 @@ public class SoftwareController {
         return "contents/software-list";
     }
 
+    @GetMapping(value = "/{id}")
+    public String getSoftware(Model model, @PathVariable Long id) {
+        model.addAttribute("categories", softwareService.getCategories());
+        model.addAttribute("software", softwareService.getSoftware(id));
+        softwareService.getCategories();
+        return "contents/software-detail";
+    }
 
-
-//    @GetMapping(value = "/{id}")
-//    public String getSoftware(Model model, @PathVariable Long id) {
-//        model.addAttribute("software", softwareService.getSoftware(id));
-//        softwareService.getCategories();
-//        return "contents/software-detail";
-//    }
-//
 //    @GetMapping(value = "/{id}/update")
 //    public String updateSoftwareHtml(Model model, @PathVariable Long id) {
 //        model.addAttribute("software", softwareService.getSoftware(id));

@@ -45,23 +45,15 @@ public class SoftwareService {
         return customPage;
     }
 
-//    public Page<Software> getSoftwares(SoftwareSpecification spec) {
-//        String url = UriComponentsBuilder.newInstance().path("/softwares/page")
-////                .queryParam("categoryId", spec.getCategoryId())
-//                .queryParam("nameLike", spec.getNameLike())
-//                .build().encode()
-//                .toString();
-//        return paasApiRest.getForObject(url, RestPageImpl.class); //TODO: 우수석님 RestPageImpl
-//    }
 
-//    public Software getSoftware(Long id) {
-//        String url = UriComponentsBuilder.newInstance().path("/softwares/{id}")
-//                .build()
-//                .expand(id)
-//                .toString();
-//
-//        return paasApiRest.getForObject(url, Software.class);
-//    }
+    public Software getSoftware(Long id) {
+        String url = UriComponentsBuilder.newInstance().path("/softwares/{id}")
+                .build()
+                .expand(id)
+                .toString();
+
+        return paasApiRest.getForObject(url, Software.class);
+    }
 //
 //    public void updateSoftware(Software software) {
 //        String url = UriComponentsBuilder.newInstance().path("/softwares/{id}")
