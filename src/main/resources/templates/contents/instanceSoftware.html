@@ -94,7 +94,6 @@
 
         // ON LOAD
         $(document.body).ready(function () {
-            console.log('::useStatusSoftware init::');
             getInstance();
         });
 
@@ -128,7 +127,6 @@
             if(listLength > 0 ){
 
                 for(var i = 0; i < listLength; i++){
-                    console.log(content[i].id);
                     htmlString.push(
                           '<li>'
                     //panel
@@ -162,12 +160,10 @@
                 }
                 htmlString.push(
                     '<li>'
-                    + '<button type="button" name="button" class="btn btn-panel-add" data-user="aside" data-username="#aside-aside1" style="height:350px;"><span class="ico"></span><span class="txt">서비스 추가</span></button>'
+                    + '<button type="button" name="button" class="btn btn-panel-add" onclick="moveSoftwareCreate()" data-user="aside" data-username="#aside-aside1" style="height:350px;"><span class="ico"></span><span class="txt">서비스 추가</span></button>'
                     +'</li>'
                 );
 
-                // onclick="location.href='/instances/my/page'"
-                // onclick="location.href='/instance/{id}(id=${software.id})'"
             }else{
                 htmlString = '<li>'
                     + '<div class="search_resultBox">'
@@ -178,11 +174,6 @@
             }
             sofrwareInstanceList.html(htmlString);
         };
-
-        var InstanceAdd = function () {
-            //contents/software-detail
-            alert("InstanceAdd");
-        }
 
         //eventBtn
         $("#searchBtn").on("click", function () {
@@ -196,9 +187,14 @@
             }
         });
 
-
+        //move :: Detail
         var moveSoftwareDetail = function(id) {
-            procMovePage("/softwares/{id}".replace("{id}", id));
+            procMovePage("/instances/{id}".replace("{id}", id));
+        }
+
+        //move :: Create
+        var moveSoftwareCreate = function() {
+            procMovePage("/instances/create").replace();
         }
 
         /*]]>*/

@@ -12,13 +12,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 @Controller
 @RequestMapping(value = "/instances")
@@ -49,27 +46,20 @@ public class InstanceController {
     }
 
 
-
     @GetMapping(value = "/{id}")
     public String getSoftware(Model model, @PathVariable Long id) {
+        model.addAttribute("categories", instanceService.getCategories());
         model.addAttribute("software", instanceService.getSoftware(id));
         instanceService.getCategories();
-        logger.info("::id::" + id);
         return "contents/software-detail";
     }
 
 
-    @PostMapping
-    public String createSoftware(@Valid Software software, BindingResult bindingResult, @RequestParam(value = "screenshots") MultipartFile[] screenshots, @RequestParam(value = "iconFile") MultipartFile iconFile,
-                                 @RequestParam(value = "productFile") MultipartFile productFile, @RequestParam(value = "environmentFile") MultipartFile environmentFile) {
-        if (bindingResult.hasErrors()) {
-            return "contents/software-create";
-        }
-        software.setIcon(iconFile.getOriginalFilename());
-        software.setApp(productFile.getOriginalFilename());
-        software.setManifest(environmentFile.getOriginalFilename());
-//        software.setScreenshotList();
-        instanceService.createSoftware();
+    @GetMapping(value = "/create")
+    public String createSoftwareHtml(Model model, HttpSession httpSession, @ModelAttribute Software software) {
+        model.addAttribute("types", Software.Type.values());
+        model.addAttribute("yns", Yn.values());
+        model.addAttribute("categories", instanceService.getCategories());
         return "contents/software-create";
     }
 

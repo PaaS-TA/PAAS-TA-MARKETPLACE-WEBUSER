@@ -34,9 +34,9 @@ public class InstanceService {
         return paasApiRest.getForObject("/softwares", List.class);
     }
 
+
     public Software getSoftware(Long id) {
-        logger.info("::id::" + id);
-        String url = UriComponentsBuilder.newInstance().path("/instance/{id}")
+        String url = UriComponentsBuilder.newInstance().path("/softwares/{id}")
                 .build()
                 .expand(id)
                 .toString();
