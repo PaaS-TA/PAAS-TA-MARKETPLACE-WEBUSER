@@ -125,7 +125,7 @@
                 for(var i = 0; i < listLength; i++){
                     htmlString.push(
                    '<li>'
-                        + '<div class="panelWrap">'
+                        + '<div class="panelWrap" onclick="moveSoftwareDetail(' + content[i].id + ')">'
                         + '<div class="panel type3">'
                         + '<div class="panelBox">'
                         + '<div class="pn_thumBox">'
@@ -170,6 +170,13 @@
                 e.preventDefault(getSoftwares());
             }
         });
+
+        //move :: Detail
+        var moveSoftwareDetail = function(id) {
+            procMovePage("/softwares/{id}".replace("{id}", id));
+        }
+
+
         /*]]>*/
     </script>
 </div>

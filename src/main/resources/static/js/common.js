@@ -31,7 +31,39 @@ var procCallAjax = function(reqUrl, reqMethod, param, preFunc, callback) {
             callback(data);
         },
         error: function(jqXHR, exception) {
-            console.log("jqXHR.status::::"+jqXHR.status+" exception:::"+exception);
+            if (jqXHR.status === 0) {
+                console.log('Not connect.\n Verify Network.');
+            }
+            else if (jqXHR.status == 400) {
+                console.log('Server understood the request, but request content was invalid. [400]');
+            }
+            else if (jqXHR.status == 401) {
+                console.log('Unauthorized access. [401]');
+            }
+            else if (jqXHR.status == 403) {
+                console.log('Forbidden resource can not be accessed. [403]');
+            }
+            else if (jqXHR.status == 404) {
+                console.log('Requested page not found. [404]');
+            }
+            else if (jqXHR.status == 500) {
+                console.log('Internal server error. [500]');
+            }
+            else if (jqXHR.status == 503) {
+                console.log('Service unavailable. [503]');
+            }
+            else if (exception === 'parsererror') {
+                console.log('Requested JSON parse failed. [Failed]');
+            }
+            else if (exception === 'timeout') {
+                console.log('Time out error. [Timeout]');
+            }
+            else if (exception === 'abort') {
+                console.log('Ajax request aborted. [Aborted]');
+            }
+            else {
+                console.log('Uncaught Error.n' + jqXHR.responseText);
+            }
         },
         complete : function(data) {
             // SKIP

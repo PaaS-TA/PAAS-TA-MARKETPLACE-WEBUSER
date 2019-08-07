@@ -2,6 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout-user}">
 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+
 <!-- index.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
 </th:block>
@@ -18,7 +22,7 @@
         <div class="breadWrap">
             <ol class="breadcrumb">
                 <li><a href="#">Home</a></li>
-                <li><a href="#">상품 목록</a></li>
+                <li><a href="#">사용 상품</a></li>
                 <li class="active">상품 상세</li><!-- 마지막 li -->
             </ol>
         </div>
@@ -36,37 +40,16 @@
             <div class="cBox-cnt">
                 <!-- inner -->
                 <div class="in pb10">
-
                     <div class="l_box type1">
                         <div class="pn_thumBox">
                             <div class="pn_thum">
                                 <div class="thum_img">
-                                    <img src="/static/images/thum_ico01.png" alt="" />
+                                    <img src="/static/images/thum_ico05.png" alt="" />
                                 </div>
                                 <!-- <div class="package_bg"></div> -->
                             </div>
                         </div>
-                        <button name="button" class="btn btn-color6 btn-sm" type="button" data-toggle="modal" data-target="#myModal">구매하기</button>
-
-                        <!-- 팝업 Modal -->
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content modal-sm"><!-- 개발에서 사용하는 다른 팝업모듈 사용시 이부분만 사용하세요.  -->
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="myModalLabel">상품 구매</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p class="popTxt">선택한 상품을 구매하시겠습니까?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" name="button" class="btn btn-color1">확인</button>
-                                        <button type="button" name="button" class="btn btn-color2" data-dismiss="modal">닫기</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- //팝업 Modal -->
+                        <button name="button" class="btn btn-color6 btn-sm" type="button">접속 URL 연결</button>
 
                     </div>
                     <div class="r_box">
@@ -119,25 +102,57 @@
                 </div>
                 <!-- //미리보기 -->
             </div>
+
         </div>
         <!-- //cBox1 -->
 
         <div class="cont_btnBox">
-            <button name="button" class="btn btn-color1 btn-md" type="button" onclick="moveSoftwaresPage()">목록</button>
+            <button name="button" class="btn btn-color7 btn-md" type="button" data-toggle="modal" data-target="#stopModal">정지</button>
+            <button name="button" class="btn btn-color1 btn-md " type="button" onclick="moveInstancesPage()">목록</button>
+
+            <!-- 팝업 Modal -->
+            <div class="modal fade" id="stopModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content modal-sm">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="stopModalLabel">사용 정지</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p class="popTxt">서비스 사용을 정지 하시겠습니까?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" name="button" class="btn btn-color1" onclick="stopInstance()">예</button>
+                            <button type="button" name="button" class="btn btn-color2" data-dismiss="modal">아니오</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- //팝업 Modal -->
         </div>
 
     </div>
     <!-- //content -->
+    <input type="hidden" id="id" name="id" th:value="${software.id}" />
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <script th:inline="javascript" type="text/javascript" layout:fragment="custom-script">
         /*<![CDATA[*/
 
         // ON LOAD
         $(document.body).ready(function () {
-            console.log('::softwares/{id} init::');
+            console.log(':: instances-detail init::');
         });
 
-        var moveSoftwaresPage = function() {
-            procMovePage("/softwares/page");
+
+        var moveInstancesPage = function() {
+            procMovePage("/instances/my/page");
+        }
+
+        //instance Stop(=Delete)
+        var stopInstance = function () {
+            var id = $("#id").val();
+            console.log(":: ID :: " + id);
+            procCallAjax("/instances/" + id,"DELETE", null, null, moveInstancesPage);
         }
 
         /*]]>*/

@@ -42,7 +42,6 @@ public class SoftwareController {
         return "contents/software-list";
     }
 
-/*
     @GetMapping(value = "/{id}")
     public String getSoftware(Model model, @PathVariable Long id) {
         model.addAttribute("categories", softwareService.getCategories());
@@ -50,6 +49,8 @@ public class SoftwareController {
         softwareService.getCategories();
         return "contents/software-detail";
     }
+
+/*
     @GetMapping(value = "/create")
     public String createSoftwareHtml(Model model, HttpSession httpSession, @ModelAttribute Software software) {
         model.addAttribute("types", Software.Type.values());
