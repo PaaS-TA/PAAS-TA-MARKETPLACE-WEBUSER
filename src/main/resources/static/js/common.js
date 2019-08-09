@@ -6,7 +6,8 @@
  * @param preFunc     : Pre function
  * @param callback    : after function
  * @description
- *      async: false 동기 처리
+ * SEYA
+ * async: false 동기 처리
  */
 var procCallAjax = function(reqUrl, reqMethod, param, preFunc, callback) {
     console.log("procCallAjax Init");
