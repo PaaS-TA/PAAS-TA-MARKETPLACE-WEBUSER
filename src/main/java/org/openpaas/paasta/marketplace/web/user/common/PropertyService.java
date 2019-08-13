@@ -9,15 +9,15 @@ import lombok.Data;
 @Data
 public class PropertyService {
 
-	// market
-	@Value("${market.place.api.uri}")
+    // market
+    @Value("${marketplace.api.url}")
     private String marketApiUri;
 	
-    @Value("${market.place.api.authorization.username}")
-    private String marketApiUsername;
-
-    @Value("${market.place.api.authorization.password}")
-    private String marketApiPassword;
+//    @Value("${market.place.api.authorization.username}")
+//    private String marketApiUsername;
+//
+//    @Value("${market.place.api.authorization.password}")
+//    private String marketApiPassword;
     
 
 	// PaaS-TA CF
