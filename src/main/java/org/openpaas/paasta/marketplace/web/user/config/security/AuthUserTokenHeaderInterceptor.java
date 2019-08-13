@@ -1,8 +1,8 @@
-package org.openpaas.paasta.marketplace.web.user.domain;
+package org.openpaas.paasta.marketplace.web.user.config.security;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.openpaas.paasta.marketplace.api.domain.User;
+import org.openpaas.paasta.marketplace.web.user.util.SecurityUtils;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
@@ -31,7 +31,7 @@ public class AuthUserTokenHeaderInterceptor implements ClientHttpRequestIntercep
             request.getHeaders().set(authTokenHeaderName, user.getToken());
         }
 
-        request.getHeaders().set(authTokenHeaderName, "hyerin");
+        request.getHeaders().set(authTokenHeaderName, "admin");
 
         return execution.execute(request, body);
     }

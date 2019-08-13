@@ -7,12 +7,18 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
+/**
+ * RestTemplate Configuration
+ *
+ * @author hrjin
+ * @version 1.0
+ * @since 2019-04-08
+ */
 @Configuration
 public class RestConfig {
-
     public static final String AUTH_TOKEN_HEADER_NAME = "Authorization";
 
-    @Value("${marketplace.api}")
+    @Value("${marketplace.api.url}")
     private String marketplaceApi;
 
     @Bean
