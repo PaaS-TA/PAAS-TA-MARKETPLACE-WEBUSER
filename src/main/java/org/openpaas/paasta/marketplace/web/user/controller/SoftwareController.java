@@ -35,7 +35,8 @@ public class SoftwareController {
 
     @GetMapping(value = "/page")
     public String getSoftwares(Model model, @AuthenticationPrincipal OAuth2User oauth2User, HttpSession httpSession, SoftwareSpecification spec, Authentication authentication) {
-//        httpSession.setAttribute("yourName", oauth2User.getAttributes().get("user_name"));
+        //httpSession.setAttribute("yourName", oauth2User.getAttributes().get("user_name"));
+        System.out.println("your name(id) ::: " + httpSession.getAttribute("yourName"));
         model.addAttribute("categories", softwareService.getCategories());
         model.addAttribute("spec", new SoftwareSpecification());
         model.addAttribute("status", Software.Status.values());

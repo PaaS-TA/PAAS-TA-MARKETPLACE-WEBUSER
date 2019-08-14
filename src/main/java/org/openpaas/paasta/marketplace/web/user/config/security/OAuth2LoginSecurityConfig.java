@@ -38,10 +38,10 @@ public class OAuth2LoginSecurityConfig extends WebSecurityConfigurerAdapter {
         http.antMatcher("/**")
                 .authorizeRequests()
                 .antMatchers("/", "/login/**", "/error/**", "/static/**")
-                .permitAll();
-//                .anyRequest().authenticated().and()
-//                .oauth2Login().loginPage("/login").defaultSuccessUrl("/softwares", true).permitAll()
-//                .and().logout().logoutSuccessUrl("/login");
+                .permitAll()
+                .anyRequest().authenticated().and()
+                .oauth2Login().loginPage("/login").defaultSuccessUrl("/index", true).permitAll()
+                .and().logout().logoutSuccessUrl("/login");
     }
 
 
