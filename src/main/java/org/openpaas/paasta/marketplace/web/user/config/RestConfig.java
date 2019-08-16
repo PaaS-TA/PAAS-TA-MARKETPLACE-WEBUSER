@@ -17,7 +17,7 @@ import org.springframework.web.util.DefaultUriBuilderFactory;
 @Configuration
 public class RestConfig {
     public static final String AUTH_TOKEN_HEADER_NAME = "Authorization";
-    private static final String CF_BEARER_TOKEN_NAME = "bearer";
+    private static final String CF_BEARER_TOKEN_NAME = "cf-Authorization";
 
     @Value("${marketplace.api.url}")
     private String marketplaceApi;
