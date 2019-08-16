@@ -7,21 +7,23 @@
         </div>
         <div class="pull-right">
             <div class="align_r">
-                <div class="col col-my">
-                    <div class="dropdown">
-                        <button id="btn-my" type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <p class="name" th:text="${session.yourName}"></p>
-                            <span class="ico arr"></span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-right" role="btn-my" aria-labelledby="btn-my">
-<!--                            <li><a th:href="@{/profiles/page}"><span class="ico ico1"></span>개인정보 수정</a></li>-->
-                            <!--<li><a href="#"><span class="ico ico1"></span>개인정보 수정</a></li>
-                            <li><a href="#"><span class="ico ico3"></span>공지사항</a></li>-->
-                            <li><a href="#"><span class="ico ico4"></span>로그아웃</a></li>
-                        </ul>
+                <form action="/logout" method="post" id="frm">
+                    <div class="col col-my">
+                        <div class="dropdown">
+                            <button id="btn-my" type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <p class="name" th:text="${session.yourName}"></p>
+                                <span class="ico arr"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="btn-my" aria-labelledby="btn-my">
+    <!--                            <li><a th:href="@{/profiles/page}"><span class="ico ico1"></span>개인정보 수정</a></li>-->
+                                <!--<li><a href="#"><span class="ico ico1"></span>개인정보 수정</a></li>
+                                <li><a href="#"><span class="ico ico3"></span>공지사항</a></li>-->
+                                    <li><a href="#" th:onclick="document.getElementById('frm').submit()"><span class="ico ico4"></span>로그아웃</a></li>
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                            </ul>
+                        </div>
                     </div>
-                </div>
-
+                </form>
                 <!-- 반응형 메뉴버튼 -->
                 <!--<div class="m_btn_wrap">
                     <button id="addClassBtn" type="button"></button>
