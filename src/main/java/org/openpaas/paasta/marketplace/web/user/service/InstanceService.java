@@ -45,7 +45,7 @@ public class InstanceService {
         return customPage;
     }
 
-    public Instance getSoftware(Long id) {
+    public Instance getInstance(Long id) {
         String url = UriComponentsBuilder.newInstance().path("/instances/{id}")
                 .build()
                 .expand(id)

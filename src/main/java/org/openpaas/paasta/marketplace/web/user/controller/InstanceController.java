@@ -42,7 +42,7 @@ public class InstanceController {
     @GetMapping(value = "/{id}")
     public String getInstance(Model model, @PathVariable Long id) {
         model.addAttribute("categories", instanceService.getCategories());
-        model.addAttribute("software", instanceService.getSoftware(id));
+        model.addAttribute("instance", instanceService.getInstance(id));
         return "contents/instance-detail";
     }
 

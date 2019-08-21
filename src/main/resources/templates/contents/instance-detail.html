@@ -54,15 +54,15 @@
                     </div>
                     <div class="r_box">
                         <div class="cnt_titBox">
-                            <span class="cnt_tit" th:text="${software.name}"></span>
-                            <span class="pn_cate type4" th:text="${software.category.name}"></span>
+                            <span class="cnt_tit" th:text="${instance.appName}"></span>
+                            <span class="pn_cate type4" th:text="${instance.software.category.name}"></span>
                         </div>
                         <div class="cnt_infoBox">
                             <ul>
-                                <li><div class="tit_area"><span class="ico ico01"></span><span class="tit">버전 :</span><span class="txt" th:text="${software.version}"></span></div></li>
-                                <li><div class="tit_area"><span class="ico ico04"></span><span class="tit">개요 :</span><span class="txt m_line" th:text="${software.summary}"></span></div></li>
-                                <li><div class="tit_area"><span class="ico ico05"></span><span class="tit">가격 :</span><span class="txt" th:text="${software.pricePerDay} +' 원/일'"></span></div></li>
-                                <li><div class="tit_area"><span class="ico ico02"></span><span class="tit">판매자 :</span><span class="txt" th:text="${software.createdBy}"></span></div></li>
+                                <li><div class="tit_area"><span class="ico ico01"></span><span class="tit">버전 :</span><span class="txt" th:text="${instance.software.version}"></span></div></li>
+                                <li><div class="tit_area"><span class="ico ico04"></span><span class="tit">개요 :</span><span class="txt m_line" th:text="${instance.software.summary}"></span></div></li>
+                                <li><div class="tit_area"><span class="ico ico05"></span><span class="tit">가격 :</span><span class="txt" th:text="${instance.software.pricePerDay} +' 원/일'"></span></div></li>
+                                <li><div class="tit_area"><span class="ico ico02"></span><span class="tit">판매자 :</span><span class="txt" th:text="${instance.software.createdBy}"></span></div></li>
                             </ul>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                         <li>
                             <div class="tit_area"><span class="ico ico03"></span><span class="tit">상품 상세 정보</span></div>
                             <div class="info_inner_txt">
-                                <pre th:text="${software.description}">
+                                <pre th:text="${instance.software.description}">
                                 </pre>
                             </div>
                         </li>
@@ -133,7 +133,7 @@
 
     </div>
     <!-- //content -->
-    <input type="hidden" id="id" name="id" th:value="${software.id}" />
+    <input type="hidden" id="id" name="id" th:value="${instance.id}" />
     <!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />-->
     <script th:inline="javascript" type="text/javascript" layout:fragment="custom-script">
         /*<![CDATA[*/
