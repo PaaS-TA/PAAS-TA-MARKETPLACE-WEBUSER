@@ -26,7 +26,7 @@ public class InstanceController {
 
     @GetMapping
     @ResponseBody
-    public CustomPage<Software> getSoftwareList(HttpServletRequest httpServletRequest){
+    public CustomPage<Instance> getSoftwareList(HttpServletRequest httpServletRequest){
         return instanceService.getSoftwareList(commonService.setParameters(httpServletRequest));
     }
 
@@ -59,6 +59,17 @@ public class InstanceController {
     public String updateToDeleted(@PathVariable Long id, @ModelAttribute Software software) {
         instanceService.updateToDeleted(software);
         return "redirect:/instances/" + id;
+    }
+
+    @PostMapping(value = "/provisionTest")
+    public Software provision(@RequestBody Software software) {
+        return instanceService.provision(software);
+    }
+
+    @PostMapping
+    @ResponseBody
+    public Instance createInstance(@RequestBody Instance instance) {
+        return instanceService.createInstance(instance);
     }
 
 }

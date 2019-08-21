@@ -35,24 +35,23 @@ public class InstanceService {
     }
 
 
-    //Page::Software
-    public CustomPage<Software> getSoftwareList(String queryParamString) {
-        ResponseEntity<CustomPage<Software>> responseEntity = paasApiRest.exchange("/instances/my/page" + queryParamString, HttpMethod.GET, null, new ParameterizedTypeReference<CustomPage<Software>>() {});
-        CustomPage<Software> customPage = responseEntity.getBody();
-        Page<Software> page = customPage.toPage();
+    //Page::Instance
+    public CustomPage<Instance> getSoftwareList(String queryParamString) {
+        ResponseEntity<CustomPage<Instance>> responseEntity = paasApiRest.exchange("/instances/my/page" + queryParamString, HttpMethod.GET, null, new ParameterizedTypeReference<CustomPage<Instance>>() {});
+        CustomPage<Instance> customPage = responseEntity.getBody();
 
         System.out.println("getContent ::: " + customPage.getContent());
         System.out.println("getTotalElements ::: " + customPage.getTotalElements());
         return customPage;
     }
 
-    public Software getSoftware(Long id) {
-        String url = UriComponentsBuilder.newInstance().path("/softwares/{id}")
+    public Instance getSoftware(Long id) {
+        String url = UriComponentsBuilder.newInstance().path("/instances/{id}")
                 .build()
                 .expand(id)
                 .toString();
 
-        return paasApiRest.getForObject(url, Software.class);
+        return paasApiRest.getForObject(url, Instance.class);
     }
 
     public void updateToDeleted(Software software) {
@@ -64,4 +63,11 @@ public class InstanceService {
         paasApiRest.put(url, software);
     }
 
+    public Software provision(Software software) {
+        return paasApiRest.postForObject("/apps", software, Software.class);
+    }
+
+    public Instance createInstance(Instance instance) {
+        return paasApiRest.postForObject("/instances", instance, Instance.class);
+    }
 }

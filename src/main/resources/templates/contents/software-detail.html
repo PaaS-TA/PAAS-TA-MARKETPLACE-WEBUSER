@@ -60,7 +60,7 @@
                                         <p class="popTxt">선택한 상품을 구매하시겠습니까?</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" name="button" class="btn btn-color1">확인</button>
+                                        <button type="button" name="button" class="btn btn-color1" id="purchaseBtn">확인</button>
                                         <button type="button" name="button" class="btn btn-color2" data-dismiss="modal">닫기</button>
                                     </div>
                                 </div>
@@ -127,9 +127,32 @@
         </div>
 
     </div>
+    <input type="hidden" id="softwareId" name="id" th:value="${software.id}" />
     <!-- //content -->
     <script th:inline="javascript" type="text/javascript" layout:fragment="custom-script">
         /*<![CDATA[*/
+
+        $("#purchaseBtn").on("click", function () {
+
+            var id = $("#softwareId").val();
+
+            console.log("여기 들어오니?" + id);
+
+            var reqParam = {
+                "software": {
+                    "id": id
+                },
+                "provisionTryCount": 0,
+                "deprovisionTryCount": 0
+            };
+
+            procCallAjax("/instances", "POST", JSON.stringify(reqParam), null, callbackCreatedInstance);
+        });
+
+        var callbackCreatedInstance = function(data) {
+            console.log(data);
+            procMovePage("/instances/my/page");
+        };
 
         // ON LOAD
         $(document.body).ready(function () {

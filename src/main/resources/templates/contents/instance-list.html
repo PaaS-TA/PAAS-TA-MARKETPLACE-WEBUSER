@@ -110,11 +110,14 @@
                 nameLike = '';
             }
 
-            var reqUrl = "/softwares" + "?categoryId=" + categoryId + "&nameLike=" + nameLike;
+            var reqUrl = "/instances" + "?categoryId=" + categoryId + "&nameLike=" + nameLike;
             procCallAjax(reqUrl, "GET", null, null, callbackInstance);
         };
 
-        var callbackInstance = function (data) {  $("#totalElements").text("(" + data.totalElements + ")");
+        var callbackInstance = function (data) {
+            console.log("data ::: " + JSON.stringify(data));
+
+            $("#totalElements").text("(" + data.totalElements + ")");
 
             var sofrwareInstanceList = $("#sofrwareInstanceBox");
             var htmlString = [];
@@ -139,9 +142,9 @@
                         + '</div>'
                         + '</div>'
                         + '</div>'
-                        + ' <span class="pn_cate type2">'+ content[i].category.name+'</span>'
+                        + ' <span class="pn_cate type2">'+ content[i].software.category.name +'</span>'
                         + ' <div class="pn_tit">'
-                        + '  <span class="pn_tit_txt">'+ content[i].name+' <span class="point5">(v'+ content[i].version+')</span></span>'
+                        + '  <span class="pn_tit_txt">'+ content[i].appName+' <span class="point5">(v'+ content[i].software.version+')</span></span>'
                         + ' <span class="starting_info">'+ content[i].createdDate+'</span>'
                         + ' </div>'
                         + '  <div class="pn_btn_area">'
@@ -188,12 +191,8 @@
         //move :: Detail
         var moveInstancesDetail = function(id) {
             procMovePage("/instances/{id}".replace("{id}", id));
-        }
+        };
 
-        //move :: Create
-        var moveSoftwareCreate = function() {
-            procMovePage("/instances/create").replace();
-        }
 
         /*]]>*/
     </script>
