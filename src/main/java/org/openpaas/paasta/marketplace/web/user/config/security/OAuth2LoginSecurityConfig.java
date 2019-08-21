@@ -36,6 +36,7 @@ public class OAuth2LoginSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         turnOffSslChecking();
         http.antMatcher("/**")
+                .cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/login/**", "/error/**", "/static/**")
                 .permitAll()
