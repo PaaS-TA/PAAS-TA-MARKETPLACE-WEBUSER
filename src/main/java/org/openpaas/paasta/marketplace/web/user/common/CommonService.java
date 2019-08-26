@@ -133,19 +133,47 @@ public class CommonService {
         /**
          * Parameters name parameters list.
          */
-        PARAMETERS_NAME("nameLike"),
+        PARAMETERS_NAME1("nameLike"),
         /**
-         * Parameters page parameters list.
+         * Parameters name parameters list.
          */
-        PARAMETERS_PAGE("status"),
+        PARAMETERS_NAME2("softwareNameLike"),
         /**
-         * Parameters size parameters list.
+         * Parameters status parameters list.
          */
-        PARAMETERS_SIZE("inUse"),
+        PARAMETERS_STATUS("status"),
+        /**
+         * Parameters useYn parameters list.
+         */
+        PARAMETERS_INUSE("inUse"),
         /**
          * Parameters sort parameters list.
          */
-        PARAMETERS_SORT("createdBy");
+        PARAMETERS_CREATE_DATE("createdBy"),
+        /**
+         * Parameters size parameters list.
+         */
+        PARAMETERS_PAGING_SIZE("size"),
+        /**
+         * Parameters sort parameters list.
+         */
+        PARAMETERS_SORT("sort"),
+        /**
+         * Parameters start date parameters list.
+         */
+        PARAMETERS_START_DATE("createdDateAfter"),
+        /**
+         * Parameters end date parameters list.
+         */
+        PARAMETERS_END_DATE("createdDateBefore"),
+        /**
+         * Parameters start date parameters list.
+         */
+        PARAMETERS_APPROVAL_START_DATE("statusModifiedDateAfter"),
+        /**
+         * Parameters end date parameters list.
+         */
+        PARAMETERS_APPROVAL_END_DATE("statusModifiedDateBefore");
 
         private String actualValue;
 

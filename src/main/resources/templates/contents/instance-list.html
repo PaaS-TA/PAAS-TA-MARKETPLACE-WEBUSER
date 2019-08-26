@@ -65,7 +65,7 @@
                         <div class="form-group-area">
                             <div class="fm_label"><label for="" class="label">상품명</label></div>
                             <div class="fm_box">
-                                <input type="text" placeholder="검색어를 입력해 주세요." th:field="*{nameLike}" id="nameLike" style="width:400px;">
+                                <input type="text" placeholder="검색어를 입력해 주세요." onkeypress="if(event.keyCode==13) {search();}" th:field="*{nameLike}" id="nameLike" style="width:400px;">
                             </div>
                         </div>
                     </div>
@@ -80,16 +80,18 @@
             <h3 class="h-tit3">총 건수 <span class="point4" id="totalElements"></span></h3>
         </div>
 
-        <!-- panel area-->
-        <ul class="ul-panel" id="sofrwareInstanceBox">
-        </ul>
-        <!-- //panel area-->
+
+        <div id="totalListArea">
+        </div>
+
 
     </div>
     <!-- //content -->
     <script th:inline="javascript" type="text/javascript" layout:fragment="custom-script">
         /*<![CDATA[*/
-        var BOOLEN_SEARCH = false;
+
+        var PAGING_SIZE = 8;
+        var SORT = "id,asc";
 
         // ON LOAD
         $(document.body).ready(function () {
@@ -110,7 +112,7 @@
                 nameLike = '';
             }
 
-            var reqUrl = "/instances" + "?categoryId=" + categoryId + "&nameLike=" + nameLike;
+            var reqUrl = "/instances" + "?categoryId=" + categoryId + "&softwareNameLike=" + nameLike + "&size=" + PAGING_SIZE + "&sort=" + SORT;
             procCallAjax(reqUrl, "GET", null, null, callbackInstance);
         };
 
@@ -119,16 +121,16 @@
 
             $("#totalElements").text("(" + data.totalElements + ")");
 
-            var sofrwareInstanceList = $("#sofrwareInstanceBox");
+            var totalListArea = $("#totalListArea");
             var htmlString = [];
             var content = data.content;
 
             var listLength = content.length;
 
-            if(listLength > 0 ){
-
+            if(listLength > 0){
+                htmlString += '<ul class="ul-panel">';
                 for(var i = 0; i < listLength; i++){
-                    htmlString.push(
+                    htmlString +=
                           '<li>'
                     //panel
                         + '<div class="panelWrap" onclick="moveInstancesDetail(' + content[i].id + ')">'
@@ -138,14 +140,14 @@
                         + '<div class="pn_thumBox">'
                         + '<div class="pn_thum">'
                         + '<div class="thum_img">'
-                        + ' <img src="/static/images/thum_ico05.png" alt="" />'
+                        + ' <img src="/static/images/thum_05.png" alt="" />'
                         + '</div>'
                         + '</div>'
                         + '</div>'
                         + ' <span class="pn_cate type2">'+ content[i].software.category.name +'</span>'
                         + ' <div class="pn_tit">'
-                        + '  <span class="pn_tit_txt">'+ content[i].appName+' <span class="point5">(v'+ content[i].software.version+')</span></span>'
-                        + ' <span class="starting_info">'+ content[i].createdDate+'</span>'
+                        + ' <span class="pn_tit_txt">'+ content[i].software.name +' <span class="point5">(v'+ content[i].software.version+')</span></span>'
+                        + ' <span class="starting_info">사용시작일 : '+ content[i].usageStartDate+'</span>'
                         + ' </div>'
                         + '  <div class="pn_btn_area">'
                         + '  <div class="btn-inline">'
@@ -157,23 +159,19 @@
                         + ' </div>'
                         + ' </div>'
                     //panel -->
-                    );
+                        +'</li>';
                 }
-                // htmlString.push(
-                //     '<li>'
-                //     + '<button type="button" name="button" class="btn btn-panel-add" onclick="moveSoftwareCreate()" data-user="aside" data-username="#aside-aside1" style="height:350px;"><span class="ico"></span><span class="txt">서비스 추가</span></button>'
-                //     +'</li>'
-                // );
+                htmlString += '</ul>';
+                totalListArea.html(htmlString);
 
             }else{
-                htmlString = '<li>'
-                    + '<div class="search_resultBox">'
-                    + '<p class="txt_lg">' + '<span class="color1">'+$("#nameLike").val()+'</span>' + '에 대한 검색결과가 없습니다.</p>'
+                htmlString = '<div class="search_resultBox">'
+                    + '<p class="txt_lg">' + '<span class="color1">검색결과가 없습니다.' + '</span></p>'
                     + '<p class="txt_sm">단어의 철자를 확인하거나 다른 검색어를 넣어 다시 검색해주세요.</p>'
-                    + '</div>'
-                    +'</li>'
+                    + '</div>';
+
+                totalListArea.html(htmlString);
             }
-            sofrwareInstanceList.html(htmlString);
         };
 
         //eventBtn
@@ -181,12 +179,10 @@
             getInstance();
         });
 
-        //eventnNameLike
-        $("#nameLike").keypress(function(e) {
-            if (e.keyCode === 13) {
-                e.preventDefault(getInstance());
-            }
-        });
+        // search enter
+        var search = function() {
+            getInstance();
+        };
 
         //move :: Detail
         var moveInstancesDetail = function(id) {
