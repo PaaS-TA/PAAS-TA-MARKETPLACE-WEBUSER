@@ -49,7 +49,7 @@
                                 <!-- <div class="package_bg"></div> -->
                             </div>
                         </div>
-                        <button name="button" class="btn btn-color6 btn-sm" type="button">접속 URL 연결</button>
+                        <button name="button" class="btn btn-color6 btn-sm" type="button" id="accessProductUrl">접속 URL 연결</button>
 
                     </div>
                     <div class="r_box">
@@ -134,6 +134,7 @@
     </div>
     <!-- //content -->
     <input type="hidden" id="id" name="id" th:value="${instance.id}" />
+    <input type="hidden" id="accessUrl" name="accessUrl" th:value="${instance.appUrl}" />
     <!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />-->
     <script th:inline="javascript" type="text/javascript" layout:fragment="custom-script">
         /*<![CDATA[*/
@@ -146,14 +147,19 @@
 
         var moveInstancesPage = function() {
             procMovePage("/instances/my/page");
-        }
+        };
 
         //instance Stop(=Delete)
         var stopInstance = function () {
             var id = $("#id").val();
             console.log(":: ID :: " + id);
             procCallAjax("/instances/" + id,"DELETE", null, null, moveInstancesPage);
-        }
+        };
+
+        $("#accessProductUrl").on("click", function () {
+            var accessUrl = "http://" + $("#accessUrl").val();
+            $(location).attr('href',accessUrl);
+        });
 
         /*]]>*/
     </script>
