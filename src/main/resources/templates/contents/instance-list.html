@@ -65,7 +65,7 @@
                         <div class="form-group-area">
                             <div class="fm_label"><label for="" class="label">상품명</label></div>
                             <div class="fm_box">
-                                <input type="text" placeholder="검색어를 입력해 주세요." onkeypress="if(event.keyCode==13) {search();}" th:field="*{nameLike}" id="nameLike" style="width:400px;">
+                                <input type="text" placeholder="검색어를 입력해 주세요." th:field="*{nameLike}" id="nameLike" style="width:400px;">
                             </div>
                         </div>
                     </div>
@@ -140,7 +140,7 @@
                         + '<div class="pn_thumBox">'
                         + '<div class="pn_thum">'
                         + '<div class="thum_img">'
-                        + ' <img src="/static/images/thum_05.png" alt="" />'
+                        + ' <img src="/static/images/thum_ico05.png" alt="" />'
                         + '</div>'
                         + '</div>'
                         + '</div>'
@@ -179,10 +179,13 @@
             getInstance();
         });
 
-        // search enter
-        var search = function() {
-            getInstance();
-        };
+
+        //eventnNameLike
+        $("#nameLike").keypress(function(e) {
+            if (e.keyCode === 13) {
+                e.preventDefault(getInstance());
+            }
+        });
 
         //move :: Detail
         var moveInstancesDetail = function(id) {
