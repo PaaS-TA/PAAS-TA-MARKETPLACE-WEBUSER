@@ -44,7 +44,7 @@
                         <div class="pn_thumBox">
                             <div class="pn_thum">
                                 <div class="thum_img">
-                                    <img src="/static/images/thum_ico05.png" alt="" />
+                                    <img th:src="${instance.software.iconPath}" alt="" />
                                 </div>
                                 <!-- <div class="package_bg"></div> -->
                             </div>
@@ -86,16 +86,9 @@
                     <div class="slideWrap">
                         <div class="slide_list">
                             <ul class="nav nav-tabs">
-                                <li><a href=""><img src="/static/images/thum_test01.png" alt="" /></a></li>
-                                <li><a href=""><img src="/static/images/thum_test02.png" alt="" /></a></li>
-                                <li><a href="" class="video"><img src="/static/images/thum_test05.png" alt="" /></a></li>
-                                <li><a href=""><img src="/static/images/thum_test03.png" alt="" /></a></li>
-                                <li><a href=""><img src="/static/images/thum_test04.png" alt="" /></a></li>
-                                <li><a href=""><img src="/static/images/thum_test05.png" alt="" /></a></li>
-                                <li><a href=""><img src="/static/images/thum_test01.png" alt="" /></a></li>
-                                <li><a href=""><img src="/static/images/thum_test02.png" alt="" /></a></li>
-                                <li><a href=""><img src="/static/images/thum_test03.png" alt="" /></a></li>
-                                <li><a href=""><img src="/static/images/thum_test04.png" alt="" /></a></li>
+                                <li th:each="screenshot : ${instance.software.screenshotList}">
+                                    <a href=""><img th:src="${screenshot}" alt="" /></a>
+                                </li>
                             </ul>
                         </div>
                     </div>
