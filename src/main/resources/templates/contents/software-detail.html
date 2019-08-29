@@ -41,7 +41,7 @@
                         <div class="pn_thumBox">
                             <div class="pn_thum">
                                 <div class="thum_img">
-                                    <img src="/static/images/thum_ico01.png" alt="" />
+                                    <img th:src="${software.iconPath}" alt="" />
                                 </div>
                                 <!-- <div class="package_bg"></div> -->
                             </div>
@@ -103,7 +103,9 @@
                     <div class="slideWrap">
                         <div class="slide_list">
                             <ul class="nav nav-tabs">
-                                <li><a href=""><img src="/static/images/thum_test03.png" alt="" /></a></li>
+                                <li th:each="screenshot : ${software.screenshotList}">
+                                    <a href=""><img th:src="${screenshot}" alt="" /></a>
+                                </li>
                             </ul>
                         </div>
                     </div>
