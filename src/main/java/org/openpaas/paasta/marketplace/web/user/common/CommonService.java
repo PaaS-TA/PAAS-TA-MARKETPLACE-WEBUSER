@@ -159,6 +159,10 @@ public class CommonService {
          */
         PARAMETERS_SORT("sort"),
         /**
+         * Parameters page parameters list.
+         */
+        PARAMETERS_PAGING_PAGE("page"),
+        /**
          * Parameters start date parameters list.
          */
         PARAMETERS_START_DATE("createdDateAfter"),
