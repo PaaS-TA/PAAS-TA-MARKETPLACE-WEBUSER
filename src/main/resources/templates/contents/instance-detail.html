@@ -138,7 +138,8 @@
         });
 
 
-        var moveInstancesPage = function() {
+        var moveInstancesPage = function(data) {
+            console.log("딜리트 저자아앙~~~" + JSON.stringify(data));
             procMovePage("/instances/my/page");
         };
 
@@ -149,9 +150,11 @@
             procCallAjax("/instances/" + id,"DELETE", null, null, moveInstancesPage);
         };
 
-        $("#accessProductUrl").on("click", function () {
+        // 접속 URL 새 창 열기
+        $("#accessProductUrl").on("click", function (e) {
+            e.preventDefault();
             var accessUrl = "http://" + $("#accessUrl").val();
-            $(location).attr('href',accessUrl);
+            window.open(accessUrl, "_blank");
         });
 
         /*]]>*/

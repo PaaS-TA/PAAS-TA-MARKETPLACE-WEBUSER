@@ -84,6 +84,10 @@
         <div id="totalListArea">
         </div>
 
+        <nav class="pagiWrap">
+            <ul class="pagination" id="pageNumberList">
+            </ul>
+        </nav>
 
     </div>
     <!-- //content -->
@@ -98,7 +102,7 @@
             getInstance();
         });
 
-        var getInstance = function () {
+        var getInstance = function (pageNum) {
             var categoryId = $("#categoryId option:selected").val();
             var nameLike = $("#nameLike").val();
 
@@ -112,7 +116,7 @@
                 nameLike = '';
             }
 
-            var reqUrl = "/instances" + "?categoryId=" + categoryId + "&softwareNameLike=" + nameLike + "&size=" + PAGING_SIZE + "&sort=" + SORT;
+            var reqUrl = "/instances" + "?categoryId=" + categoryId + "&softwareNameLike=" + nameLike + "&size=" + PAGING_SIZE + "&sort=" + SORT + "&page=" + pageNum;
             procCallAjax(reqUrl, "GET", null, null, callbackInstance);
         };
 
@@ -151,7 +155,7 @@
                         + ' </div>'
                         + '  <div class="pn_btn_area">'
                         + '  <div class="btn-inline">'
-                        + '  <button name="button" class="btn btn-sm" type="button"><span class="txt">접속URL</span><span class="ico ico_url">바로가기</span></button>'
+                        + '  <span class="txt">구동 상태 : '+ content[i].provisionStatus +'</span>'
                         + ' </div>'
                         + ' </div>'
                     //panelBox-->
@@ -172,6 +176,23 @@
 
                 totalListArea.html(htmlString);
             }
+
+            //::page::
+            var pageNumberList = $("#pageNumberList");
+            var htmlStringPage = "<li class='first disabled'><a href='#'>맨 처음</a></li>" + "<li class='prev'><a href='#'>이전</a></li>";
+            var pageTotalNumber = data.totalElements;
+            var pageSize = data.size;
+
+            var pageCount = Math.ceil(pageTotalNumber/pageSize);
+            console.log("::pageCount :: " + pageCount);
+
+            if(pageCount > 0){
+                for(var page = 0; page < pageCount; page++){
+                    htmlStringPage += "<li class='active'><a href='javascript:void(0);' onclick=moveInstanceListPage('"+ page +"')>" + (page + 1) + "<span class='sr-only'>(current)</span></a></li>"
+                }
+            }
+            htmlStringPage += "<li class='next'><a href='#'>다음</a></li>" + "<li class='end'><a href='#'>맨 끝</a></li>";
+            pageNumberList.html(htmlStringPage);
         };
 
         //eventBtn
@@ -186,6 +207,10 @@
                 e.preventDefault(getInstance());
             }
         });
+
+        var moveInstanceListPage = function(page) {
+            getInstance(page);
+        };
 
         //move :: Detail
         var moveInstancesDetail = function(id) {

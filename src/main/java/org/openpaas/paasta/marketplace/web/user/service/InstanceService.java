@@ -54,13 +54,13 @@ public class InstanceService {
         return paasApiRest.getForObject(url, Instance.class);
     }
 
-    public void updateToDeleted(Software software) {
-        String url = UriComponentsBuilder.newInstance().path("/softwares/{id}")
+    public void updateToDeleted(Long id) {
+        String url = UriComponentsBuilder.newInstance().path("/instances/{id}")
                 .build()
-                .expand(software.getId())
+                .expand(id)
                 .toString();
 
-        paasApiRest.put(url, software);
+        paasApiRest.delete(url);
     }
 
     public Software provision(Software software) {

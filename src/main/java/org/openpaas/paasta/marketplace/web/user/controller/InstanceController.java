@@ -56,8 +56,8 @@ public class InstanceController {
 
 
     @DeleteMapping(value = "/{id}")
-    public String updateToDeleted(@PathVariable Long id, @ModelAttribute Software software) {
-        instanceService.updateToDeleted(software);
+    public String updateToDeleted(@PathVariable Long id) {
+        instanceService.updateToDeleted(id);
         return "redirect:/instances/" + id;
     }
 
