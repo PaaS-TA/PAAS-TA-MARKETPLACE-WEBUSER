@@ -56,6 +56,7 @@ public class InstanceController {
 
 
     @DeleteMapping(value = "/{id}")
+    @ResponseBody
     public Instance updateToDeleted(@PathVariable Long id) {
         instanceService.updateToDeleted(id);
         return instanceService.getInstance(id);
