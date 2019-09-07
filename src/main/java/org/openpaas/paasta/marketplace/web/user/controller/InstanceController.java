@@ -56,9 +56,9 @@ public class InstanceController {
 
 
     @DeleteMapping(value = "/{id}")
-    public String updateToDeleted(@PathVariable Long id) {
+    public Instance updateToDeleted(@PathVariable Long id) {
         instanceService.updateToDeleted(id);
-        return "redirect:/instances/" + id;
+        return instanceService.getInstance(id);
     }
 
     @PostMapping(value = "/provisionTest")
