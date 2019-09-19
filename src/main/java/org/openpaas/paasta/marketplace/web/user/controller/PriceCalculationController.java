@@ -1,27 +1,34 @@
 package org.openpaas.paasta.marketplace.web.user.controller;
 
+import lombok.RequiredArgsConstructor;
+import org.openpaas.paasta.marketplace.api.domain.SoftwareSpecification;
+import org.openpaas.paasta.marketplace.web.user.service.InstanceService;
 import org.openpaas.paasta.marketplace.web.user.service.PriceCalculationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+@Controller
+@RequiredArgsConstructor
+@RequestMapping(value = "/priceCalculation")
 public class PriceCalculationController {
 
-    @Autowired
-    public PriceCalculationService priceCalculationService;
+    private final PriceCalculationService priceCalculationService;
+    private final InstanceService instanceService;
 
     /**
      * 요금계산 메인페이지로 이동한다.
      *
      * @return ModelAndView(Spring 클래스)
      */
-    @RequestMapping(value = {"/priceCalculation"}, method = RequestMethod.GET)
-    @ResponseBody
-    public ModelAndView getUserInfoMain() {
-        return priceCalculationService.getUserInfoMain();
+    @GetMapping
+    public String getUserInfoMain(Model model) {
+        model.addAttribute("categories", instanceService.getCategories());
+        model.addAttribute("spec", new SoftwareSpecification());
+
+        return "contents/priceCalculation";
     }
+
+
 }

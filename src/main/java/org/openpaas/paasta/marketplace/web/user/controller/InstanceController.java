@@ -30,6 +30,12 @@ public class InstanceController {
         return instanceService.getSoftwareList(commonService.setParameters(httpServletRequest));
     }
 
+    @GetMapping(value = "/total")
+    @ResponseBody
+    public CustomPage<Instance> getMyTotalList(HttpServletRequest httpServletRequest){
+        return instanceService.getMyTotalList(commonService.setParameters(httpServletRequest));
+    }
+
     @GetMapping(value = "/my/page")
     public String getMyPage(Model model, @AuthenticationPrincipal OAuth2User oauth2User, HttpSession httpSession, SoftwareSpecification spec, Authentication authentication) {
 //        httpSession.setAttribute("yourName", oauth2User.getAttributes().get("user_name"));

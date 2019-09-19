@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout-user}">
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <!-- index.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
 </th:block>
@@ -46,24 +46,29 @@
                 <!-- Form 그룹 -->
                 <div class="form-group">
                     <div class="form-group-area">
-                        <div class="fm_label"><label for="" class="label">카테고리</label></div>
-                        <div class="fm_box">
-                            <select id="" name="">
-                                <option value="">전체</option>
-                                <option value="">보안</option>
-                                <option value="">ERP</option>
-                                <option value="">게임</option>
-                            </select>
-                        </div>
+                        <div class="fm_label"><label class="label">사용연월</label></div>
+                        <select name="selectDateYear1" id="selectDateYear1">
+
+                        </select>
+                        <label></label>
+                        <select name="selectDateMonth1" id="selectDateMonth1">
+
+                        </select>
                     </div>
                 </div>
                 <!-- //Form 그룹 -->
                 <!-- Form 그룹 -->
                 <div class="form-group">
                     <div class="form-group-area">
-                        <div class="fm_label"><label for="" class="label">상품명</label></div>
+                        <div class="fm_label"><label for="" class="label">카테고리</label></div>
                         <div class="fm_box">
-                            <input type="text" placeholder="검색어를 입력해 주세요." style="width:400px;">
+                            <select class="selectField" id="categoryList">
+                                <option value="">선택</option>
+                                <option th:each="category : ${categories}"
+                                        th:value="${category.id}"
+                                        th:utext="${category.name}">
+                                </option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -74,7 +79,7 @@
         <!-- //검색 Form -->
 
         <div class="cont-titWrap mt30">
-            <h3 class="h-tit3">총 건수 <span class="point4">(10)</span><span class="point_txt"> / 총 금액(77,000원)</span></h3>
+            <h3 class="h-tit3">총 건수 <span class="point4" id="totalElements"></span><span class="point_txt"> / 총 금액(77,000원)</span></h3>
         </div>
 
         <!-- 테이블 -->
@@ -84,137 +89,28 @@
                     <col style="width:8%;">
                     <col style="width:10%;">
                     <col style="width:15%;">
-                    <col style="width:auto;">
+                    <col style="width:10%;">
                     <col style="width:8%;">
+                    <col style="width:15%;">
                     <col style="width:10%;">
                     <col style="width:10%;">
-                    <col style="width:10%;">
-                    <col style="width:10%;">
+                    <col style="width:auto;">
                 </colgroup>
                 <thead>
                 <tr>
                     <th scope="col">No.</th>
-                    <th scope="col">사용 연월</th>
+
                     <th scope="col">카테고리</th>
                     <th scope="col">상품 명</th>
                     <th scope="col">버전</th>
                     <th scope="col">가격</th>
                     <th scope="col">구매일</th>
+                    <th scope="col">사용 월 수</th>
                     <th scope="col">상태</th>
-                    <th scope="col">사용 요금</th>
+                   <th scope="col">사용 요금</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>10</td>
-                    <td>2019. 05</td>
-                    <td><span class="pn_cate type4">커머스</span></td>
-                    <td>영카트</td>
-                    <td>1.0</td>
-                    <td>1,000원/일</td>
-                    <td>2019-04-01</td>
-                    <td>사용</td>
-                    <td>10,000</td>
-                </tr>
-                <tr>
-                    <td>9</td>
-                    <td>2019. 05</td>
-                    <td><span class="pn_cate type4">커머스</span></td>
-                    <td>마젠토</td>
-                    <td>1.5</td>
-                    <td>1,000원/일</td>
-                    <td>2019-04-01</td>
-                    <td>종료</td>
-                    <td>5,000</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>2019. 05</td>
-                    <td><span class="pn_cate type5">보안</span></td>
-                    <td>테드폴허브</td>
-                    <td>1.0</td>
-                    <td>1,000원/일</td>
-                    <td>2019-03-01</td>
-                    <td>종료</td>
-                    <td>10,000</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>2019. 05</td>
-                    <td><span class="pn_cate type5">보안</span></td>
-                    <td>영카트</td>
-                    <td>1.0</td>
-                    <td>1,000원/일</td>
-                    <td>2019-04-01</td>
-                    <td>사용</td>
-                    <td>10,000</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>2019. 05</td>
-                    <td><span class="pn_cate type3">의료</span></td>
-                    <td>영카트</td>
-                    <td>1.0</td>
-                    <td>1,000원/일</td>
-                    <td>2019-04-01</td>
-                    <td>사용</td>
-                    <td>10,000</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>2019. 05</td>
-                    <td><span class="pn_cate type2">ERP</span></td>
-                    <td>영카트</td>
-                    <td>1.0</td>
-                    <td>1,000원/일</td>
-                    <td>2019-04-01</td>
-                    <td>사용</td>
-                    <td>10,000</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>2019. 05</td>
-                    <td><span class="pn_cate type2">ERP</span></td>
-                    <td>영카트</td>
-                    <td>1.0</td>
-                    <td>1,000원/일</td>
-                    <td>2019-04-01</td>
-                    <td>사용</td>
-                    <td>10,000</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>2019. 05</td>
-                    <td><span class="pn_cate type1">CRM</span></td>
-                    <td>영카트</td>
-                    <td>1.0</td>
-                    <td>1,000원/일</td>
-                    <td>2019-04-01</td>
-                    <td>사용</td>
-                    <td>10,000</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>2019. 05</td>
-                    <td><span class="pn_cate type6">게임</span></td>
-                    <td>영카트</td>
-                    <td>1.0</td>
-                    <td>1,000원/일</td>
-                    <td>2019-04-01</td>
-                    <td>사용</td>
-                    <td>10,000</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>2019. 05</td>
-                    <td><span class="pn_cate type6">게임</span></td>
-                    <td>영카트</td>
-                    <td>1.0</td>
-                    <td>1,000원/일</td>
-                    <td>2019-04-01</td>
-                    <td>사용</td>
-                    <td>10,000</td>
-                </tr>
+                <tbody id="myInstanceListArea">
                 </tbody>
             </table>
         </div>
@@ -222,33 +118,129 @@
 
         <!-- page -->
         <nav class="pagiWrap">
-            <ul class="pagination">
-                <li class="first disabled"><a href="#">맨 처음</a></li>
-                <li class="prev"><a href="#">이전</a></li>
-                <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-                <li class=" disabled"><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">6</a></li>
-                <li><a href="#">7</a></li>
-                <li><a href="#">8</a></li>
-                <li><a href="#">9</a></li>
-                <li class="next"><a href="#">다음</a></li>
-                <li class="end"><a href="#">맨 끝</a></li>
+            <ul class="pagination" id="pageNumberList">
             </ul>
         </nav>
         <!-- //page -->
     </div>
     <!-- //content -->
-    <script th:inline="javascript" type="text/javascript" layout:fragment="custom-script">
-
+    <script th:inline="javascript" type="text/javascript">
         /*<![CDATA[*/
-        var REST_URL = "/priceCalculation";
+
+        var PAGING_SIZE = 10;
+        var SORT = "id,asc";
+
+
+        var getMyInstanceList = function() {
+            var selectedCategory = $("#categoryList option:selected").val();
+            var searchKeyword = $("#search_keyword").val();
+            var selectedStatus = $("#statusOption option:selected").val();
+            var selectedUseYn = $("#useYn option:selected").val();
+            var dateParameter;
+
+            if (selectedCategory === 'ALL' || selectedCategory === '') {
+                selectedCategory = '';
+            }
+
+            if(searchKeyword === null || searchKeyword === '') {
+                searchKeyword = '';
+            }
+
+            if(selectedStatus === '') {
+                selectedStatus = '';
+            }
+
+            if(selectedUseYn === '') {
+                selectedUseYn = '';
+            }
+
+            // 전체 구매 상품 목록 조회 url
+            var reqUrl = "/instances/total" + "?categoryId=" + selectedCategory + "&size=" + PAGING_SIZE + "&sort=" + SORT;
+            console.log("전체 경로 ::: "  + reqUrl);
+            procCallAjax(reqUrl, "GET", null, null, callbackGetMyInstanceList);
+
+        };
+
+        // 상품 목록 CALLBACK
+        var callbackGetMyInstanceList = function(data) {
+            // 페이징
+            var pageNumberList = $("#pageNumberList");
+            var htmlStringPage = "<li class='first disabled'><a href='#'>맨 처음</a></li>" + "<li class='prev'><a href='#'>이전</a></li>";
+            var pageTotalNumber = data.totalElements;
+            var pageSize = data.size;
+
+            var pageCount = Math.ceil(pageTotalNumber/pageSize);
+            console.log("총 페이지 수는?" + pageCount);
+
+            if(pageCount > 0){
+                for(var page = 0; page < pageCount; page++){
+                    htmlStringPage += "<li class='active'><a href='#'>" + (page + 1) + "<span class='sr-only'>(current)</span></a></li>"
+                }
+            }
+            htmlStringPage += "<li class='next'><a href='#'>다음</a></li>" + "<li class='end'><a href='#'>맨 끝</a></li>";
+            pageNumberList.html(htmlStringPage);
+
+            console.log("hihihihi ::: " + JSON.stringify(data));
+
+            // 총 상품 수
+            $("#totalElements").text("(" + data.totalElements + ")");
+
+            // 상품 목록 조회
+            var myInstanceListArea = $("#myInstanceListArea");
+            var htmlString = [];
+            var productList = data.content;
+
+            var listLength = productList.length;
+
+            if(listLength > 0){
+                for(var i = 0; i < listLength; i++){
+                    htmlString.push(
+                        "<tr>"
+                        + "<td>" + (i+1) + "</td>"
+                        + "<td><span class=\"pn_cate type"+ productList[i].software.category.id +"\">" + productList[i].software.category.name + "</span></td>"
+                        + "<td>" + productList[i].software.name + "</td>"
+                        + "<td>" + productList[i].software.version + "</td>"
+                        + "<td>" + productList[i].software.pricePerDay + " 원/월</td>"
+                        + "<td>" + productList[i].usageStartDate + "</td>"
+                        + "<td>" + 3 + "</td>"
+                        + "<td>" + productList[i].status + "</td>"
+                        + "<td>" + (productList[i].software.pricePerDay/30 * 10) + " 원</td>"
+                        +"</tr>"
+                    );
+                }
+            }else{
+                htmlString = "<tr>"
+                    + "<td colspan='9'><p class='user_p'>상품이 존재하지 않습니다.</p></td>" + "</tr>"
+            }
+
+            myInstanceListArea.html(htmlString);
+        };
+
+
+
+
+        // [공통] 년, 월 select box
+        function selectCal(monthfield, yearfield) {
+            var today = new Date();
+            for (var i = 1; i < 13; i++) {
+
+                if (today.getMonth() == i) $("#" + monthfield).append("<option value='" + i + "' selected='selected'>" + (i + 1) + "</option>");
+                else $("#" + monthfield).append("<option value='" + i + "'>" + i + "</option>");
+            }
+
+            var thisyear = today.getFullYear();
+            for (var y = thisyear - 10; y < thisyear + 10; y++) {
+
+                if (thisyear == y) $("#" + yearfield).append("<option value='" + y + "' selected='selected'>" + y + "</option>");
+                else $("#" + yearfield).append("<option value='" + y + "'>" + y + "</option>");
+            }
+
+        }
 
         // ON LOAD
         $(document.body).ready(function () {
-            console.log('::priceCalculation init::');
+            selectCal('selectDateMonth1', 'selectDateYear1');
+            getMyInstanceList();
         });
 
 
