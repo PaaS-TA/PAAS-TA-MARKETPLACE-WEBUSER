@@ -139,8 +139,7 @@
                 selectedCategory = '';
             }
 
-
-            console.log("year ::: " + yearValue + " & month ::: " + monthValue);
+            console.log("기본 이어2 ::: " + yearValue + "& 기본 몬쓰2 ::: " + monthValue);
 
             // 전체 구매 상품 목록 조회 url
             var reqUrl = "/instances/total" + "?categoryId=" + selectedCategory + "&page=" + pageNum + "&size=" + PAGING_SIZE + "&sort=" + SORT;
@@ -151,6 +150,10 @@
 
         // 상품 목록 CALLBACK
         var callbackGetMyInstanceList = function(data) {
+            console.log("검색되는 이어 ::: " + yearValue + "& 검색되는 몬쓰 ::: " + monthValue);
+            var lastDay = ( new Date(yearValue, monthValue, 0) ).getDate();
+            console.log("마지막 날? " + lastDay);
+
             // 페이징
             var pageNumberList = $("#pageNumberList");
             var htmlStringPage = "<li class='first disabled'><a href='#'>맨 처음</a></li>" + "<li class='prev'><a href='#'>이전</a></li>";
@@ -210,8 +213,7 @@
         //eventBtn
         $("#searchBtn").on("click", function () {
             getMyInstanceList();
-            var lastDay = ( new Date( "2020", "2", 0) ).getDate();
-            console.log("마지막 날? " + lastDay);
+
         });
 
 
@@ -220,10 +222,10 @@
             var today = new Date();
 
             console.log("오늘?? " + (today.getMonth() + 1));
-            yearValue = (today.getMonth() + 1);
-            monthValue = today.getFullYear();
+            yearValue = today.getFullYear();
+            monthValue = (today.getMonth() + 1);
 
-            console.log("기본 이어 ::: " + yearValue + "& 기본 몬쓰 ::: " + monthValue);
+            console.log("기본 이어1 ::: " + yearValue + "& 기본 몬쓰1 ::: " + monthValue);
 
             for (var i = 1; i < 13; i++) {
 
