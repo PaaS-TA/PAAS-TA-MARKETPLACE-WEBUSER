@@ -99,13 +99,12 @@
                 <thead>
                 <tr>
                     <th scope="col">No.</th>
-
                     <th scope="col">카테고리</th>
                     <th scope="col">상품 명</th>
                     <th scope="col">버전</th>
                     <th scope="col">가격</th>
                     <th scope="col">구매일</th>
-                    <th scope="col">사용 월 수</th>
+                    <th scope="col">사용일 수</th>
                     <th scope="col">상태</th>
                    <th scope="col">사용 요금</th>
                 </tr>
@@ -183,6 +182,10 @@
 
             if(listLength > 0){
                 for(var i = 0; i < listLength; i++){
+
+                    var dayOfUsingPeriod = [[ ${dayOfUsingPeriod} ]];
+                    var usingDay = (dayOfUsingPeriod[productList[i].id] + 1);
+
                     htmlString.push(
                         "<tr>"
                         + "<td>" + (i+1) + "</td>"
@@ -191,9 +194,9 @@
                         + "<td>" + productList[i].software.version + "</td>"
                         + "<td>" + productList[i].software.pricePerDay + " 원/월</td>"
                         + "<td>" + productList[i].usageStartDate + "</td>"
-                        + "<td>" + 3 + "</td>"
+                        + "<td>" + usingDay + " 일</td>"
                         + "<td>" + productList[i].status + "</td>"
-                        + "<td>" + (productList[i].software.pricePerDay/30 * 10) + " 원</td>"
+                        + "<td>" + (productList[i].software.pricePerDay/lastDay * usingDay).toFixed(2) + " 원</td>"
                         +"</tr>"
                     );
                 }
