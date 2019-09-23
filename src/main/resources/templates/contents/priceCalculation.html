@@ -79,7 +79,7 @@
         <!-- //검색 Form -->
 
         <div class="cont-titWrap mt30">
-            <h3 class="h-tit3">총 건수 <span class="point4" id="totalElements"></span><span class="point_txt"> / 총 금액(77,000원)</span></h3>
+            <h3 class="h-tit3">총 건수 <span class="point4" id="totalElements"></span><span class="point_txt" id="totalPrice"></span></h3>
         </div>
 
         <!-- 테이블 -->
@@ -179,12 +179,14 @@
             var productList = data.content;
 
             var listLength = productList.length;
+            var priceTotal = 0;
 
             if(listLength > 0){
                 for(var i = 0; i < listLength; i++){
 
                     var dayOfUsingPeriod = [[ ${dayOfUsingPeriod} ]];
                     var usingDay = (dayOfUsingPeriod[productList[i].id] + 1);
+                    var pricePerInstance = Math.round(productList[i].software.pricePerDay/lastDay * usingDay);
 
                     htmlString.push(
                         "<tr>"
@@ -196,14 +198,20 @@
                         + "<td>" + productList[i].usageStartDate + "</td>"
                         + "<td>" + usingDay + " 일</td>"
                         + "<td>" + productList[i].status + "</td>"
-                        + "<td>" + (productList[i].software.pricePerDay/lastDay * usingDay).toFixed(2) + " 원</td>"
+                        + "<td>" + pricePerInstance + " 원</td>"
                         +"</tr>"
                     );
+
+                    priceTotal += parseInt(pricePerInstance);
                 }
             }else{
                 htmlString = "<tr>"
                     + "<td colspan='9'><p class='user_p'>상품이 존재하지 않습니다.</p></td>" + "</tr>"
             }
+
+
+            // 총 금액
+            $("#totalPrice").text(" / 총 금액 (" +  priceTotal +" 원)");
 
             myInstanceListArea.html(htmlString);
         };
