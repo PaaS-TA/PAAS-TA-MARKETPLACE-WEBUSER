@@ -177,7 +177,15 @@ public class CommonService {
         /**
          * Parameters end date parameters list.
          */
-        PARAMETERS_APPROVAL_END_DATE("statusModifiedDateBefore");
+        PARAMETERS_APPROVAL_END_DATE("statusModifiedDateBefore"),
+        /**
+         * Parameters start date parameters list.
+         */
+        PARAMETERS_USAGE_START_DATE("usageStartDate"),
+        /**
+         * Parameters start date parameters list.
+         */
+        PARAMETERS_USAGE_END_DATE("usageEndDate");
 
         private String actualValue;
 
