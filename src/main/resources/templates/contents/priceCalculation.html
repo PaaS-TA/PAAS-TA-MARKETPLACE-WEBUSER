@@ -270,6 +270,9 @@
                     var dayOfUsingPeriod = [[ ${dayOfUsingPeriod} ]];
                     var usingDay = (dayOfUsingPeriod[productList[i].id] + 1);
                     var pricePerInstance = Math.round(productList[i].software.pricePerDay/lastDay * usingDay);
+                 	// Format Date
+                 	var usageStartDateValue = new Date(productList[i].usageStartDate);
+                	var usageStartDate = getFormatDate(usageStartDateValue);
 
                     htmlString.push(
                         "<tr>"
@@ -279,7 +282,7 @@
                         + "<td>" + productList[i].software.name + "</td>"
                         + "<td>" + productList[i].software.version + "</td>"
                         + "<td>" + productList[i].software.pricePerDay + " 원/월</td>"
-                        + "<td>" + productList[i].usageStartDate + "</td>"
+                        + "<td>" + usageStartDate + "</td>"
                         + "<td>" + usingDay + " 일</td>"
                         + "<td>" + productList[i].status + "</td>"
                         + "<td>" + pricePerInstance + " 원</td>"

@@ -139,6 +139,10 @@
             if(listLength > 0){
                 htmlString += '<ul class="ul-panel">';
                 for(var i = 0; i < listLength; i++){
+                	// Format Date
+                	var usageStartDateValue = new Date(content[i].usageStartDate);
+                	var usageStartDate = getFormatDate(usageStartDateValue);
+                	
                     htmlString +=
                           '<li>'
                     //panel
@@ -156,7 +160,7 @@
                         + ' <span class="pn_cate type2">'+ content[i].software.category.name +'</span>'
                         + ' <div class="pn_tit">'
                         + ' <span class="pn_tit_txt">'+ content[i].software.name +' <span class="point5">(v'+ content[i].software.version+')</span></span>'
-                        + ' <span class="starting_info">사용시작일 : '+ content[i].usageStartDate+'</span>'
+                        + ' <span class="starting_info">사용시작일 : '+ usageStartDate +'</span>'
                         + ' </div>'
                         + '  <div class="pn_btn_area">'
                         + '  <div class="btn-inline">'
@@ -267,7 +271,6 @@
         var moveInstancesDetail = function(id) {
             procMovePage("/instances/{id}".replace("{id}", id));
         };
-
 
         /*]]>*/
     </script>
