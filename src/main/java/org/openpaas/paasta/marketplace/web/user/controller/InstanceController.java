@@ -52,14 +52,6 @@ public class InstanceController {
         return "contents/instance-detail";
     }
 
-    @GetMapping(value = "/create")
-    public String createInstance(Model model, HttpSession httpSession, @ModelAttribute Software software) {
-        model.addAttribute("types", Software.Type.values());
-        model.addAttribute("yns", Yn.values());
-        model.addAttribute("categories", instanceService.getCategories());
-        return "contents/software-create";
-    }
-
 
     @DeleteMapping(value = "/{id}")
     @ResponseBody

@@ -7,16 +7,16 @@
             <!-- depth1 START -->
             <ul class="gnb-menu dept1 depth1">
                 <li class="dept1">
-                    <a class="dept1 on" th:href="@{/softwares/page}" onclick="depth1Click(event);"><span class="ico ico-bul ico1"></span>상품 목록</a>
+                    <a class="dept1" th:href="@{/softwares/page}" onclick="depth1Click(event);" id="1"><span class="ico ico-bul ico1"></span>상품 목록</a>
                 </li>
                 <li class="dept1">
-                    <a class="dept1" href="javascript:void(0);" onclick="depth1Click(event);"><span class="ico ico-bul ico2"></span>마이 페이지<span class="ico ico-arr"></span></a>
-                    <ul class="dept2" style="display:none;">
+                    <a class="dept1" href="javascript:void(0);" onclick="depth1Click(event);" id="2"><span class="ico ico-bul ico2"></span>마이 페이지<span class="ico ico-arr"></span></a>
+                    <ul class="dept2" style="display:none;" id="2_">
                         <li class="dept2">
-                            <a class="dept2" th:href="@{/instances/my/page}">사용 상품</a>
+                            <a class="dept2" th:href="@{/instances/my/page}" id="2_1">사용 상품</a>
                         </li>
                         <li class="dept2">
-                            <a class="dept2" th:href="@{/priceCalculation}">요금 계산</a>
+                            <a class="dept2" th:href="@{/priceCalculation}" id="2_2">요금 계산</a>
                         </li>
                     </ul>
                     <!-- dept2 END -->
