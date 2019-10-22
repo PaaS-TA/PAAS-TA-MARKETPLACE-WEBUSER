@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class PriceCalculationService {
+public class PriceService {
 
     private final RestTemplate paasApiRest;
 

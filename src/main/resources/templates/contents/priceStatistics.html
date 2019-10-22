@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout-user}">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+
+</th:block>
+
+<div class="rightCnt" layout:fragment="content">
+    <!-- title area -->
+    <div class="titWrap">
+        <h2 class="h2">요금 통계</h2>
+        <div class="breadWrap">
+            <ol class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">마이 페이지</a></li>
+                <li class="active">요금 통계</li><!-- 마지막 li -->
+            </ol>
+        </div>
+    </div>
+    <!-- //title area -->
+
+    <!-- content -->
+    <div class="content">
+        <!-- Top 비주얼 -->
+        <div class="top_visualWrap">
+            <div class="top_visual">
+                <p class="top_title">Welcome to PaaS-TA Market place</p>
+                <p class="top_stitle">
+                    Thanks to our partnership with PaaS-TA, we have the ability to gain new revenues, and our customers will gain<br />
+                    access to all the new technologies and benefits those technologies bring. They are exceptionally forward thinking.<br />
+                    they've built their business around the cloud.
+                </p>
+            </div>
+        </div>
+        <!-- //Top 비주얼 -->
+
+        <!-- 검색 Form -->
+        <div class="searchWrap">
+            <div class="searchBox">
+                <!-- Form 그룹 -->
+                <div class="form-group">
+                    <div class="form-group-area">
+                        <div class="fm_label"><label class="label">사용기간</label></div>
+                        <select name="selectDateYear1" id="selectDateYear1" th:onchange="selectYear()">
+
+                        </select>
+                        <label></label>
+                        <select name="selectDateMonth1" id="selectDateMonth1" th:onchange="selectMonth()">
+                        </select>
+						~
+						<select name="selectDateYear2" id="selectDateYear2" th:onchange="selectYear()">
+
+                        </select>
+                        <label></label>
+                        <select name="selectDateMonth2" id="selectDateMonth2" th:onchange="selectMonth()">
+                        </select>
+                    </div>
+                </div>
+                <!-- //Form 그룹 -->
+                
+                <button type="button" name="button" class="btn btn-sch" title="검색" id="searchBtn"><span class="ico">검색</span></button>
+            </div>
+        </div>
+        <!-- //검색 Form -->
+
+        <div class="cont-titWrap mt30">
+            <h3 class="h-tit3">총 건수 <span class="point4" id="totalElements"></span><span class="point_txt" id="totalPrice"></span></h3>
+        </div>
+
+        <!-- 테이블 -->
+        <div class="tbl type1 pt20">
+            <table class="table">
+                <colgroup>
+                    <col style="width:8%;">
+                    <col style="width:10%;">                    
+                    <col style="width:10%;">
+                    <col style="width:10%;">
+                    <col style="width:10%;">
+                    <col style="width:10%;">
+                    <col style="width:15%;">
+                    <col style="width:15%;">
+                    <col style="width:auto;">
+                </colgroup>
+                <thead>
+                	<tr>
+                		<th scope="col" rowspan="2">No.</th>
+                    	<th scope="col" rowspan="2">사용연월</th>
+                    	<th colspan="3">상품수</th>
+                    	
+                    	<th scope="col" rowspan="2">평균 상품수</th>
+                    	<th scope="col" rowspan="2">평균 단가</th>
+                    	<th scope="col" rowspan="2">평균 사용일</th>
+                   		<th scope="col" rowspan="2">사용 요금</th>
+                	</tr>
+                	<tr>
+                		<th scope="col">사용</th>
+                    	<th scope="col">신규</th>
+                    	<th scope="col">정지</th>
+                	</tr>
+                </thead>
+                <tbody id="myInstanceStatsListArea">
+                </tbody>
+            </table>
+        </div>
+        <!-- //테이블 -->
+
+        <!-- page -->
+        <nav class="pagiWrap">
+            <ul class="pagination" id="pageNumberList">
+            </ul>
+        </nav>
+        <!-- //page -->
+    </div>
+    <!-- //content -->
+    <script th:inline="javascript" type="text/javascript">
+        /*<![CDATA[*/
+
+        var PAGING_SIZE = 10;
+        var pageNumSave = 0; 
+        var SORT = "id,asc";
+        var yearValueF = $("#selectDateYear1 option:selected").val();
+        var monthValueF = $("#selectDateMonth1 option:selected").val();
+        var yearValueS = $("#selectDateYear2 option:selected").val();
+        var monthValueS = $("#selectDateMonth2 option:selected").val();
+
+        var getMyInstanceStatsList = function(pageNum) {
+            
+            console.log("기본 이어2 ::: " + yearValue + "& 기본 몬쓰2 ::: " + monthValue);
+
+            // 전체 구매 상품 목록 조회 url
+            var reqUrl;
+            console.log("전체 경로 ::: "  + reqUrl);
+            
+            if (pageNum != null)
+            	pageNumSave = pageNum;
+            
+            procCallAjax(reqUrl, "GET", null, null, callbackGetMyInstanceStatsList);
+        };
+
+        // CALLBACK
+        var callbackGetMyInstanceStatsList = function(data) {
+
+        	// TODO
+        	
+          	//::page::
+            var pageTotalNumber = data.totalElements;   // 총 데이터 수
+        	var pageSize = data.size;                   // 한 페이지에 나타낼 데이터 수        	
+        	paging(pageTotalNumber, pageSize, PAGING_SIZE, pageNumSave);
+        	
+        	function paging(pageTotalNumber, pageSize, PAGING_SIZE, currentPage){
+            	console.log("currentPage : " + currentPage);
+            	currentPage = parseInt(currentPage);
+                
+            	var totalPage = Math.ceil(pageTotalNumber/pageSize);           // 총 페이지 수
+            	if (currentPage)
+            		var pageGroup = Math.ceil((currentPage+1)/PAGING_SIZE);    // 페이지 그룹
+            	else var pageGroup = 1;
+                
+                console.log("pageGroup : " + pageGroup);
+                
+                var last = pageGroup * PAGING_SIZE;        // 화면에 보여질 마지막 페이지 번호 (실제 페이지와 -1 차이)
+                if(last > totalPage)
+                    last = totalPage;
+                var first = last - (PAGING_SIZE-1)-1;      // 화면에 보여질 첫번째 페이지
+                if(first < 0)
+                    first = 0;                               
+                var next = currentPage + 1;                // 다음 페이지
+                var prev = currentPage - 1;                // 이전 페이지
+                
+                console.log("last : " + last);
+                console.log("first : " + first);
+                console.log("next : " + next);
+                console.log("prev : " + prev);
+                 
+                var htmlStringPage = "";
+                
+                if(currentPage==0) {
+                	htmlStringPage += "<li class='first disabled' id='first'><a href='#'>맨 처음</a></li>";                    
+                } else {
+                	htmlStringPage += "<li class='first' id='first'><a href='javascript:void(0);' onclick=moveMyInstanceStatsListPage('0')>맨 처음</a></li>";
+                }
+                
+                if(prev < 0) {
+                	htmlStringPage += "<li class='prev disabled' id='prev'><a href='#'>이전</a> </li>";                    
+                } else {
+                	htmlStringPage += "<li class='prev' id='prev'><a href='javascript:void(0);' onclick=moveMyInstanceStatsListPage('"+ prev +"')>이전</a> </li>";
+                }
+                                    
+                for(var i=first; i < last; i++){
+                    htmlStringPage += "<li class='active' id='" + i + "'><a href='javascript:void(0);' onclick=moveMyInstanceStatsListPage('"+ i +"')>" + (i + 1) + "</a></li> ";
+                }
+                
+                if(next > totalPage-1) {
+                	htmlStringPage += "<li class='next disabled' id='next'><a href='#'>다음</a></li>";                   
+                } else {
+                	htmlStringPage += "<li class='next' id='next'><a href='javascript:void(0);' onclick=moveMyInstanceStatsListPage('"+ next +"')>다음</a></li>";
+                }
+                
+                if(currentPage==totalPage-1) {
+                	htmlStringPage += "<li class='end disabled'><a href='#'>맨 끝</a></li>";            
+                } else {
+                	htmlStringPage += "<li class='end'><a href='javascript:void(0);' onclick=moveMyInstanceStatsListPage('"+ (totalPage-1) +"')>맨 끝</a></li>";
+                }
+                                
+                $("#pageNumberList").html(htmlStringPage);                      // 페이지 목록 생성                                     
+            }
+
+            // 총 상품 수
+            $("#totalElements").text("(" + data.totalElements + ")");
+
+            // 목록 조회
+            var myInstanceStatsListArea = $("#myInstanceStatsListArea");
+            var htmlString = [];
+
+            var listLength;
+
+            if(listLength > 0){
+                for(var i = 0; i < listLength; i++){
+
+                 	// Format Date
+
+                    htmlString.push(
+                        "<tr>"
+                        + "<td>" + (i+1) + "</td>"
+                        + "<td>" + yearValue + "-" + monthValue + "</td>"                        
+                        + "<td>" +  + "</td>"
+                        + "<td>" +  + "</td>"
+                        + "<td>" +  + "</td>"
+                        + "<td>" +  + "</td>"
+                        + "<td>" +  + "</td>"
+                        + "<td>" +  + "</td>"
+                        + "<td>" +  + " 원</td>"
+                        +"</tr>"
+                    );
+
+                }
+            }else{
+                htmlString = "<tr>"
+                    + "<td colspan='10'><p class='user_p'>상품이 존재하지 않습니다.</p></td>" + "</tr>"
+            }
+
+
+            // 총 금액
+            $("#totalPrice").text(" / 총 금액 (" +  priceTotal +" 원)");
+
+            myInstanceStatsListArea.html(htmlString);
+        };
+
+     	// 페이지 이동
+        var moveMyInstanceStatsListPage = function(page) {
+            getMyInstanceStatsList(page);
+        };
+
+        //eventBtn
+        $("#searchBtn").on("click", function () {
+            getMyInstanceStatsList();
+
+        });
+
+
+        // [공통] 년, 월 select box
+        function selectCal(monthfieldF, yearfieldF, monthfieldS, yearfieldS) {
+            var today = new Date();
+
+            yearValueF = today.getFullYear();
+            monthValueF = (today.getMonth() + 1);
+            
+            console.log("오늘?? " + (today.getMonth() + 1));
+            yearValueS = today.getFullYear();
+            monthValueS = (today.getMonth() + 1);
+
+            console.log("기본 이어1 ::: " + yearValueS + "& 기본 몬쓰1 ::: " + monthValueS);
+
+            for (var i = 1; i < 13; i++) {
+                if (i == 1) $("#" + monthfieldF).append("<option value='" + i + "' selected='selected'>" + i + "</option>");
+                else $("#" + monthfieldF).append("<option value='" + i + "'>" + i + "</option>");
+            }
+            
+            for (var i = 1; i < 13; i++) {
+                if ((today.getMonth() + 1) == i) $("#" + monthfieldS).append("<option value='" + i + "' selected='selected'>" + i + "</option>");
+                else $("#" + monthfieldS).append("<option value='" + i + "'>" + i + "</option>");
+            }
+
+            var thisyear = today.getFullYear();
+            for (var y = thisyear - 10; y < thisyear + 10; y++) {
+
+                if (thisyear == y) $("#" + yearfieldF).append("<option value='" + y + "' selected='selected'>" + y + "</option>");
+                else $("#" + yearfieldF).append("<option value='" + y + "'>" + y + "</option>");
+            }
+
+            for (var y = thisyear - 10; y < thisyear + 10; y++) {
+                if (thisyear == y) $("#" + yearfieldS).append("<option value='" + y + "' selected='selected'>" + y + "</option>");
+                else $("#" + yearfieldS).append("<option value='" + y + "'>" + y + "</option>");
+            }
+
+        }
+
+        var selectYear = function() {
+        	var selectedYearValueF = $("#selectDateYear1 option:selected").val();
+            var selectedYearValueS = $("#selectDateYear2 option:selected").val();
+
+            yearValueF = selectedYearValueF;
+            yearValueS = selectedYearValueS;
+            console.log("Year ::: " + selectedYearValueF +"/"+ selectedYearValueS);
+        };
+
+        var selectMonth = function() {
+        	var selectedMonthValueF = $("#selectDateMonth1 option:selected").val();
+            var selectedMonthValueS = $("#selectDateMonth2 option:selected").val();
+
+            monthValueF = selectedMonthValueF;
+            monthValueS = selectedMonthValueS;
+
+            console.log("Month ::: " + selectedMonthValueF +"/"+ selectedMonthValueS);
+        };
+
+        // ON LOAD
+        $(document.body).ready(function () {
+            selectCal('selectDateMonth1', 'selectDateYear1', 'selectDateMonth2', 'selectDateYear2');
+            //getMyInstanceStatsList();
+            currentMenu('2_3');
+        });
+
+
+        /*]]>*/
+    </script>
+</div>
+</html>
