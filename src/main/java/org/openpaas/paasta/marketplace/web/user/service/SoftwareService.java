@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.openpaas.paasta.marketplace.api.domain.Category;
 import org.openpaas.paasta.marketplace.api.domain.CustomPage;
 import org.openpaas.paasta.marketplace.api.domain.Software;
+import org.openpaas.paasta.marketplace.api.domain.SoftwarePlan;
 import org.openpaas.paasta.marketplace.api.domain.SoftwareSpecification;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -53,6 +55,14 @@ public class SoftwareService {
                 .toString();
 
         return paasApiRest.getForObject(url, Software.class);
+    }
+    
+    public List<SoftwarePlan> getSoftwarePlanList(Long id) {
+    	String url = UriComponentsBuilder.newInstance().path("/softwares/plan/{id}/list?sort=name,asc")
+    			.build()
+    			.expand(id)
+    			.toString();
+    	return paasApiRest.getForObject(url, List.class);
     }
 //
 //    public void updateSoftware(Software software) {

@@ -46,9 +46,9 @@
                                 <!-- <div class="package_bg"></div> -->
                             </div>
                         </div>
-                        <button name="button" class="btn btn-color6 btn-sm" type="button" data-toggle="modal" data-target="#myModal">구매하기</button>
+                        <button name="button" class="btn btn-color6 btn-sm" type="button" data-toggle="modal" data-target="#instancePriceModal">구매하기</button>
 
-                        <!-- 팝업 Modal -->
+                        <!-- 상품구매 확인 팝업 Modal -->
                         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content modal-sm"><!-- 개발에서 사용하는 다른 팝업모듈 사용시 이부분만 사용하세요.  -->
@@ -66,7 +66,70 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- //팝업 Modal -->
+                        <!-- //상품구매 확인 팝업 Modal -->
+                        
+                        <!-- 장바구니 확인 팝업 Modal -->
+                        <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content modal-sm"><!-- 개발에서 사용하는 다른 팝업모듈 사용시 이부분만 사용하세요.  -->
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel">상품 구매</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="popTxt">선택한 상품을 장바구니에 추가하시겠습니까?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" name="button" class="btn btn-color1" id="instanceCartBtn">확인</button>
+                                        <button type="button" name="button" class="btn btn-color2" data-dismiss="modal">닫기</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //장바구니 확인 팝업 Modal -->
+                        
+                        <!-- 상품구매 팝업 Modal -->
+                        <div class="modal fade bd-example-modal-lg" id="instancePriceModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel">상품 구매</h4>
+                                    </div>
+									<div class="modal-body">
+                                    	<table class="table" id="instancePriceModal_table">
+											<thead class="thead-dark">
+										    	<tr>
+										      		<th scope="col" class="text-center" style="width: 10%"></th>
+												    <th scope="col" class="text-center" style="width: 10%">Plan</th>
+												    <th scope="col" class="text-center" style="width: 50%">Desc</th>
+												    <th scope="col" class="text-center" style="width: 30%">Price</th>
+										    	</tr>
+										  	</thead>
+										  	<tbody>
+										   		<tr th:each="softwarePlan,index : ${softwarePlanList}">
+										   			<th:block th:if="${index.index} == 0">
+										   				<th scope="row"><input type="radio" name="instancePriceModal_selectedPlan" th:value="${softwarePlan.id}" checked></th>
+										   			</th:block>
+										   			<th:block th:if="${index.index} > 0">
+										   				<th scope="row"><input type="radio" name="instancePriceModal_selectedPlan" th:value="${softwarePlan.id}"></th>
+										   			</th:block>
+										      		<td th:text="${softwarePlan.name}"></td>
+										      		<td th:text="${softwarePlan.description}"></td>
+										      		<td th:text="${softwarePlan.cpuAmt} + ' 원/월'"></td>
+										    	</tr>
+										  	</tbody>
+										</table>
+                                    </div>
+									<div class="modal-footer">
+	                                    <button type="button" name="button" class="btn btn-color1" data-dismiss="modal" id="purchaseConfirmBtn">구매</button>
+	                                    <button type="button" name="button" class="btn btn-color1" data-dismiss="modal" id="instanceCartConfirmBtn">장바구니추가</button>
+	                                	<button type="button" name="button" class="btn btn-color2" data-dismiss="modal">닫기</button>
+	                                </div>
+								</div>
+							</div>
+						</div>
+                        <!-- //상품구매 팝업 Modal -->
 
                     </div>
                     <div class="r_box">
@@ -121,26 +184,72 @@
 
     </div>
     <input type="hidden" id="softwareId" name="id" th:value="${software.id}" />
+    <input type="hidden" id="softwarePlanId" name="softwarePlanId"/>
     <!-- //content -->
     <script th:inline="javascript" type="text/javascript" layout:fragment="custom-script">
         /*<![CDATA[*/
-
         $("#purchaseBtn").on("click", function () {
 
             var id = $("#softwareId").val();
-
+            var softwarePlanId = $("#softwarePlanId").val();
             console.log("여기 들어오니?" + id);
 
             var reqParam = {
                 "software": {
                     "id": id
                 },
+                "softwarePlanId": softwarePlanId,
                 "provisionTryCount": 0,
                 "deprovisionTryCount": 0
             };
-
+            console.log("purchaseBtn > reqParam: %o", reqParam);
             procCallAjax("/instances", "POST", JSON.stringify(reqParam), null, callbackCreatedInstance);
         });
+
+        $("#instanceCartBtn").on("click", function () {
+        	var id = $("#softwareId").val();
+        	var softwarePlanId = $("#softwarePlanId").val();
+            var reqParam = {
+                "software": {
+                    "id": id
+                },
+                "softwarePlanId": softwarePlanId,
+                "provisionTryCount": 0,
+                "deprovisionTryCount": 0
+            };
+            console.log("instanceCartBtn > reqParam: %o", reqParam);
+            // procCallAjax("/instancesCart", "POST", JSON.stringify(reqParam), null, callbackCreatedInstanceCart);
+        });
+
+        $("#purchaseConfirmBtn").on("click", function () {
+        	saveSoftwarePlanId();
+        	$('#myModal').modal("show"); //열기
+        });
+        
+        $("#instanceCartConfirmBtn").on("click", function () {
+        	saveSoftwarePlanId();
+        	$('#cartModal').modal("show"); //열기
+        });
+                
+        $('#instancePriceModal').on('hidden.bs.modal', function (e) {
+       		// alert('purchaseConfirmBtn');
+        	var rows = $('#instancePriceModal_table').children('tbody').children('tr');
+			console.log("rows: %o", rows);
+			console.log("rows[0]: %o", rows[0]);
+			
+			$('#instancePriceModal_table').children('tbody').children('tr').each(function(){
+				console.log("td: %s", $(this).find("td").eq(1).text());
+			});
+			
+		    var selectedPlanValue = $("#instancePriceModal_table :input:radio[name=instancePriceModal_selectedPlan]:checked").val();
+			console.log("selectedPlanValue: %s", selectedPlanValue);
+       	})
+        
+       	var saveSoftwarePlanId = function() {
+        	var selectedPlanValue = $("#instancePriceModal_table :input:radio[name=instancePriceModal_selectedPlan]:checked").val();
+        	$("#softwarePlanId").val(selectedPlanValue);
+			console.log("selectedPlanValue: %s", selectedPlanValue);
+        }
 
         var callbackCreatedInstance = function(data) {
             console.log(data);

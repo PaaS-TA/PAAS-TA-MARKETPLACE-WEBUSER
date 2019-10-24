@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openpaas.paasta.marketplace.api.domain.CustomPage;
 import org.openpaas.paasta.marketplace.api.domain.Software;
+import org.openpaas.paasta.marketplace.api.domain.SoftwarePlan;
 import org.openpaas.paasta.marketplace.api.domain.SoftwareSpecification;
 import org.openpaas.paasta.marketplace.web.user.common.CommonService;
 import org.openpaas.paasta.marketplace.web.user.service.SoftwareService;
@@ -13,6 +14,8 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -46,6 +49,7 @@ public class SoftwareController {
     public String getSoftware(Model model, @PathVariable Long id) {
         model.addAttribute("categories", softwareService.getCategories());
         model.addAttribute("software", softwareService.getSoftware(id));
+        model.addAttribute("softwarePlanList", softwareService.getSoftwarePlanList(id));
         softwareService.getCategories();
         return "contents/software-detail";
     }
