@@ -58,7 +58,7 @@ public class SoftwareService {
     }
     
     public List<SoftwarePlan> getSoftwarePlanList(Long id) {
-    	String url = UriComponentsBuilder.newInstance().path("/softwares/plan/{id}/list?sort=name,asc")
+    	String url = UriComponentsBuilder.newInstance().path("/softwares/plan/{id}/list?sort=id,asc")
     			.build()
     			.expand(id)
     			.toString();
