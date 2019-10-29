@@ -46,14 +46,14 @@
                 <!-- Form 그룹 -->
                 <div class="form-group">
                     <div class="form-group-area">
-                        <div class="fm_label"><label class="label">사용연월</label></div>
-                        <select name="selectDateYear1" id="selectDateYear1" th:onchange="selectYear()">
-
-                        </select>
+                        <div class="fm_label"><label class="label">사용기간</label></div>
+                        <select name="selectDateYearStart" id="selectDateYearStart"></select>
                         <label></label>
-                        <select name="selectDateMonth1" id="selectDateMonth1" th:onchange="selectMonth()">
-
-                        </select>
+                        <select name="selectDateMonthStart" id="selectDateMonthStart"></select>
+                        ~
+                        <select name="selectDateYearEnd" id="selectDateYearEnd"></select>
+                        <label></label>
+                        <select name="selectDateMonthEnd" id="selectDateMonthEnd"></select>
                     </div>
                 </div>
                 <!-- //Form 그룹 -->
@@ -73,6 +73,16 @@
                     </div>
                 </div>
                 <!-- //Form 그룹 -->
+                <!-- Form 그룹 -->
+                <div class="form-group">
+                    <div class="form-group-area">
+                        <div class="fm_box">
+                        	<input type="checkbox" id="instanceCartView" />
+                        </div>
+                        <div class="fm_label"><label for="instanceCartView" class="label">장바구니포함</label></div>
+                    </div>
+                </div>
+                <!-- //Form 그룹 -->
                 <button type="button" name="button" class="btn btn-sch" title="검색" id="searchBtn"><span class="ico">검색</span></button>
             </div>
         </div>
@@ -87,124 +97,183 @@
             <table class="table">
                 <colgroup>
                     <col style="width:8%;">
-                    <col style="width:8%;">
-                    <col style="width:8%;">
-                    <col style="width:15%;">
-                    <col style="width:8%;">
-                    <col style="width:8%;">
+                    <col style="width:10%;">
                     <col style="width:15%;">
                     <col style="width:10%;">
-                    <col style="width:8%;">
+                    <col style="width:10%;">
+                    <col style="width:15%;">
+                    <col style="width:15%;">
                     <col style="width:auto;">
                 </colgroup>
                 <thead>
                 <tr>
                     <th scope="col">No.</th>
-                    <th scope="col">사용연월</th>
                     <th scope="col">카테고리</th>
                     <th scope="col">상품 명</th>
                     <th scope="col">버전</th>
                     <th scope="col">가격</th>
                     <th scope="col">구매일</th>
-                    <th scope="col">사용일 수</th>
-                    <th scope="col">상태</th>
-                   <th scope="col">사용 요금</th>
+                    <th scope="col">정지일</th>
+                   	<th scope="col">사용 요금</th>
                 </tr>
                 </thead>
-                <tbody id="myInstanceListArea">
-                </tbody>
+                <tbody id="myInstanceListArea"></tbody>
             </table>
         </div>
         <!-- //테이블 -->
 
+        <div class="pull-right mt10">
+            <!-- <button type="button" class="btn btn-danger btn-lg">Click to toggle popover</button> -->
+            <button type="button" class="btn btn-success btn-sm" id="deleteInstanceCartBtn" style="display:none;">장바구니 비우기</button>
+        </div>
+        
         <!-- page -->
         <nav class="pagiWrap">
-            <ul class="pagination" id="pageNumberList">
-            </ul>
+            <ul class="pagination" id="pageNumberList"></ul>
         </nav>
         <!-- //page -->
     </div>
+    
+    <!-- 알림 팝업 Modal -->
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content modal-sm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">알림!</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="popTxt" id="alertModal-text">구매할 상품의 가격 정보가 없습니다.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" name="button" class="btn btn-color2" data-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //알림 팝업 Modal -->
+    
+        <!-- 장바구니 확인 팝업 Modal -->
+    <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content modal-sm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">장바구니</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="popTxt">장바구니를 비우시겠습니까?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" name="button" class="btn btn-color1" id="execDeleteInstanceCartBtn">예</button>
+                    <button type="button" name="button" class="btn btn-color2" data-dismiss="modal">아니오</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //장바구니 확인 팝업 Modal -->
+    
+    <!-- InstanceCartList Template -->
+    <SCRIPT id="instanceCartTemplate" type="text/html">
+		<tr>
+			<td><img src="/static/images/icon_cart.png" width="30" height="30"></td>
+			<td><span class="pn_cate type${software.category.id}">${software.category.name}</span></td>
+			<td>${software.name}</td>
+			<td>${software.version}</td>
+			<td>${software.pricePerMonth} 원/월</td>
+			<td>-</td>
+			<td>-</td>
+			<td>-</td>
+		</tr>
+	</SCRIPT>
+    <!-- //InstanceCartList Template -->
+    <!-- InstanceList Template -->
+    <SCRIPT id="instanceTemplate" type="text/html">
+		<tr>
+			<td>${rowNum}</td>
+			<td><span class="pn_cate type${software.category.id}">${software.category.name}</span></td>
+			<td>${software.name}</td>
+			<td>${software.version}</td>
+			<td>${software.pricePerMonth} 원/월</td>
+			<td>${usageStartDate}</td>
+			<td>${usageEndDate}</td>
+			<td>${pricePerInstance} 원</td>
+		</tr>
+	</SCRIPT>
+    <!-- //InstanceList Template -->
+    
     <!-- //content -->
     <script th:inline="javascript" type="text/javascript">
         /*<![CDATA[*/
-
-        var PAGING_SIZE = 10;
+        var PAGING_SIZE = 2;
         var pageNumSave = 0; 
         var SORT = "id,asc";
-        var yearValue = $("#selectDateYear1 option:selected").val();
-        var monthValue = $("#selectDateMonth1 option:selected").val();
 
-        var getMyInstanceList = function(pageNum) {
+        var getMyInstanceRangeList = function(pageNum) {
+        	// Category
             var selectedCategory = $("#categoryList option:selected").val();
-
             if (selectedCategory === 'ALL' || selectedCategory === '') {
                 selectedCategory = '';
             }
 
-            console.log("기본 이어2 ::: " + yearValue + "& 기본 몬쓰2 ::: " + monthValue);
+           	// InstanceCart
+           	var instanceCartChecked = $("#instanceCartView").is(":checked");
+           
+			// Usage Date Range
+			var usageYearStart = $("#selectDateYearStart option:selected").val();
+			var usageMonthStart = $("#selectDateMonthStart option:selected").val();
+			var usageYearEnd = $("#selectDateYearEnd option:selected").val();
+			var usageMonthEnd = $("#selectDateMonthEnd option:selected").val();
+			
+			var startDateValue = Number(usageYearStart + fncDateValueDigit(usageMonthStart));
+			var endDateValue = Number(usageYearEnd + fncDateValueDigit(usageMonthEnd));
+			
+			if (startDateValue > endDateValue) {
+        		$("#alertModal-text").text("사용기간은 시작일자가 종료일자보다 클수는 없습니다.");
+        		$("#alertModal").modal("show");
 
-            var yy = yearValue; // 이번 해
-            var yy2 = yearValue; // 다음 해
-
-            var mm = monthValue; // 이번 달
-            var mm2 = monthValue; // 다음 달
-
-            if (monthValue < 10) {
-                mm = '0' + monthValue;
-                if((parseInt(monthValue) + 1) >= 10) {
-                    mm2 = (parseInt(monthValue) + 1);
-                } else {
-                    mm2 = '0' + (parseInt(monthValue) + 1);
-                }
-            }else if(monthValue >= 10 && monthValue < 12) {
-                mm = monthValue;
-                mm2 = parseInt(monthValue) + 1;
-            }
-
-
-            if(monthValue > 11) {
-                console.log("현재 12월 ::: " + yearValue + "-" + monthValue);
-                console.log(parseInt(yearValue) + 1);
-                yy = yearValue;
-                yy2 = parseInt(yearValue) + 1;
-                mm = monthValue;
-                mm2 = "01";
-            }
-
-            var currentYearMonth = yy + "-" + mm + "-01";
-            var nextYearMonth = yy2 + "-" + mm2 + "-01";
-
-
+				$("#selectDateYearEnd").val(usageYearStart);
+				$("#selectDateMonthEnd").val(usageMonthStart);
+				return;
+			}
+			
+			currentYearMonth = usageYearStart +"-"+ usageMonthStart +"-01";
+			nextYearMonth = usageYearEnd +"-"+ usageMonthEnd +"-31";
+			
             // 전체 구매 상품 목록 조회 url
-            var reqUrl = "/instances/total" + "?categoryId=" + selectedCategory + "&page=" + pageNum + "&size=" + PAGING_SIZE + "&sort=" + SORT + "&usageStartDate=" + currentYearMonth +"&usageEndDate=" + nextYearMonth;
-            console.log("전체 경로 ::: "  + reqUrl);
+            var reqUrl = "/instances/total" + "?categoryId=" + selectedCategory + "&page=" + pageNum + "&size=" + PAGING_SIZE + "&sort=" + SORT + "&usageStartDate=" + currentYearMonth +"&usageEndDate=" + nextYearMonth +"&instanceCartChecked="+ instanceCartChecked;
+            
+            console.log(">>>>>> Requeset URL: %s", reqUrl);
+            
             if (pageNum != null)
             	pageNumSave = pageNum;
             procCallAjax(reqUrl, "GET", null, null, callbackGetMyInstanceList);
-
         };
 
         // 상품 목록 CALLBACK
         var callbackGetMyInstanceList = function(data) {
-            console.log("검색되는 이어 ::: " + yearValue + "& 검색되는 몬쓰 ::: " + monthValue);
+            // List 초기화
+            $("#myInstanceListArea").html("");
+            $("#deleteInstanceCartBtn").hide();
+            
+        	console.log(">>>>>>> data: %o", data);
+        	
+            var yearValue = $("#selectDateYearStart option:selected").val();
+            var monthValue = $("#selectDateMonthStart option:selected").val();
             var lastDay = ( new Date(yearValue, monthValue, 0) ).getDate();
-            console.log("마지막 날? " + lastDay);
 
           	//::page::
-            var pageTotalNumber = data.totalElements;   // 총 데이터 수
-        	var pageSize = data.size;                   // 한 페이지에 나타낼 데이터 수        	
+            var pageTotalNumber = data.instancePage.totalElements;   // 총 데이터 수
+        	var pageSize = data.instancePage.size;                   // 한 페이지에 나타낼 데이터 수        	
         	paging(pageTotalNumber, pageSize, PAGING_SIZE, pageNumSave);
         	
-        	function paging(pageTotalNumber, pageSize, PAGING_SIZE, currentPage){
-            	console.log("currentPage : " + currentPage);
+        	function paging(pageTotalNumber, pageSize, PAGING_SIZE, currentPage) {
             	currentPage = parseInt(currentPage);
                 
             	var totalPage = Math.ceil(pageTotalNumber/pageSize);           // 총 페이지 수
             	if (currentPage)
             		var pageGroup = Math.ceil((currentPage+1)/PAGING_SIZE);    // 페이지 그룹
             	else var pageGroup = 1;
-                
-                console.log("pageGroup : " + pageGroup);
                 
                 var last = pageGroup * PAGING_SIZE;        // 화면에 보여질 마지막 페이지 번호 (실제 페이지와 -1 차이)
                 if(last > totalPage)
@@ -214,12 +283,6 @@
                     first = 0;                               
                 var next = currentPage + 1;                // 다음 페이지
                 var prev = currentPage - 1;                // 이전 페이지
-                
-                console.log("last : " + last);
-                console.log("first : " + first);
-                console.log("next : " + next);
-                console.log("prev : " + prev);
-                 
                 var htmlStringPage = "";
                 
                 if(currentPage==0) {
@@ -235,7 +298,7 @@
                 }
                                     
                 for(var i=first; i < last; i++){
-                    htmlStringPage += "<li class='active' id='" + i + "'><a href='javascript:void(0);' onclick=moveMyInstanceListPage('"+ i +"')>" + (i + 1) + "</a></li> ";
+                    htmlStringPage += "<li class='active' id='" + i + "'><a href='javascript:void(0);' style='cursor:pointer' onclick=moveMyInstanceListPage('"+ i +"')>" + (i + 1) + "</a></li> ";
                 }
                 
                 if(next > totalPage-1) {
@@ -254,112 +317,139 @@
             }
 
             // 총 상품 수
-            $("#totalElements").text("(" + data.totalElements + ")");
+            var totalInstanceCnt = data.instancePage.totalElements;
+            $("#totalElements").text("(" + totalInstanceCnt + ")");
+
+            // Template Loading
+            var instanceCartTemplateHtml = $("#instanceCartTemplate").text();
+            var instanceTemplateHtml = $("#instanceTemplate").text();
+            
+            // Cart List
+            var instanceCartChecked = $("#instanceCartView").is(":checked");
+            if (data.instanceCartList != undefined && data.instanceCartList.length > 0) {
+            	$("#deleteInstanceCartBtn").show();
+            	
+            	data.instanceCartList.forEach(function(cartInfo){
+            		$.tmpl(instanceCartTemplateHtml, cartInfo).appendTo("#myInstanceListArea");
+				});
+            } else if (instanceCartChecked && (pageNumSave == 0 || pageNumSave == undefined)) {
+            	$("#alertModal-text").text("장바구니에 담겨있는 상품이 없습니다.");
+        		$("#alertModal").modal("show");
+            }
 
             // 상품 목록 조회
             var myInstanceListArea = $("#myInstanceListArea");
             var htmlString = [];
-            var productList = data.content;
-
+            var productList = data.instancePage.content;
             var listLength = productList.length;
             var priceTotal = 0;
 
-            if(listLength > 0){
-                for(var i = 0; i < listLength; i++){
+            if (listLength > 0) {
+            	var rowNum = totalInstanceCnt - (pageNumSave * PAGING_SIZE);
 
-                    var dayOfUsingPeriod = [[ ${dayOfUsingPeriod} ]];
-                    var usingDay = (dayOfUsingPeriod[productList[i].id] + 1);
-                    var pricePerInstance = Math.round(productList[i].software.pricePerMonth/lastDay * usingDay);
-                 	// Format Date
-                 	var usageStartDateValue = new Date(productList[i].usageStartDate);
-                	var usageStartDate = getFormatDate(usageStartDateValue);
+            	productList.forEach(function(instanceInfo) {
+            		// RowNumber 생성
+                	instanceInfo.rowNum = rowNum;
+            		rowNum--;
 
-                    htmlString.push(
-                        "<tr>"
-                        + "<td>" + (i+1) + "</td>"
-                        + "<td>" + yearValue + "-" + monthValue + "</td>"
-                        + "<td><span class=\"pn_cate type"+ productList[i].software.category.id +"\">" + productList[i].software.category.name + "</span></td>"
-                        + "<td>" + productList[i].software.name + "</td>"
-                        + "<td>" + productList[i].software.version + "</td>"
-                        + "<td>" + productList[i].software.pricePerMonth + " 원/월</td>"
-                        + "<td>" + usageStartDate + "</td>"
-                        + "<td>" + usingDay + " 일</td>"
-                        + "<td>" + productList[i].status + "</td>"
-                        + "<td>" + pricePerInstance + " 원</td>"
-                        +"</tr>"
-                    );
-
+                	// 사용요금 계산
+            		var dayOfUsingPeriod = [[ ${dayOfUsingPeriod} ]];
+                    var usingDay = (dayOfUsingPeriod[instanceInfo.id] + 1);
+                    var pricePerInstance = Math.round(instanceInfo.software.pricePerMonth/lastDay * usingDay);
                     priceTotal += parseInt(pricePerInstance);
-                }
-            }else{
-                htmlString = "<tr>"
-                    + "<td colspan='10'><p class='user_p'>상품이 존재하지 않습니다.</p></td>" + "</tr>"
-            }
+                    instanceInfo.pricePerInstance = pricePerInstance;
 
+                 	// 사용시작일 DateFormat
+                 	var usageStartDateValue = new Date(instanceInfo.usageStartDate);
+                	instanceInfo.usageStartDate = getFormatDate(usageStartDateValue);
+					
+                	// 사용종료일 DateFormat
+                	if (instanceInfo.usageEndDate != null) {
+	                	var usageEndDateValue = new Date(instanceInfo.usageEndDate);
+	                	instanceInfo.usageEndDate = getFormatDate(usageEndDateValue);
+                	} else {
+                		instanceInfo.usageEndDate = fncNullValue(instanceInfo.usageEndDate, "-")
+                	}
+            		
+               		$.tmpl(instanceTemplateHtml, instanceInfo).appendTo("#myInstanceListArea");
+            	});
+            } else {
+                $("#myInstanceListArea").html("<tr><td colspan='10'><p class='user_p'>상품이 존재하지 않습니다.</p></td></tr>");
+            }
 
             // 총 금액
             $("#totalPrice").text(" / 총 금액 (" +  priceTotal +" 원)");
-
-            myInstanceListArea.html(htmlString);
         };
 
      	// 페이지 이동
         var moveMyInstanceListPage = function(page) {
-            getMyInstanceList(page);
+            getMyInstanceRangeList(page);
         };
 
         //eventBtn
         $("#searchBtn").on("click", function () {
-            getMyInstanceList();
-
+            getMyInstanceRangeList();
+        });
+        
+        //장바구니 비우기 버튼
+        $("#deleteInstanceCartBtn").on("click", function () {
+        	$("#cartModal").modal("show");
         });
 
-
+      	//장바구니 삭제
+        $("#execDeleteInstanceCartBtn").on("click", function () {
+            procCallAjax("/instances/cart/allDelete", "DELETE", "", null, callbackDeleteInstanceCart);
+        });
+      	
+      	function callbackDeleteInstanceCart() {
+      		procMovePage("/priceCalculation");
+      	}
+      
         // [공통] 년, 월 select box
         function selectCal(monthfield, yearfield) {
             var today = new Date();
-
-            console.log("오늘?? " + (today.getMonth() + 1));
             yearValue = today.getFullYear();
             monthValue = (today.getMonth() + 1);
-
-            console.log("기본 이어1 ::: " + yearValue + "& 기본 몬쓰1 ::: " + monthValue);
-
+            
             for (var i = 1; i < 13; i++) {
-
                 if ((today.getMonth() + 1) == i) $("#" + monthfield).append("<option value='" + i + "' selected='selected'>" + i + "</option>");
                 else $("#" + monthfield).append("<option value='" + i + "'>" + i + "</option>");
             }
 
             var thisyear = today.getFullYear();
             for (var y = thisyear - 10; y < thisyear + 10; y++) {
-
                 if (thisyear == y) $("#" + yearfield).append("<option value='" + y + "' selected='selected'>" + y + "</option>");
                 else $("#" + yearfield).append("<option value='" + y + "'>" + y + "</option>");
             }
-
         }
-
-        var selectYear = function() {
-            var selectedYearValue = $("#selectDateYear1 option:selected").val();
-            console.log("Year ::: " + selectedYearValue);
-            yearValue = selectedYearValue;
-        };
-
-        var selectMonth = function() {
-            var selectedMonthValue = $("#selectDateMonth1 option:selected").val();
-            console.log("Month ::: " + selectedMonthValue);
-            monthValue = selectedMonthValue;
-        };
+        
+        function fncDateValueDigit(value) {
+        	var result = value;
+            if (value < 10) {
+                result = '0' + value;
+            }
+			return result;
+        }
+        
+        function fncNullValue(value, diffaultValue) {
+        	var result = value;
+        	if (value == "null") {
+        		result = diffaultValue;
+        	} else if (value == null) {
+        		result = diffaultValue;
+        	} else if (value == "") {
+        		result = diffaultValue;
+        	}
+        	return result;
+        }
 
         // ON LOAD
         $(document.body).ready(function () {
-            selectCal('selectDateMonth1', 'selectDateYear1');
-            getMyInstanceList();
+            selectCal('selectDateMonthStart', 'selectDateYearStart');
+            selectCal('selectDateMonthEnd', 'selectDateYearEnd');
+            getMyInstanceRangeList();
             currentMenu('2_2');
         });
-
-
         /*]]>*/
     </script>
 </div>
