@@ -2,6 +2,7 @@ package org.openpaas.paasta.marketplace.web.user.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.openpaas.paasta.marketplace.api.domain.Instance;
 import org.openpaas.paasta.marketplace.api.domain.SoftwareSpecification;
 import org.openpaas.paasta.marketplace.web.user.common.CommonService;
@@ -11,9 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @Controller
@@ -53,17 +58,18 @@ public class PriceController {
      */
     @GetMapping(value = "/priceStatistics")
     public String getPriceStatsMain(Model model) {
-        model.addAttribute("spec", new SoftwareSpecification());
-
-        // 전체 구매 상품 중 상품별 사용일 수 
-        List<Long> idIn = new ArrayList<>();
-        for (Instance i:instanceService.getMyTotalList("").getContent()) {
-            idIn.add(i.getId());
-        }
-
-        log.info("구매 상품 사용한 일(Day) 수 ::: " + priceService.getDayOfUseInstsPeriod(idIn));
-        model.addAttribute("dayOfUsingPeriod", priceService.getDayOfUseInstsPeriod(idIn));
         
         return "contents/priceStatistics";
+    }
+    
+    /**
+     * 요금통계 결과 객체를 불러온다.
+     *
+     * @return Map
+     */
+    @GetMapping(value = "/stats/instances/my/price/total")
+    @ResponseBody
+    public Map<Long, Object> purchaseAmount(HttpServletRequest httpServletRequest){
+        return priceService.purchaseAmount(commonService.setParameters(httpServletRequest));
     }
 }
