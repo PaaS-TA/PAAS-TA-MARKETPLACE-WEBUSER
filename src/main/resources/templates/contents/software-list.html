@@ -86,7 +86,7 @@
     <!-- //content -->
     <script type="text/javascript">
         /*<![CDATA[*/
-        var BOOLEN_SEARCH = false;
+        var SORT = "id,desc";
 
         // ON LOAD
         $(document).ready(function() {
@@ -108,7 +108,7 @@
                 nameLike = '';
             }
 
-            var reqUrl = "/softwares" + "?categoryId=" + categoryId + "&nameLike=" + nameLike;
+            var reqUrl = "/softwares" + "?categoryId=" + categoryId + "&nameLike=" + nameLike + "&sort=" + SORT;
             procCallAjax(reqUrl, "GET", null, null, callbackSoftwares);
         };
 
