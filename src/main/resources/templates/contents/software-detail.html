@@ -206,7 +206,7 @@
 					   			</th:block>
 					      		<td class="text-center" th:text="${softwarePlan.name}"></td>
 					      		<td class="text-center" th:text="${softwarePlan.description}"></td>
-					      		<td class="text-center" th:text="${softwarePlan.cpuAmt} + ' 원/월'"></td>
+					      		<td class="text-center" th:text="${softwarePlan.cpuAmt}+${softwarePlan.memoryAmt}+${softwarePlan.diskAmt} + ' 원/월'"></td>
 					    	</tr>
 					  	</tbody>
 					</table>

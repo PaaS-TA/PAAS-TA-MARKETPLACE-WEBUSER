@@ -55,12 +55,15 @@ public class InstanceController {
     	Map<String,Object> result = new HashMap<String,Object>();
     	CustomPage<Instance> instancePage = instanceService.getMyTotalList(commonService.setParameters(httpServletRequest));
     	result.put("instancePage", instancePage);
-    	
+
     	if ("true".equalsIgnoreCase(instanceCartChecked) && ("0".equalsIgnoreCase(page) || "undefined".equalsIgnoreCase(page))) {
     		List<InstanceCart> instanceCartList = instanceCartService.getAllList(commonService.setParameters(httpServletRequest));
     		result.put("instanceCartList", instanceCartList);
     	}
-    	
+
+    	Long usagePriceTotal = instanceService.getUsagePriceTotal(commonService.setParameters(httpServletRequest));
+    	result.put("usagePriceTotal", usagePriceTotal);
+
     	return result;
     }
 
