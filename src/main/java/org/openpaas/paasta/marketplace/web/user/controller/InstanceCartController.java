@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.openpaas.paasta.marketplace.api.domain.InstanceCart;
+import org.openpaas.paasta.marketplace.api.domain.InstanceCartSpecification;
 import org.openpaas.paasta.marketplace.web.user.common.CommonService;
 import org.openpaas.paasta.marketplace.web.user.service.InstanceCartService;
 import org.springframework.stereotype.Controller;
@@ -43,5 +44,12 @@ public class InstanceCartController {
     @ResponseBody
     public Integer allDelete(HttpServletRequest httpServletRequest) {
         return instanceCartService.allDelete(commonService.setParameters(httpServletRequest));
+    }
+    
+    @DeleteMapping(value = "/delete")
+    @ResponseBody
+    public Integer delete(@RequestBody InstanceCartSpecification instanceCartSpecification) {
+    	log.debug(">>>>>>>>>>>> instanceCartSpecification: {}", instanceCartSpecification.toString());
+    	return instanceCartService.delete(instanceCartSpecification);
     }
 }

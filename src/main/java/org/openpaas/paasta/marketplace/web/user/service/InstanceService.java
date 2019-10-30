@@ -80,4 +80,9 @@ public class InstanceService {
     public Instance createInstance(Instance instance) {
         return paasApiRest.postForObject("/instances", instance, Instance.class);
     }
+    
+    public Long getUsagePriceTotal(String queryParamString) {
+        ResponseEntity<Long> responseEntity = paasApiRest.exchange("/instances/usagePriceTotal" + queryParamString, HttpMethod.GET, null, new ParameterizedTypeReference<Long>() {});
+        return responseEntity.getBody();
+    }
 }
