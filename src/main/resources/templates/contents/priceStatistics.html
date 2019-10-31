@@ -154,7 +154,7 @@
             
             console.log("start>>> "+ currentYearMonth + "  end>>> " + nextYearMonth);
             // 전체 구매 상품 목록 조회 url
-            var reqUrl= "/stats/instances/my/price/total" + "?sort=" + SORT + "&usageStartDate=" + currentYearMonth +"&usageEndDate=" + nextYearMonth;;
+            var reqUrl= "/stats/instances/my/price/total" + "?sort=" + SORT + "&usageStartDate=" + currentYearMonth +"&usageEndDate=" + nextYearMonth;
             console.log("전체 경로 ::: "  + reqUrl);
             
             procCallAjax(reqUrl, "GET", null, null, callbackGetMyInstanceStatsList);
