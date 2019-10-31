@@ -50,10 +50,12 @@
                         <select name="selectDateYearStart" id="selectDateYearStart"></select>
                         <label></label>
                         <select name="selectDateMonthStart" id="selectDateMonthStart"></select>
+                        <div style="display:none;">
                         ~
                         <select name="selectDateYearEnd" id="selectDateYearEnd"></select>
                         <label></label>
                         <select name="selectDateMonthEnd" id="selectDateMonthEnd"></select>
+                        </div>
                     </div>
                 </div>
                 <!-- //Form 그룹 -->
@@ -239,6 +241,16 @@
 				return;
 			}
 			
+			var nowDate = new Date();
+			var currDay = nowDate.getFullYear() +""+ fncDateValueDigit(nowDate.getMonth() + 1);
+			var srchDay = usageYearStart + fncDateValueDigit(usageMonthStart);
+			console.log(">>>> currDay: %s / srchDay: %s", currDay, srchDay);
+			
+			if (currDay < srchDay) {
+				alert("현재까지만 조회 가능합니다.");
+				return;
+			}
+			
 			currentYearMonth = usageYearStart +"-"+ fncDateValueDigit(usageMonthStart) +"-01T00:00:00";
 			nextYearMonth = usageYearEnd +"-"+ fncDateValueDigit(usageMonthEnd) +"-31T23:59:59";
 			
@@ -356,8 +368,13 @@
 
                 	// 사용요금 계산
             		var dayOfUsingPeriod = [[ ${dayOfUsingPeriod} ]];
-                    var usingDay = (dayOfUsingPeriod[instanceInfo.id] + 1);
-                    var pricePerInstance = Math.round(instanceInfo.software.pricePerMonth/lastDay * usingDay);
+                    //var usingDay = (dayOfUsingPeriod[instanceInfo.id] + 1);
+                    var usingDay = dayOfUsingPeriod[instanceInfo.id];
+                    var pricePerInstance = Math.round(instanceInfo.softwarePlanAmtMonth/lastDay * usingDay);
+                    
+                    console.log(">>>>>>> dayOfUsingPeriod: %o", dayOfUsingPeriod);
+                    console.log(">>>>>>> usingDay: %s / lastDay: %s / instanceInfo.softwarePlanAmtMonth: %s", usingDay, lastDay, instanceInfo.softwarePlanAmtMonth);
+                    
                     priceTotal += parseInt(pricePerInstance);
                     instanceInfo.pricePerInstance = pricePerInstance;
 
@@ -464,6 +481,14 @@
         	}
         	return result;
         }
+        
+        
+        $("#selectDateYearStart").on("click", function () {
+        	$("#selectDateYearEnd").val(this.value);
+        });
+        $("#selectDateMonthStart").on("click", function () {
+        	$("#selectDateMonthEnd").val(this.value);
+        });
 
         // ON LOAD
         $(document.body).ready(function () {
