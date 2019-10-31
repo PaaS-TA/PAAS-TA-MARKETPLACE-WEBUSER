@@ -239,8 +239,8 @@
 				return;
 			}
 			
-			currentYearMonth = usageYearStart +"-"+ fncDateValueDigit(usageMonthStart) +"-01";
-			nextYearMonth = usageYearEnd +"-"+ fncDateValueDigit(usageMonthEnd) +"-31";
+			currentYearMonth = usageYearStart +"-"+ fncDateValueDigit(usageMonthStart) +"-01T00:00:00";
+			nextYearMonth = usageYearEnd +"-"+ fncDateValueDigit(usageMonthEnd) +"-31T23:59:59";
 			
             // 전체 구매 상품 목록 조회 url
             var reqUrl = "/instances/total" + "?categoryId=" + selectedCategory + "&page=" + pageNum + "&size=" + PAGING_SIZE + "&sort=" + SORT + "&usageStartDate=" + currentYearMonth +"&usageEndDate=" + nextYearMonth +"&instanceCartChecked="+ instanceCartChecked;
