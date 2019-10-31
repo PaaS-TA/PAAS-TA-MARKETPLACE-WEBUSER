@@ -181,7 +181,7 @@
 			<td><span class="pn_cate type${software.category.id}">${software.category.name}</span></td>
 			<td>${software.name}</td>
 			<td>${software.version}</td>
-			<td>${software.pricePerMonth} 원/월</td>
+			<td>${softwarePlanAmtMonth} 원/월</td>
 			<td>-</td>
 			<td>-</td>
 			<td>-</td>
@@ -195,7 +195,7 @@
 			<td><span class="pn_cate type${software.category.id}">${software.category.name}</span></td>
 			<td>${software.name}</td>
 			<td>${software.version}</td>
-			<td>${software.pricePerMonth} 원/월</td>
+			<td>${softwarePlanAmtMonth} 원/월</td>
 			<td>${usageStartDate}</td>
 			<td>${usageEndDate}</td>
 			<td>${pricePerInstance} 원</td>
@@ -208,7 +208,7 @@
         /*<![CDATA[*/
         var PAGING_SIZE = 10;
         var pageNumSave = 0;
-        var SORT = "id,asc";
+        var SORT = "id,desc";
         var usagePriceTotal = /*[[ ${usagePriceTotal} ]]*/
 
         var getMyInstanceRangeList = function(pageNum) {

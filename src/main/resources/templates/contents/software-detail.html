@@ -199,10 +199,10 @@
 					  	<tbody>
 					   		<tr th:each="softwarePlan,index : ${softwarePlanList}">
 					   			<th:block th:if="${index.index} == 0">
-					   				<th class="text-center" scope="row"><input type="radio" name="instancePriceModal_selectedPlan" th:value="${softwarePlan.id}" checked></th>
+					   				<th class="text-center" scope="row"><input type="radio" name="instancePriceModal_selectedPlan" th:value="${softwarePlan.id}" onchange="changeSoftwarePlanId(this.value)" checked></th>
 					   			</th:block>
 					   			<th:block th:if="${index.index} > 0">
-					   				<th class="text-center" scope="row"><input type="radio" name="instancePriceModal_selectedPlan" th:value="${softwarePlan.id}"></th>
+					   				<th class="text-center" scope="row"><input type="radio" name="instancePriceModal_selectedPlan" th:value="${softwarePlan.id}" onchange="changeSoftwarePlanId(this.value)"></th>
 					   			</th:block>
 					      		<td class="text-center" th:text="${softwarePlan.name}"></td>
 					      		<td class="text-center" th:text="${softwarePlan.description}"></td>
@@ -256,7 +256,7 @@
                 "provisionTryCount": 0,
                 "deprovisionTryCount": 0
             };
-            //console.log("instanceCartBtn > reqParam: %o", reqParam);
+            //console.log(">>>>>>>>>>> instanceCartBtn > reqParam: %o", reqParam);
             procCallAjax("/instances/cart", "POST", JSON.stringify(reqParam), null, callbackCreatedInstanceCart);
         });
         
@@ -314,6 +314,9 @@
             procMovePage("/softwares/page");
         }
 
+        function changeSoftwarePlanId(softwarePlanId) {
+        	$("#softwarePlanId").val(softwarePlanId);
+        }
         /*]]>*/
     </script>
 </div>
