@@ -24,11 +24,13 @@ public class PriceService {
      * @param idIn
      * @return
      */
-    public Map<Long, Integer> getDayOfUseInstsPeriod(List<Long> idIn) {
+    public Map<Long, Integer> getDayOfUseInstsPeriod(List<Long> idIn, String usageStartDate, String usageEndDate) {
         UriComponentsBuilder builder = UriComponentsBuilder.newInstance().path("/stats/instances/my/usePeriod/days");
         for (Long id : idIn) {
             builder.queryParam("idIn", id);
         }
+        builder.queryParam("usageStartDate", usageStartDate);
+        builder.queryParam("usageEndDate", usageEndDate);
         String url = builder.buildAndExpand().toUriString();
 
         return paasApiRest.getForObject(url, Map.class);

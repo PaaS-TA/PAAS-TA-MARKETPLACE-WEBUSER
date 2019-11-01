@@ -1,7 +1,12 @@
 package org.openpaas.paasta.marketplace.web.user.controller;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.openpaas.paasta.marketplace.api.domain.Instance;
 import org.openpaas.paasta.marketplace.api.domain.SoftwareSpecification;
@@ -11,14 +16,10 @@ import org.openpaas.paasta.marketplace.web.user.service.PriceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
@@ -44,9 +45,24 @@ public class PriceController {
         for (Instance i:instanceService.getMyTotalList("").getContent()) {
             idIn.add(i.getId());
         }
+        
+        // 사용 시작 종료일자 생성 
+        SimpleDateFormat sdf = new SimpleDateFormat ("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+        
+        String currYear = String.valueOf(calendar.get(Calendar.YEAR));
+        String currMonth = String.valueOf(calendar.get(Calendar.MONTH)+1);
+        currMonth = (currMonth.length() == 1) ? "0"+ currMonth : currMonth;
+        String lastDay = String.valueOf(calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        		
+        String usageStartDate = String.format("%s-%s-01", currYear, currMonth);
+        String usageEndDate = String.format("%s-%s-%s", currYear, currMonth, lastDay);
 
-        log.info("구매 상품 사용한 일(Day) 수 ::: " + priceService.getDayOfUseInstsPeriod(idIn));
-        model.addAttribute("dayOfUsingPeriod", priceService.getDayOfUseInstsPeriod(idIn));
+        log.info("################################################################################");
+        log.info("구매 상품 사용한 일(Day) 수  ::: usageStartDate: {} / usageEndDate: {}", usageStartDate, usageEndDate);
+        log.info("################################################################################");
+        model.addAttribute("dayOfUsingPeriod", priceService.getDayOfUseInstsPeriod(idIn, usageStartDate, usageEndDate));
+        
         return "contents/priceCalculation";
     }
 

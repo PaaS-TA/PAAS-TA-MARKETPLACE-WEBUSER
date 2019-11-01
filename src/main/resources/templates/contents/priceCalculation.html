@@ -367,13 +367,13 @@
             		rowNum--;
 
                 	// 사용요금 계산
-            		var dayOfUsingPeriod = [[ ${dayOfUsingPeriod} ]];
-                    //var usingDay = (dayOfUsingPeriod[instanceInfo.id] + 1);
-                    var usingDay = dayOfUsingPeriod[instanceInfo.id];
+            		//var dayOfUsingPeriod = [[ ${dayOfUsingPeriod} ]];
+            		var dayOfUsingPeriod = data.dayOfUsingPeriod;
+                    var usingDay = (dayOfUsingPeriod[instanceInfo.id]);
                     var pricePerInstance = Math.round(instanceInfo.softwarePlanAmtMonth/lastDay * usingDay);
                     
-                    console.log(">>>>>>> dayOfUsingPeriod: %o", dayOfUsingPeriod);
-                    console.log(">>>>>>> usingDay: %s / lastDay: %s / instanceInfo.softwarePlanAmtMonth: %s", usingDay, lastDay, instanceInfo.softwarePlanAmtMonth);
+                    //console.log(">>>>>>> dayOfUsingPeriod: %o", dayOfUsingPeriod);
+                    //console.log(">>>>>>> usingDay: %s / lastDay: %s / instanceInfo.softwarePlanAmtMonth: %s", usingDay, lastDay, instanceInfo.softwarePlanAmtMonth);
                     
                     priceTotal += parseInt(pricePerInstance);
                     instanceInfo.pricePerInstance = pricePerInstance;
