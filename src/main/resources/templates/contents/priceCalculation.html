@@ -276,8 +276,6 @@
             $("#myInstanceListArea").html("");
             $("#deleteInstanceCartBtn").hide();
             
-        	//console.log(">>>>>>> data: %o", data);
-        	
             var yearValue = $("#selectDateYearStart option:selected").val();
             var monthValue = $("#selectDateMonthStart option:selected").val();
             var lastDay = ( new Date(yearValue, monthValue, 0) ).getDate();
@@ -362,6 +360,7 @@
             var htmlString = [];
             var productList = data.instancePage.content;
             var listLength = productList.length;
+            var pageRowTotalPricePerInstance = 0;
 
             if (listLength > 0) {
             	var rowNum = totalInstanceCnt - (pageNumSave * PAGING_SIZE);
@@ -377,6 +376,7 @@
                     var usingDay = (dayOfUsingPeriod[instanceInfo.id]);
                     var pricePerInstance = Math.round(instanceInfo.softwarePlanAmtMonth/lastDay * usingDay);
                     instanceInfo.pricePerInstance = pricePerInstance;
+                    pageRowTotalPricePerInstance += parseInt(pricePerInstance);
                     
                  	// 사용시작일 DateFormat
                  	var usageStartDateValue = new Date(instanceInfo.usageStartDate);
@@ -395,10 +395,12 @@
             } else {
                 $("#myInstanceListArea").append($.parseHTML("<tr><td colspan='8'><p class='user_p'>상품이 존재하지 않습니다.</p></td></tr>"));
             }
-            
-	        // 총 사용 금액
-	        if (!commonUtils.isBlank(data.usagePriceTotal)) {
-	        	$("#totalPrice").text(" / 총 금액 (" +  commonUtils.addComma(data.usagePriceTotal) +" 원)");
+
+            // 총 사용 금액
+	        // if (!commonUtils.isBlank(data.usagePriceTotal)) {
+	        //	$("#totalPrice").text(" / 총 금액 (" +  commonUtils.addComma(data.usagePriceTotal) +" 원)");
+	        if (pageRowTotalPricePerInstance > 0) {
+	        	$("#totalPrice").text(" / 총 금액 (" +  pageRowTotalPricePerInstance +" 원)");
 	        } else {
 	        	$("#totalPrice").text(" / 총 금액 (0 원)");
 	        }
