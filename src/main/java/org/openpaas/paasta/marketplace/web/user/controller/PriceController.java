@@ -47,9 +47,7 @@ public class PriceController {
         }
         
         // 사용 시작 종료일자 생성 
-        SimpleDateFormat sdf = new SimpleDateFormat ("yyyy-MM-dd");
         Calendar calendar = Calendar.getInstance();
-        
         String currYear = String.valueOf(calendar.get(Calendar.YEAR));
         String currMonth = String.valueOf(calendar.get(Calendar.MONTH)+1);
         currMonth = (currMonth.length() == 1) ? "0"+ currMonth : currMonth;
@@ -57,10 +55,6 @@ public class PriceController {
         		
         String usageStartDate = String.format("%s-%s-01", currYear, currMonth);
         String usageEndDate = String.format("%s-%s-%s", currYear, currMonth, lastDay);
-
-        log.info("################################################################################");
-        log.info("구매 상품 사용한 일(Day) 수  ::: usageStartDate: {} / usageEndDate: {}", usageStartDate, usageEndDate);
-        log.info("################################################################################");
         model.addAttribute("dayOfUsingPeriod", priceService.getDayOfUseInstsPeriod(idIn, usageStartDate, usageEndDate));
         
         return "contents/priceCalculation";

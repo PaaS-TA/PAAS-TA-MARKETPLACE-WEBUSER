@@ -99,3 +99,30 @@ var getFormatDate = function (date) {
     day = day >= 10 ? day : '0' + day; //day 두자리로 저장
     return year + '-' + month + '-' + day;
 };
+
+var commonUtils = {
+	addComma: function(num) {
+		return num;
+		// var regexp = /\B(?=(\d{3})+(?!\d))/g;
+		// return num.toString().replace(regexp, ',');
+	},
+	dateValueDigit: function(value) {
+    	var result = value;
+        if (value < 10) {
+            result = '0' + value;
+        }
+		return result;
+    }, 
+    isEmpty(object) {
+    	if (object == undefined || object == null) {
+    		return true;
+    	}
+    	return false;
+    }, 
+    isBlank(value) {
+    	if (value == undefined || value == null || value == "") {
+    		return true;
+    	}
+    	return false;
+    }
+}

@@ -22,6 +22,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,28 +61,42 @@ public class InstanceController {
     		, @RequestParam("usageStartDate") String usageStartDate
     		, @RequestParam("usageEndDate") String usageEndDate) {
     	Map<String,Object> result = new HashMap<String,Object>();
+    	// 구매상품 리스트 조회
     	CustomPage<Instance> instancePage = instanceService.getMyTotalList(commonService.setParameters(httpServletRequest));
-    	result.put("instancePage", instancePage);
+//    	result.put("instancePage", instancePage);
 
     	if ("true".equalsIgnoreCase(instanceCartChecked) && ("0".equalsIgnoreCase(page) || "undefined".equalsIgnoreCase(page))) {
     		List<InstanceCart> instanceCartList = instanceCartService.getAllList(commonService.setParameters(httpServletRequest));
     		result.put("instanceCartList", instanceCartList);
     	}
 
-    	Long usagePriceTotal = instanceService.getUsagePriceTotal(commonService.setParameters(httpServletRequest));
+    	// 사용자 총 사용요금 계산 (기간한정)
+    	Long usagePriceTotal = instanceService.getUsagePriceTotal(usageStartDate, usageEndDate);
     	result.put("usagePriceTotal", usagePriceTotal);
     	
-        // 전체 구매 상품 중 상품별 사용일 수
+    	// InstanceID List 생성
         List<Long> idIn = new ArrayList<>();
         for (Instance i:instanceService.getMyTotalList("").getContent()) {
             idIn.add(i.getId());
         }
+        
+        // 상품별 해당월 사용일수 조회
         Map<Long, Integer> dayOfUsingPeriod = priceService.getDayOfUseInstsPeriod(idIn, usageStartDate, usageEndDate);
-        log.info("################################################################################");
-        log.info("구매 상품 사용한 일(Day) 수  ::: usageStartDate: {} / usageEndDate: {}", usageStartDate, usageEndDate);
-        log.info("################################################################################");
         result.put("dayOfUsingPeriod", dayOfUsingPeriod);
         
+        // 상품별 사용요금 계산 (기간한정)
+        Map<String, String> pricePerInstanceList = instanceService.getPricePerInstanceList(idIn, usageStartDate, usageEndDate);
+        result.put("pricePerInstanceList", pricePerInstanceList);
+        
+        // 상품별 사용요금 상품정보에 설정
+        List<Instance> instanceList = instancePage.getContent();
+        for (Instance instance : instanceList) {
+    		String temp = pricePerInstanceList.get(""+instance.getId());
+    		instance.setPricePerInstance((StringUtils.isEmpty(temp) ? 0 : Long.valueOf(temp)));
+        }
+        result.put("instanceList", instanceList);
+        
+        result.put("instancePage", instancePage);
     	return result;
     }
 
