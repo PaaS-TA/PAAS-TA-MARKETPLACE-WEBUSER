@@ -116,7 +116,7 @@
                     <th scope="col">가격</th>
                     <th scope="col">구매일</th>
                     <th scope="col">정지일</th>
-                   	<th scope="col">사용 요금</th>
+                   	<th scope="col">예상 사용 요금</th>
                 </tr>
                 </thead>
                 <tbody id="myInstanceListArea"></tbody>
@@ -266,6 +266,7 @@
 
             // 총 상품 수
             var totalInstanceCnt = data.instancePage.totalElements;
+            totalInstanceCnt += commonUtils.isEmpty(data.instanceCartList) ? 0 : data.instanceCartList.length; 
             $("#totalElements").text("(" + totalInstanceCnt + ")");
 
             // Template Loading
@@ -318,15 +319,8 @@
                 $("#myInstanceListArea").append($.parseHTML("<tr><td colspan='9'><p class='user_p'>상품이 존재하지 않습니다.</p></td></tr>"));
             }
 
-            // 총 사용 금액
-	        /* if (!commonUtils.isBlank(data.usagePriceTotal)) {
-	        	$("#totalPrice").text(" / 총 금액 (" +  commonUtils.addComma(data.usagePriceTotal) +" 원)");
-	        } else {
-	        	$("#totalPrice").text(" / 총 금액 (0 원)");
-	        } */
-            
             // 총 사용금액 계산
-	        fncUsagePriceTotalRecalcul("READY", null);
+	        fncUsagePriceTotalRecalcul();
         };
 
      	// 페이지 이동
@@ -404,7 +398,7 @@
 			});
 			
         	//console.log(">>>>>>>> usagePriceTotal: %s", usagePriceTotal);
-        	$("#totalPrice").text(" / 총 금액 ("+ usagePriceTotal +" 원)");
+        	$("#totalPrice").text(" / 총 금액 ("+ commonUtils.addComma(usagePriceTotal) +" 원)");
         }
 		
         // ON LOAD
