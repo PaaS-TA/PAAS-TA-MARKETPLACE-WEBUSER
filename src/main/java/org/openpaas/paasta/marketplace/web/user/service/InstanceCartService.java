@@ -5,7 +5,6 @@ import java.util.List;
 import org.openpaas.paasta.marketplace.api.domain.InstanceCart;
 import org.openpaas.paasta.marketplace.api.domain.InstanceCartSpecification;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -32,6 +31,16 @@ public class InstanceCartService {
         log.debug(">>>>>>> instanceCartList: {}", (instanceCartList != null ? instanceCartList.toString() : "instanceCartList is null"));
         
         return instanceCartList;
+    }
+    
+    public List<InstanceCart> getUserAllCartList(String queryParamString) {
+    	log.info(">>>>>>> queryParamString: {}", queryParamString);
+    	ResponseEntity<List<InstanceCart>> responseEntity = paasApiRest.exchange("/instances/cart/userAllCartList" + queryParamString, HttpMethod.GET, null, new ParameterizedTypeReference<List<InstanceCart>>() {});
+    	List<InstanceCart> instanceCartList = responseEntity.getBody();
+    	
+    	log.debug(">>>>>>> instanceCartList: {}", (instanceCartList != null ? instanceCartList.toString() : "instanceCartList is null"));
+    	
+    	return instanceCartList;
     }
     
     public Integer allDelete(String queryParamString) {

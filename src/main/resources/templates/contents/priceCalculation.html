@@ -50,12 +50,10 @@
                         <select name="selectDateYearStart" id="selectDateYearStart"></select>
                         <label></label>
                         <select name="selectDateMonthStart" id="selectDateMonthStart"></select>
-                        <div style="display:none;">
                         ~
                         <select name="selectDateYearEnd" id="selectDateYearEnd"></select>
                         <label></label>
                         <select name="selectDateMonthEnd" id="selectDateMonthEnd"></select>
-                        </div>
                     </div>
                 </div>
                 <!-- //Form 그룹 -->
@@ -98,8 +96,9 @@
         <div class="tbl type1 pt20">
             <table class="table">
                 <colgroup>
+                	<col style="width:5%;">
+                    <col style="width:5%;">
                     <col style="width:8%;">
-                    <col style="width:10%;">
                     <col style="width:15%;">
                     <col style="width:10%;">
                     <col style="width:10%;">
@@ -109,6 +108,7 @@
                 </colgroup>
                 <thead>
                 <tr>
+                	<th scope="col"><input type="checkbox" id="priceCalculationCheckAll" checked></th>
                     <th scope="col">No.</th>
                     <th scope="col">카테고리</th>
                     <th scope="col">상품 명</th>
@@ -124,7 +124,7 @@
         </div>
         <!-- //테이블 -->
 
-        <div class="pull-right mt10">
+        <div class="pull-right mt10" style="display:none;">
             <!-- <button type="button" class="btn btn-danger btn-lg">Click to toggle popover</button> -->
             <button type="button" class="btn btn-success btn-sm" id="deleteInstanceCartBtn" style="display:none;">장바구니 비우기</button>
         </div>
@@ -178,7 +178,7 @@
     <!-- InstanceCartList Template -->
     <SCRIPT id="instanceCartTemplate" type="text/html">
 		<tr>
-			<!-- 개별삭제 <td><input type="checkbox" name="instanceCartCheckbox" value="${id}"><img src="/static/images/icon_cart.png" width="30" height="30"></td>-->
+			<td><input type="checkbox" name="priceCalculationCheck" data-price-per-instance="${pricePerInstance}" onclick="fncUsagePriceTotalRecalcul()" checked></td>
 			<td><img src="/static/images/icon_cart.png" width="30" height="30"></td>
 			<td><span class="pn_cate type${software.category.id}">${software.category.name}</span></td>
 			<td>${software.name}</td>
@@ -186,14 +186,15 @@
 			<td>${commonUtils.addComma(softwarePlanAmtMonth)} 원/월</td>
 			<td>-</td>
 			<td>-</td>
-			<td>-</td>
+			<td>${commonUtils.addComma(pricePerInstance)} 원</td>
 		</tr>
 	</SCRIPT>
     <!-- //InstanceCartList Template -->
     <!-- InstanceList Template -->
     <SCRIPT id="instanceTemplate" type="text/html">
 		<tr>
-			<td>${rowNum}</td>
+			<td><input type="checkbox" name="priceCalculationCheck" data-price-per-instance="${pricePerInstance}" onclick="fncUsagePriceTotalRecalcul()" checked></td>
+			<td>${rowNum}_${id}</td>
 			<td><span class="pn_cate type${software.category.id}">${software.category.name}</span></td>
 			<td>${software.name}</td>
 			<td>${software.version}</td>
@@ -208,10 +209,9 @@
     <!-- //content -->
     <script th:inline="javascript" type="text/javascript">
         /*<![CDATA[*/
-        var PAGING_SIZE = 10;
+        var PAGING_SIZE = 999999;
         var pageNumSave = 0;
         var SORT = "id,desc";
-        var usagePriceTotal = /*[[ ${usagePriceTotal} ]]*/
 
         var getMyInstanceRangeList = function(pageNum) {
         	// Category
@@ -241,16 +241,6 @@
 				return;
 			}
 			
-			var nowDate = new Date();
-			var currDay = nowDate.getFullYear() +""+ commonUtils.dateValueDigit(nowDate.getMonth() + 1);
-			var srchDay = usageYearStart + commonUtils.dateValueDigit(usageMonthStart);
-			// console.log(">>>> currDay: %s / srchDay: %s", currDay, srchDay);
-			
-			if (currDay < srchDay) {
-				alert("현재까지만 조회 가능합니다.");
-				return;
-			}
-			
 			// 조회 시작일자 생성
 			currentYearMonth = usageYearStart +"-"+ commonUtils.dateValueDigit(usageMonthStart) +"-01T00:00:00";
 			
@@ -258,15 +248,9 @@
 			var nextLastDay = (new Date(usageYearEnd, commonUtils.dateValueDigit(usageMonthEnd), 0)).getDate();
 			nextYearMonth = usageYearEnd +"-"+ commonUtils.dateValueDigit(usageMonthEnd) +"-"+ nextLastDay +"T23:59:59";
 			
-			//console.log(">>>>>>> nextYearMonth: %s", nextYearMonth);
-			
             // 전체 구매 상품 목록 조회 url
             var reqUrl = "/instances/total" + "?categoryId=" + selectedCategory + "&page=" + pageNum + "&size=" + PAGING_SIZE + "&sort=" + SORT + "&usageStartDate=" + currentYearMonth +"&usageEndDate=" + nextYearMonth +"&instanceCartChecked="+ instanceCartChecked;
-            
-            //console.log(">>>>>> Requeset URL: %s", reqUrl);
-            
-            if (pageNum != null)
-            	pageNumSave = pageNum;
+                        
             procCallAjax(reqUrl, "GET", null, null, callbackGetMyInstanceList);
         };
 
@@ -279,60 +263,6 @@
             var yearValue = $("#selectDateYearStart option:selected").val();
             var monthValue = $("#selectDateMonthStart option:selected").val();
             var lastDay = ( new Date(yearValue, monthValue, 0) ).getDate();
-
-          	//::page::
-            var pageTotalNumber = data.instancePage.totalElements;   // 총 데이터 수
-        	var pageSize = data.instancePage.size;                   // 한 페이지에 나타낼 데이터 수
-        	paging(pageTotalNumber, pageSize, PAGING_SIZE, pageNumSave);
-        	
-        	function paging(pageTotalNumber, pageSize, PAGING_SIZE, currentPage) {
-            	currentPage = parseInt(currentPage);
-                
-            	var totalPage = Math.ceil(pageTotalNumber/pageSize);           // 총 페이지 수
-            	if (currentPage)
-            		var pageGroup = Math.ceil((currentPage+1)/PAGING_SIZE);    // 페이지 그룹
-            	else var pageGroup = 1;
-                
-                var last = pageGroup * PAGING_SIZE;        // 화면에 보여질 마지막 페이지 번호 (실제 페이지와 -1 차이)
-                if(last > totalPage)
-                    last = totalPage;
-                var first = last - (PAGING_SIZE-1)-1;      // 화면에 보여질 첫번째 페이지
-                if(first < 0)
-                    first = 0;                               
-                var next = currentPage + 1;                // 다음 페이지
-                var prev = currentPage - 1;                // 이전 페이지
-                var htmlStringPage = "";
-                
-                if(currentPage==0) {
-                	htmlStringPage += "<li class='first disabled' id='first'><a href='#'>맨 처음</a></li>";                    
-                } else {
-                	htmlStringPage += "<li class='first' id='first'><a href='javascript:void(0);' onclick=moveMyInstanceListPage('0')>맨 처음</a></li>";
-                }
-                
-                if(prev < 0) {
-                	htmlStringPage += "<li class='prev disabled' id='prev'><a href='#'>이전</a> </li>";                    
-                } else {
-                	htmlStringPage += "<li class='prev' id='prev'><a href='javascript:void(0);' onclick=moveMyInstanceListPage('"+ prev +"')>이전</a> </li>";
-                }
-                                    
-                for(var i=first; i < last; i++){
-                    htmlStringPage += "<li class='active' id='" + i + "'><a href='javascript:void(0);' style='cursor:pointer' onclick=moveMyInstanceListPage('"+ i +"')>" + (i + 1) + "</a></li> ";
-                }
-                
-                if(next > totalPage-1) {
-                	htmlStringPage += "<li class='next disabled' id='next'><a href='#'>다음</a></li>";                   
-                } else {
-                	htmlStringPage += "<li class='next' id='next'><a href='javascript:void(0);' onclick=moveMyInstanceListPage('"+ next +"')>다음</a></li>";
-                }
-                
-                if(currentPage==totalPage-1) {
-                	htmlStringPage += "<li class='end disabled'><a href='#'>맨 끝</a></li>";            
-                } else {
-                	htmlStringPage += "<li class='end'><a href='javascript:void(0);' onclick=moveMyInstanceListPage('"+ (totalPage-1) +"')>맨 끝</a></li>";
-                }
-                                
-                $("#pageNumberList").html(htmlStringPage);                      // 페이지 목록 생성                                     
-            }
 
             // 총 상품 수
             var totalInstanceCnt = data.instancePage.totalElements;
@@ -351,8 +281,8 @@
             		$.tmpl(instanceCartTemplateHtml, cartInfo).appendTo("#myInstanceListArea");
 				});
             } else if (instanceCartChecked && (pageNumSave == 0 || pageNumSave == undefined)) {
-            	$("#alertModal-text").text("장바구니에 담겨있는 상품이 없습니다.");
-        		$("#alertModal").modal("show");
+            	//$("#alertModal-text").text("장바구니에 담겨있는 상품이 없습니다.");
+        		//$("#alertModal").modal("show");
             }
 
             // 상품 목록 조회
@@ -370,14 +300,6 @@
                 	instanceInfo.rowNum = rowNum;
             		rowNum--;
             		
-                	// 사용요금 계산 (차후 삭제)
-            		//var dayOfUsingPeriod = [[ ${dayOfUsingPeriod} ]];
-            		var dayOfUsingPeriod = data.dayOfUsingPeriod;
-                    var usingDay = (dayOfUsingPeriod[instanceInfo.id]);
-                    var pricePerInstance = Math.round(instanceInfo.softwarePlanAmtMonth/lastDay * usingDay);
-                    instanceInfo.pricePerInstance = pricePerInstance;
-                    pageRowTotalPricePerInstance += parseInt(pricePerInstance);
-                    
                  	// 사용시작일 DateFormat
                  	var usageStartDateValue = new Date(instanceInfo.usageStartDate);
                 	instanceInfo.usageStartDate = getFormatDate(usageStartDateValue);
@@ -393,17 +315,18 @@
                		$.tmpl(instanceTemplateHtml, instanceInfo).appendTo("#myInstanceListArea");
             	});
             } else {
-                $("#myInstanceListArea").append($.parseHTML("<tr><td colspan='8'><p class='user_p'>상품이 존재하지 않습니다.</p></td></tr>"));
+                $("#myInstanceListArea").append($.parseHTML("<tr><td colspan='9'><p class='user_p'>상품이 존재하지 않습니다.</p></td></tr>"));
             }
 
             // 총 사용 금액
-	        // if (!commonUtils.isBlank(data.usagePriceTotal)) {
-	        //	$("#totalPrice").text(" / 총 금액 (" +  commonUtils.addComma(data.usagePriceTotal) +" 원)");
-	        if (pageRowTotalPricePerInstance > 0) {
-	        	$("#totalPrice").text(" / 총 금액 (" +  pageRowTotalPricePerInstance +" 원)");
+	        /* if (!commonUtils.isBlank(data.usagePriceTotal)) {
+	        	$("#totalPrice").text(" / 총 금액 (" +  commonUtils.addComma(data.usagePriceTotal) +" 원)");
 	        } else {
 	        	$("#totalPrice").text(" / 총 금액 (0 원)");
-	        }
+	        } */
+            
+            // 총 사용금액 계산
+	        fncUsagePriceTotalRecalcul("READY", null);
         };
 
      	// 페이지 이동
@@ -413,7 +336,7 @@
 
         //eventBtn
         $("#searchBtn").on("click", function () {
-            getMyInstanceRangeList();
+            getMyInstanceRangeList(0);
         });
         
         //장바구니 비우기 버튼
@@ -423,30 +346,11 @@
 
       	//장바구니 삭제
         $("#execDeleteInstanceCartBtn").on("click", function () {
-        	// 전체삭제
         	procCallAjax("/instances/cart/allDelete", "DELETE", "", null, callbackDeleteInstanceCart);
-/*
-        	// 개별삭제
-        	var instanceCartIdList = [];
-            var arrCartCheckbox = $("input[name=instanceCartCheckbox]");
-            arrCartCheckbox.each(function(index, item) {
-            	//console.log(">>>>>>>> index: %s / value: %s / checked: %s", index, this.value, this.checked);
-            	if (this.checked) {
-            		instanceCartIdList[instanceCartIdList.length] = this.value;
-            	}
-            });
-            var reqParam = {
-                "inInstanceCartId": instanceCartIdList
-            };
-        	procCallAjax("/instances/cart/delete", "DELETE", JSON.stringify(reqParam), null, callbackDeleteInstanceCart);
-*/
         });
       	
       	function callbackDeleteInstanceCart(data) {
-      		// 전체삭제
       		procMovePage("/priceCalculation");
-      		// 개별삭제
-      		//getMyInstanceRangeList(0);
       	}
       
         // [공통] 년, 월 select box
@@ -461,7 +365,8 @@
             }
 
             var thisyear = today.getFullYear();
-            for (var y = thisyear - 10; y < thisyear + 10; y++) {
+            //for (var y = thisyear - 10; y < thisyear + 10; y++) {
+            for (var y = thisyear; y < thisyear + 32; y++) {
                 if (thisyear == y) $("#" + yearfield).append("<option value='" + y + "' selected='selected'>" + y + "</option>");
                 else $("#" + yearfield).append("<option value='" + y + "'>" + y + "</option>");
             }
@@ -478,21 +383,37 @@
         	}
         	return result;
         }
+        
+        $("#priceCalculationCheckAll").on("click", function () {
+        	var isChecked = $("#priceCalculationCheckAll").is(":checked");
+			$("input:checkbox[name=priceCalculationCheck]").each(function() {
+				$(this).prop("checked", isChecked);
+				// console.log(">>>>>>> isChecked: %s / obj: %o / price-per-instance: %s", isChecked, $(this), $(this).data("price-per-instance"));
+			});
+			fncUsagePriceTotalRecalcul();
+        });
+        
+        function fncUsagePriceTotalRecalcul() {
+        	var usagePriceTotal = 0;
+        	$("input:checkbox[name=priceCalculationCheck]").each(function() {
+        		var obj = $(this);
+				if (obj.is(":checked")) {
+					usagePriceTotal += obj.data("pricePerInstance");
+				}
+				//console.log(">>>>>>>> checked: %s / pricePerInstance: %s", obj.is(":checked"), obj.data("pricePerInstance"));
+			});
+			
+        	//console.log(">>>>>>>> usagePriceTotal: %s", usagePriceTotal);
+        	$("#totalPrice").text(" / 총 금액 ("+ usagePriceTotal +" 원)");
+        }
 		
-        // 검색기간 종료일을 시작일과 동일하게 변경
-        $("#selectDateYearStart").on("click", function () {
-        	$("#selectDateYearEnd").val(this.value);
-        });
-        $("#selectDateMonthStart").on("click", function () {
-        	$("#selectDateMonthEnd").val(this.value);
-        });
-
         // ON LOAD
         $(document.body).ready(function () {
             selectCal('selectDateMonthStart', 'selectDateYearStart');
             selectCal('selectDateMonthEnd', 'selectDateYearEnd');
-            getMyInstanceRangeList();
+            getMyInstanceRangeList(0);
             currentMenu('2_2');
+            fncUsagePriceTotalRecalcul();
         });
         /*]]>*/
     </script>

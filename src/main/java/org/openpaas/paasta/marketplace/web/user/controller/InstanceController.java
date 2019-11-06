@@ -61,18 +61,21 @@ public class InstanceController {
     		, @RequestParam("usageStartDate") String usageStartDate
     		, @RequestParam("usageEndDate") String usageEndDate) {
     	Map<String,Object> result = new HashMap<String,Object>();
+    	
     	// 구매상품 리스트 조회
     	CustomPage<Instance> instancePage = instanceService.getMyTotalList(commonService.setParameters(httpServletRequest));
 //    	result.put("instancePage", instancePage);
 
+    	// 장바구니 상품 조회
     	if ("true".equalsIgnoreCase(instanceCartChecked) && ("0".equalsIgnoreCase(page) || "undefined".equalsIgnoreCase(page))) {
-    		List<InstanceCart> instanceCartList = instanceCartService.getAllList(commonService.setParameters(httpServletRequest));
+//    		List<InstanceCart> instanceCartList = instanceCartService.getAllList(commonService.setParameters(httpServletRequest));
+    		List<InstanceCart> instanceCartList = instanceCartService.getUserAllCartList(commonService.setParameters(httpServletRequest));
     		result.put("instanceCartList", instanceCartList);
     	}
 
     	// 사용자 총 사용요금 계산 (기간한정)
-    	Long usagePriceTotal = instanceService.getUsagePriceTotal(usageStartDate, usageEndDate);
-    	result.put("usagePriceTotal", usagePriceTotal);
+//    	Long usagePriceTotal = instanceService.getUsagePriceTotal(usageStartDate, usageEndDate);
+//    	result.put("usagePriceTotal", usagePriceTotal);
     	
     	// InstanceID List 생성
         List<Long> idIn = new ArrayList<>();
@@ -81,10 +84,10 @@ public class InstanceController {
         }
         
         // 상품별 해당월 사용일수 조회
-        Map<Long, Integer> dayOfUsingPeriod = priceService.getDayOfUseInstsPeriod(idIn, usageStartDate, usageEndDate);
-        result.put("dayOfUsingPeriod", dayOfUsingPeriod);
+//        Map<Long, Integer> dayOfUsingPeriod = priceService.getDayOfUseInstsPeriod(idIn, usageStartDate, usageEndDate);
+//        result.put("dayOfUsingPeriod", dayOfUsingPeriod);
         
-        // 상품별 사용요금 계산 (기간한정)
+        // 상품별 사용요금 계산 리스트 (기간한정)
         Map<String, String> pricePerInstanceList = instanceService.getPricePerInstanceList(idIn, usageStartDate, usageEndDate);
         result.put("pricePerInstanceList", pricePerInstanceList);
         
