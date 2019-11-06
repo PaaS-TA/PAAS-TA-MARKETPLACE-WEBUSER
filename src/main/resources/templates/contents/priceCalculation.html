@@ -93,8 +93,9 @@
         </div>
 
         <!-- 테이블 -->
-        <div class="tbl type1 pt20">
-            <table class="table table-dark">
+        <!-- <div class="tbl type1 pt20"> -->
+        <div>
+            <table class="table">
                 <colgroup>
                 	<col style="width:5%;">
                     <col style="width:5%;">
@@ -107,16 +108,16 @@
                     <col style="width:auto;">
                 </colgroup>
                 <thead>
-	                <tr>
-	                	<th scope="col"><input type="checkbox" id="priceCalculationCheckAll" checked></th>
-	                    <th scope="col">No.</th>
-	                    <th scope="col">카테고리</th>
-	                    <th scope="col">상품 명</th>
-	                    <th scope="col">버전</th>
-	                    <th scope="col">가격</th>
-	                    <th scope="col">구매일</th>
-	                    <th scope="col">정지일</th>
-	                   	<th scope="col">예상 사용 요금</th>
+	                <tr style="background-color: #333">
+	                	<th scope="col" style="color: #ffff"><input type="checkbox" id="priceCalculationCheckAll" checked></th>
+	                    <th scope="col" style="color: #ffff">No.</th>
+	                    <th scope="col" style="color: #ffff">카테고리</th>
+	                    <th scope="col" style="color: #ffff">상품 명</th>
+	                    <th scope="col" style="color: #ffff">버전</th>
+	                    <th scope="col" style="color: #ffff">가격</th>
+	                    <th scope="col" style="color: #ffff">구매일</th>
+	                    <th scope="col" style="color: #ffff">정지일</th>
+	                   	<th scope="col" style="color: #ffff">예상 사용 요금</th>
 	                </tr>
                 </thead>
                 <tbody id="myInstanceListArea"></tbody>
@@ -177,8 +178,8 @@
     
     <!-- InstanceCartList Template -->
     <SCRIPT id="instanceCartTemplate" type="text/html">
-		<tr>
-			<td><input type="checkbox" name="priceCalculationCheck" data-price-per-instance="${pricePerInstance}" onclick="fncUsagePriceTotalRecalcul()" checked></td>
+		<tr id="CART_ROW_${id}" style="background-color: #ffff;">
+			<td><input type="checkbox" name="priceCalculationCheck" data-row-id="CART_ROW_${id}" data-price-per-instance="${pricePerInstance}" onclick="fncUsagePriceTotalRecalcul()" checked></td>
 			<td><img src="/static/images/icon_cart.png" width="30" height="30"></td>
 			<td><span class="pn_cate type${software.category.id}">${software.category.name}</span></td>
 			<td>${software.name}</td>
@@ -192,8 +193,8 @@
     <!-- //InstanceCartList Template -->
     <!-- InstanceList Template -->
     <SCRIPT id="instanceTemplate" type="text/html">
-		<tr class="bg-danger">
-			<td><input type="checkbox" name="priceCalculationCheck" data-price-per-instance="${pricePerInstance}" onclick="fncUsagePriceTotalRecalcul()" checked></td>
+		<tr id="INSTANCE_ROW_${id}" style="background-color: #ffff;">
+			<td><input type="checkbox" name="priceCalculationCheck" data-row-id="INSTANCE_ROW_${id}" data-price-per-instance="${pricePerInstance}" onclick="fncUsagePriceTotalRecalcul()" checked></td>
 			<td>${rowNum}</td>
 			<td><span class="pn_cate type${software.category.id}">${software.category.name}</span></td>
 			<td>${software.name}</td>
@@ -389,10 +390,18 @@
         
         function fncUsagePriceTotalRecalcul() {
         	var usagePriceTotal = 0;
+        	
         	$("input:checkbox[name=priceCalculationCheck]").each(function() {
         		var obj = $(this);
-				if (obj.is(":checked")) {
+			
+        		if (obj.is(":checked")) {
+					// 예상 사용 요금 합산
 					usagePriceTotal += obj.data("pricePerInstance");
+					// 선택 Row 배경 White로 변경
+					$("#"+ obj.data("rowId")).css("background-color", "#ffff");
+				} else {
+					// 해제 Row 배경 회색으로 변경
+					$("#"+ obj.data("rowId")).css("background-color", "#dee2e6");
 				}
 				//console.log(">>>>>>>> checked: %s / pricePerInstance: %s", obj.is(":checked"), obj.data("pricePerInstance"));
 			});
