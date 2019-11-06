@@ -94,7 +94,7 @@
 
         <!-- 테이블 -->
         <div class="tbl type1 pt20">
-            <table class="table">
+            <table class="table table-dark">
                 <colgroup>
                 	<col style="width:5%;">
                     <col style="width:5%;">
@@ -107,17 +107,17 @@
                     <col style="width:auto;">
                 </colgroup>
                 <thead>
-                <tr>
-                	<th scope="col"><input type="checkbox" id="priceCalculationCheckAll" checked></th>
-                    <th scope="col">No.</th>
-                    <th scope="col">카테고리</th>
-                    <th scope="col">상품 명</th>
-                    <th scope="col">버전</th>
-                    <th scope="col">가격</th>
-                    <th scope="col">구매일</th>
-                    <th scope="col">정지일</th>
-                   	<th scope="col">예상 사용 요금</th>
-                </tr>
+	                <tr>
+	                	<th scope="col"><input type="checkbox" id="priceCalculationCheckAll" checked></th>
+	                    <th scope="col">No.</th>
+	                    <th scope="col">카테고리</th>
+	                    <th scope="col">상품 명</th>
+	                    <th scope="col">버전</th>
+	                    <th scope="col">가격</th>
+	                    <th scope="col">구매일</th>
+	                    <th scope="col">정지일</th>
+	                   	<th scope="col">예상 사용 요금</th>
+	                </tr>
                 </thead>
                 <tbody id="myInstanceListArea"></tbody>
             </table>
@@ -192,7 +192,7 @@
     <!-- //InstanceCartList Template -->
     <!-- InstanceList Template -->
     <SCRIPT id="instanceTemplate" type="text/html">
-		<tr>
+		<tr class="bg-danger">
 			<td><input type="checkbox" name="priceCalculationCheck" data-price-per-instance="${pricePerInstance}" onclick="fncUsagePriceTotalRecalcul()" checked></td>
 			<td>${rowNum}</td>
 			<td><span class="pn_cate type${software.category.id}">${software.category.name}</span></td>
@@ -294,13 +294,13 @@
             var pageRowTotalPricePerInstance = 0;
 
             if (listLength > 0) {
-            	var rowNum = totalInstanceCnt - (pageNumSave * PAGING_SIZE);
+            	var rowNum = listLength;
 
             	productList.forEach(function(instanceInfo) {
             		// RowNumber 생성
                 	instanceInfo.rowNum = rowNum;
-            		rowNum--;
-            		
+                	rowNum--;
+                	
                  	// 사용시작일 DateFormat
                  	var usageStartDateValue = new Date(instanceInfo.usageStartDate);
                 	instanceInfo.usageStartDate = getFormatDate(usageStartDateValue);
