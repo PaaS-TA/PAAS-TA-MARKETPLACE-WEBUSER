@@ -32,18 +32,20 @@ public class LoginController {
     @Autowired
     private OAuth2AuthorizedClientService authorizedClientService;
 
-    @GetMapping(value = {"/", "/login"})
+    @GetMapping(value = {"/", "/main"})
     public String getLoginPage(Model model) {
         Map<String, String> oauth2AuthenticationUrls = new HashMap<>();
         Iterable<ClientRegistration> clientRegistrations = null;
+        
         ResolvableType type = ResolvableType.forInstance(clientRegistrationRepository).as(Iterable.class);
+        
         if (type != ResolvableType.NONE && ClientRegistration.class.isAssignableFrom(type.resolveGenerics()[0])) {
             clientRegistrations = (Iterable<ClientRegistration>) clientRegistrationRepository;
         }
 
         clientRegistrations.forEach(registration -> oauth2AuthenticationUrls.put(registration.getClientName(), "/oauth2/authorization/cf"));
         model.addAttribute("urls", oauth2AuthenticationUrls);
-
+        
         return "contents/login";
     }
 
@@ -53,11 +55,15 @@ public class LoginController {
                 .loadAuthorizedClient(
                         authentication.getAuthorizedClientRegistrationId(),
                         authentication.getName());
+        
+        if (client == null) {
+        	return "redirect:/main";
+        }
 
         OAuth2AccessToken accessToken = client.getAccessToken();
-
+        
         OAuth2User user = authentication.getPrincipal();
-
+        
         System.out.println("authentication access Token value ::: " + accessToken.getTokenValue());
         System.out.println("authentication getName ::: " + user.getAttributes().get("user_name"));
 
