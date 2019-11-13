@@ -66,11 +66,6 @@ public class InstanceCartController {
     @GetMapping(value = "/page")
     public String cartPage(Model model, @AuthenticationPrincipal OAuth2User oauth2User, HttpSession httpSession) {
         model.addAttribute("categories", instanceService.getCategories());
-        
-        Instance sss = new Instance();
-        sss = null;
-        sss.getInUse();
-        
         return "contents/instanceCart-list";
     }
     
