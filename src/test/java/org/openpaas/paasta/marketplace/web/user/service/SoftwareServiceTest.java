@@ -15,7 +15,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.openpaas.paasta.marketplace.api.domain.Category;
 import org.openpaas.paasta.marketplace.api.domain.CustomPage;
-import org.openpaas.paasta.marketplace.api.domain.Profile;
 import org.openpaas.paasta.marketplace.api.domain.Software;
 import org.openpaas.paasta.marketplace.api.domain.SoftwarePlan;
 import org.springframework.core.ParameterizedTypeReference;
@@ -29,16 +28,13 @@ public class SoftwareServiceTest extends AbstractMockTest {
     SoftwareService softwareService;
 
     @Mock
-    ParameterizedTypeReference<CustomPage<Profile>> typeRef;
+    ResponseEntity<CustomPage<Software>> softearePageResponse;
 
     @Mock
-    ResponseEntity<CustomPage<Software>> responseEntity;
+    CustomPage<Software> softwareCustomPage;
 
     @Mock
-    CustomPage<Software> customPage;
-
-    @Mock
-    Page<Software> page;
+    Page<Software> softwarePage;
 
     @Before
     public void setUp() throws Exception {
@@ -65,7 +61,7 @@ public class SoftwareServiceTest extends AbstractMockTest {
 
         softwareService.createSoftware(null);
     }
-    
+
     @Test
     public void getCategories() {
         List<Category> categoryList = new ArrayList<>();
@@ -82,13 +78,14 @@ public class SoftwareServiceTest extends AbstractMockTest {
 
     @Test(expected = RuntimeException.class)
     public void getCategoriesError() {
-        when(paasApiRest.getForObject(startsWith("/categories"), eq(List.class))).thenThrow(new IllegalStateException());
+        when(paasApiRest.getForObject(startsWith("/categories"), eq(List.class)))
+                .thenThrow(new IllegalStateException());
 
         softwareService.getCategories();
     }
-    
+
     @Test
-    public void getProfileList() {
+    public void getSoftwareList() {
         Category category = category(1L, "category-01");
         List<Software> softwareList = new ArrayList<>();
         Software software1 = software(1L, "software-01", category);
@@ -97,16 +94,16 @@ public class SoftwareServiceTest extends AbstractMockTest {
         softwareList.add(software2);
 
         when(paasApiRest.exchange(startsWith("/softwares/page"), eq(HttpMethod.GET), eq(null),
-                any(ParameterizedTypeReference.class))).thenReturn(responseEntity);
+                any(ParameterizedTypeReference.class))).thenReturn(softearePageResponse);
 
-        when(responseEntity.getBody()).thenReturn(customPage);
-        when(customPage.toPage()).thenReturn(page);
-        when(customPage.getContent()).thenReturn(softwareList);
+        when(softearePageResponse.getBody()).thenReturn(softwareCustomPage);
+        when(softwareCustomPage.toPage()).thenReturn(softwarePage);
+        when(softwareCustomPage.getContent()).thenReturn(softwareList);
 
         CustomPage<Software> result = softwareService.getSoftwareList("?nameLike=software");
         assertEquals(softwareList, result.getContent());
     }
-    
+
     @Test
     public void getSoftware() {
         Category category = category(1L, "category-01");
@@ -117,7 +114,7 @@ public class SoftwareServiceTest extends AbstractMockTest {
         Software result = softwareService.getSoftware(1L);
         assertEquals(software1, result);
     }
-    
+
     @Test
     public void getSoftwarePlanList() {
         Category category = category(1L, "category-01");
@@ -128,10 +125,11 @@ public class SoftwareServiceTest extends AbstractMockTest {
         SoftwarePlan softwarePlan2 = softwarePlan(2L, 1L);
         softwarePlanList.add(softwarePlan2);
 
-        when(paasApiRest.getForObject(startsWith("/softwares/plan/1/list"), eq(List.class))).thenReturn(softwarePlanList);
+        when(paasApiRest.getForObject(startsWith("/softwares/plan/1/list"), eq(List.class)))
+                .thenReturn(softwarePlanList);
 
         List<SoftwarePlan> result = softwareService.getSoftwarePlanList(1L);
         assertEquals(softwarePlanList, result);
     }
-    
+
 }

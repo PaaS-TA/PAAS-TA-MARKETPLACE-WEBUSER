@@ -27,16 +27,13 @@ public class ProfileServiceTest extends AbstractMockTest {
     ProfileService profileService;
 
     @Mock
-    ParameterizedTypeReference<CustomPage<Profile>> typeRef;
+    ResponseEntity<CustomPage<Profile>> profilePageResponse;
 
     @Mock
-    ResponseEntity<CustomPage<Profile>> responseEntity;
+    CustomPage<Profile> profileCustomPage;
 
     @Mock
-    CustomPage<Profile> customPage;
-
-    @Mock
-    Page<Profile> page;
+    Page<Profile> profilePage;
 
     @Before
     public void setUp() throws Exception {
@@ -101,11 +98,11 @@ public class ProfileServiceTest extends AbstractMockTest {
         profileList.add(profile2);
 
         when(paasApiRest.exchange(startsWith("/profiles/page"), eq(HttpMethod.GET), eq(null),
-                any(ParameterizedTypeReference.class))).thenReturn(responseEntity);
+                any(ParameterizedTypeReference.class))).thenReturn(profilePageResponse);
 
-        when(responseEntity.getBody()).thenReturn(customPage);
-        when(customPage.toPage()).thenReturn(page);
-        when(customPage.getContent()).thenReturn(profileList);
+        when(profilePageResponse.getBody()).thenReturn(profileCustomPage);
+        when(profileCustomPage.toPage()).thenReturn(profilePage);
+        when(profileCustomPage.getContent()).thenReturn(profileList);
 
         CustomPage<Profile> result = profileService.getProfileList("?nameLike=user");
         assertEquals(profileList, result.getContent());
