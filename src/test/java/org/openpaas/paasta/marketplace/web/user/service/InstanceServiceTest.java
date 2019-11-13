@@ -189,6 +189,7 @@ public class InstanceServiceTest extends AbstractMockTest {
     @Test
     public void getPricePerInstanceList() {
         Map<String, String> map = new TreeMap<>();
+        map.put("1", "25000");
         when(paasApiRest.getForObject(startsWith("/instances/pricePerInstanceList"), eq(Map.class))).thenReturn(map);
 
         List<Long> ids = new ArrayList<>();
