@@ -185,7 +185,11 @@ public class CommonService {
         /**
          * Parameters start date parameters list.
          */
-        PARAMETERS_USAGE_END_DATE("usageEndDate");
+        PARAMETERS_USAGE_END_DATE("usageEndDate"),
+    	
+    	PARAMETERS_SEARCH_START_DATE("srchStartDate"),
+    	PARAMETERS_SEARCH_END_DATE("srchEndDate"),
+    	PARAMETERS_SEARCH_SOFTWARE_NAME("srchSoftwareName");
 
         private String actualValue;
 

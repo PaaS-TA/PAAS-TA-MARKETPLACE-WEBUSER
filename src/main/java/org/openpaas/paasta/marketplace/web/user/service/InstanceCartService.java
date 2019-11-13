@@ -58,9 +58,6 @@ public class InstanceCartService {
      * @return
      */
     public Integer delete(InstanceCartSpecification spec) {
-//    	HttpEntity<InstanceCartSpecification> requestBody = new HttpEntity<>(instanceCartSpecification);
-//    	ResponseEntity<Integer> responseEntity = paasApiRest.exchange("/instances/cart/delete", HttpMethod.DELETE, requestBody, Integer.class);
-//    	return responseEntity.getBody();
     	String params = "";
     	int deleteConut = 0;
     	if (spec.getInInstanceCartId() != null && !spec.getInInstanceCartId().isEmpty()) {
@@ -72,4 +69,17 @@ public class InstanceCartService {
     	paasApiRest.delete("/instances/cart/delete?"+ params);
     	return deleteConut;
     }
+    
+    
+    
+    public List<InstanceCart> getPageList(String queryParamString) {
+        ResponseEntity<List<InstanceCart>> responseEntity = paasApiRest.exchange("/instances/cart/page/list" + queryParamString, HttpMethod.GET, null, new ParameterizedTypeReference<List<InstanceCart>>() {});
+        List<InstanceCart> instanceCartList = responseEntity.getBody();
+        return instanceCartList;
+    }
+
+	public InstanceCart purchaseCart(InstanceCart instanceCart) {
+        return paasApiRest.postForObject("/instances/cart/purchaseCart", instanceCart, InstanceCart.class);
+    }
+
 }

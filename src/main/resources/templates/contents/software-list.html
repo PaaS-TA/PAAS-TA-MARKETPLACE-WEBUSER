@@ -108,6 +108,9 @@
                 nameLike = '';
             }
 
+         	// Loading Start
+            loading.start();
+         
             var reqUrl = "/softwares" + "?categoryId=" + categoryId + "&nameLike=" + nameLike + "&sort=" + SORT;
             procCallAjax(reqUrl, "GET", null, null, callbackSoftwares);
         };
@@ -158,6 +161,9 @@
 
             }
             sofrwareList.html(htmlString);
+            
+         	// Loading Stop
+			loading.stop();
         };
 
         //eventBtn
