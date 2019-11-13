@@ -57,7 +57,7 @@ public class ProfileServiceTest extends AbstractMockTest {
         Category category2 = category(2L, "category-02");
         categoryList.add(category2);
 
-        when(paasApiRest.getForObject("/categories", List.class)).thenReturn(categoryList);
+        when(paasApiRest.getForObject(startsWith("/categories"), eq(List.class))).thenReturn(categoryList);
 
         List<Category> result = profileService.getCategories();
         assertEquals(categoryList, result);
@@ -65,7 +65,8 @@ public class ProfileServiceTest extends AbstractMockTest {
 
     @Test(expected = RuntimeException.class)
     public void getCategoriesError() {
-        when(paasApiRest.getForObject("/categories", List.class)).thenThrow(new IllegalStateException());
+        when(paasApiRest.getForObject(startsWith("/categories"), eq(List.class)))
+                .thenThrow(new IllegalStateException());
 
         profileService.getCategories();
     }
@@ -78,7 +79,7 @@ public class ProfileServiceTest extends AbstractMockTest {
         Profile profile2 = profile("user-02");
         profileList.add(profile2);
 
-        when(paasApiRest.getForObject("/profiles", List.class)).thenReturn(profileList);
+        when(paasApiRest.getForObject(startsWith("/profiles"), eq(List.class))).thenReturn(profileList);
 
         List<Profile> result = profileService.getProfile();
         assertEquals(profileList, result);
@@ -86,7 +87,7 @@ public class ProfileServiceTest extends AbstractMockTest {
 
     @Test(expected = RuntimeException.class)
     public void getProfileError() {
-        when(paasApiRest.getForObject("/profiles", List.class)).thenThrow(new IllegalStateException());
+        when(paasApiRest.getForObject(startsWith("/profiles"), eq(List.class))).thenThrow(new IllegalStateException());
 
         profileService.getProfile();
     }
