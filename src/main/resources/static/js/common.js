@@ -133,13 +133,13 @@ var commonUtils = {
  * */
 var loading = {
 	start: function() {
-//		$('body').loading({
-//			stoppable: false
-//			,theme: 'dark'
-//			//,message: 'Working...'
-//     	});
+		$('body').loading({
+			stoppable: false
+			,theme: 'dark'
+			//,message: 'Working...'
+     	});
 	},
 	stop: function() {
-//		$('body').loading("stop");
+		$('body').loading("stop");
 	}
 }
