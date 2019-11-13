@@ -158,7 +158,7 @@ public class InstanceServiceTest extends AbstractMockTest {
         Category category = category(1L, "category-01");
         Software software1 = software(1L, "software-01", category);
 
-        when(paasApiRest.postForObject(eq("/apps"), any(), eq(Software.class))).thenReturn(software1);
+        when(paasApiRest.postForObject(eq("/apps"), any(Software.class), eq(Software.class))).thenReturn(software1);
 
         Software result = instanceService.provision(software1);
         assertEquals(software1, result);
@@ -170,7 +170,7 @@ public class InstanceServiceTest extends AbstractMockTest {
         Software software1 = software(1L, "software-01", category);
         Instance instance1 = instance(1L, software1);
 
-        when(paasApiRest.postForObject(eq("/instances"), any(), eq(Instance.class))).thenReturn(instance1);
+        when(paasApiRest.postForObject(eq("/instances"), any(Instance.class), eq(Instance.class))).thenReturn(instance1);
 
         Instance result = instanceService.createInstance(instance1);
         assertEquals(instance1, result);
