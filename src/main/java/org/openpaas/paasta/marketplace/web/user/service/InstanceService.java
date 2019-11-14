@@ -43,9 +43,6 @@ public class InstanceService {
     public CustomPage<Instance> getMyTotalList(String queryParamString) {
         ResponseEntity<CustomPage<Instance>> responseEntity = paasApiRest.exchange("/instances/my/totalPage" + queryParamString, HttpMethod.GET, null, new ParameterizedTypeReference<CustomPage<Instance>>() {});
         CustomPage<Instance> customPage = responseEntity.getBody();
-
-        System.out.println("getContent ::: " + customPage.getContent());
-        System.out.println("getTotalElements ::: " + customPage.getTotalElements());
         return customPage;
     }
 
@@ -53,9 +50,6 @@ public class InstanceService {
     public CustomPage<Instance> getSoftwareList(String queryParamString) {
         ResponseEntity<CustomPage<Instance>> responseEntity = paasApiRest.exchange("/instances/my/page" + queryParamString, HttpMethod.GET, null, new ParameterizedTypeReference<CustomPage<Instance>>() {});
         CustomPage<Instance> customPage = responseEntity.getBody();
-
-        System.out.println("getContent ::: " + customPage.getContent());
-        System.out.println("getTotalElements ::: " + customPage.getTotalElements());
         return customPage;
     }
 

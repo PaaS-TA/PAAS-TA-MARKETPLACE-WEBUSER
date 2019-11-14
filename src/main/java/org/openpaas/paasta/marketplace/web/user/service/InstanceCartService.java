@@ -24,31 +24,36 @@ public class InstanceCartService {
         return paasApiRest.postForObject("/instances/cart", instanceCart, InstanceCart.class);
     }
 	
+	/**
+	 * User의 모든 장바구니상품 조회
+	 * @param queryParamString
+	 * @return
+	 */
     public List<InstanceCart> getAllList(String queryParamString) {
         ResponseEntity<List<InstanceCart>> responseEntity = paasApiRest.exchange("/instances/cart/allList" + queryParamString, HttpMethod.GET, null, new ParameterizedTypeReference<List<InstanceCart>>() {});
         List<InstanceCart> instanceCartList = responseEntity.getBody();
-        
-        log.debug(">>>>>>> instanceCartList: {}", (instanceCartList != null ? instanceCartList.toString() : "instanceCartList is null"));
-        
         return instanceCartList;
     }
     
+    /**
+     * User의 모든 장바구니상품 조회 기간한정
+     * @param queryParamString
+     * @return
+     */
     public List<InstanceCart> getUserAllCartList(String queryParamString) {
-    	log.info(">>>>>>> queryParamString: {}", queryParamString);
     	ResponseEntity<List<InstanceCart>> responseEntity = paasApiRest.exchange("/instances/cart/userAllCartList" + queryParamString, HttpMethod.GET, null, new ParameterizedTypeReference<List<InstanceCart>>() {});
     	List<InstanceCart> instanceCartList = responseEntity.getBody();
-    	
-    	log.debug(">>>>>>> instanceCartList: {}", (instanceCartList != null ? instanceCartList.toString() : "instanceCartList is null"));
-    	
     	return instanceCartList;
     }
     
+    /**
+     * User의 장바구니 상품 모두 삭제
+     * @param queryParamString
+     * @return
+     */
     public Integer allDelete(String queryParamString) {
     	ResponseEntity<Integer> responseEntity = paasApiRest.exchange("/instances/cart/allDelete" + queryParamString, HttpMethod.DELETE, null, new ParameterizedTypeReference<Integer>() {});
     	Integer result = responseEntity.getBody();
-    	
-    	log.debug(">>>>>>> instanceCart allDelete result: {}", result);
-    	
     	return result;
     }
     
@@ -71,13 +76,22 @@ public class InstanceCartService {
     }
     
     
-    
+    /**
+     * 장바구니 페이지 리스트 조회
+     * @param queryParamString
+     * @return
+     */
     public List<InstanceCart> getPageList(String queryParamString) {
         ResponseEntity<List<InstanceCart>> responseEntity = paasApiRest.exchange("/instances/cart/page/list" + queryParamString, HttpMethod.GET, null, new ParameterizedTypeReference<List<InstanceCart>>() {});
         List<InstanceCart> instanceCartList = responseEntity.getBody();
         return instanceCartList;
     }
 
+    /**
+     * 장바구니의 상품 구매
+     * @param instanceCart
+     * @return
+     */
 	public InstanceCart purchaseCart(InstanceCart instanceCart) {
         return paasApiRest.postForObject("/instances/cart/purchaseCart", instanceCart, InstanceCart.class);
     }

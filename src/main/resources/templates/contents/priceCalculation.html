@@ -73,16 +73,6 @@
                     </div>
                 </div>
                 <!-- //Form 그룹 -->
-                <!-- Form 그룹 -->
-                <div class="form-group">
-                    <div class="form-group-area">
-                        <div class="fm_box">
-                        	<input type="checkbox" id="instanceCartView" />
-                        </div>
-                        <div class="fm_label"><label for="instanceCartView" class="label">장바구니포함</label></div>
-                    </div>
-                </div>
-                <!-- //Form 그룹 -->
                 <button type="button" name="button" class="btn btn-sch" title="검색" id="searchBtn"><span class="ico">검색</span></button>
             </div>
         </div>
@@ -124,12 +114,6 @@
             </table>
         </div>
         <!-- //테이블 -->
-
-        <div class="pull-right mt10" style="display:none;">
-            <!-- <button type="button" class="btn btn-danger btn-lg">Click to toggle popover</button> -->
-            <button type="button" class="btn btn-success btn-sm" id="deleteInstanceCartBtn" style="display:none;">장바구니 비우기</button>
-        </div>
-        
         <!-- page -->
         <nav class="pagiWrap">
             <ul class="pagination" id="pageNumberList"></ul>
@@ -155,27 +139,7 @@
         </div>
     </div>
     <!-- //알림 팝업 Modal -->
-    
-        <!-- 장바구니 확인 팝업 Modal -->
-    <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content modal-sm">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">장바구니</h4>
-                </div>
-                <div class="modal-body">
-                    <p class="popTxt">장바구니를 비우시겠습니까?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" name="button" class="btn btn-color1" id="execDeleteInstanceCartBtn">예</button>
-                    <button type="button" name="button" class="btn btn-color2" data-dismiss="modal">아니오</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- //장바구니 확인 팝업 Modal -->
-    
+        
     <!-- InstanceCartList Template -->
     <SCRIPT id="instanceCartTemplate" type="text/html">
 		<tr id="CART_ROW_${id}" style="background-color: #ffff;">
@@ -221,9 +185,6 @@
                 selectedCategory = '';
             }
 
-           	// InstanceCart
-           	var instanceCartChecked = $("#instanceCartView").is(":checked");
-           
 			// Usage Date Range
 			var usageYearStart = $("#selectDateYearStart option:selected").val();
 			var usageMonthStart = $("#selectDateMonthStart option:selected").val();
@@ -250,7 +211,7 @@
 			nextYearMonth = usageYearEnd +"-"+ commonUtils.dateValueDigit(usageMonthEnd) +"-"+ nextLastDay +"T23:59:59";
 			
             // 전체 구매 상품 목록 조회 url
-            var reqUrl = "/instances/total" + "?categoryId=" + selectedCategory + "&page=" + pageNum + "&size=" + PAGING_SIZE + "&sort=" + SORT + "&usageStartDate=" + currentYearMonth +"&usageEndDate=" + nextYearMonth +"&instanceCartChecked="+ instanceCartChecked;
+            var reqUrl = "/instances/total" + "?categoryId=" + selectedCategory + "&page=" + pageNum + "&size=" + PAGING_SIZE + "&sort=" + SORT + "&usageStartDate=" + currentYearMonth +"&usageEndDate=" + nextYearMonth +"&instanceCartChecked=true";
                         
          	// Loading Start
             loading.start();
@@ -263,7 +224,6 @@
         var callbackGetMyInstanceList = function(data) {
             // List 초기화
             $("#myInstanceListArea").html("");
-            $("#deleteInstanceCartBtn").hide();
             
             var yearValue = $("#selectDateYearStart option:selected").val();
             var monthValue = $("#selectDateMonthStart option:selected").val();
@@ -279,16 +239,10 @@
             var instanceTemplateHtml = $("#instanceTemplate").text();
             
             // Cart List
-            var instanceCartChecked = $("#instanceCartView").is(":checked");
             if (data.instanceCartList != undefined && data.instanceCartList.length > 0) {
-            	$("#deleteInstanceCartBtn").show();
-            	
             	data.instanceCartList.forEach(function(cartInfo){
             		$.tmpl(instanceCartTemplateHtml, cartInfo).appendTo("#myInstanceListArea");
 				});
-            } else if (instanceCartChecked && (pageNumSave == 0 || pageNumSave == undefined)) {
-            	//$("#alertModal-text").text("장바구니에 담겨있는 상품이 없습니다.");
-        		//$("#alertModal").modal("show");
             }
 
             // 상품 목록 조회
@@ -341,16 +295,6 @@
             getMyInstanceRangeList(0);
         });
         
-        //장바구니 비우기 버튼
-        $("#deleteInstanceCartBtn").on("click", function () {
-        	$("#cartModal").modal("show");
-        });
-
-      	//장바구니 삭제
-        $("#execDeleteInstanceCartBtn").on("click", function () {
-        	procCallAjax("/instances/cart/allDelete", "DELETE", "", null, callbackDeleteInstanceCart);
-        });
-      	
       	function callbackDeleteInstanceCart(data) {
       		procMovePage("/priceCalculation");
       	}
