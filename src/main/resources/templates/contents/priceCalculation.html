@@ -143,7 +143,7 @@
             <div class="modal-content modal-sm">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">알림!</h4>
+                    <h4 class="modal-title"><span style="color: #FF3366">알림!</span></h4>
                 </div>
                 <div class="modal-body">
                     <p class="popTxt" id="alertModal-text">구매할 상품의 가격 정보가 없습니다.</p>
@@ -252,6 +252,10 @@
             // 전체 구매 상품 목록 조회 url
             var reqUrl = "/instances/total" + "?categoryId=" + selectedCategory + "&page=" + pageNum + "&size=" + PAGING_SIZE + "&sort=" + SORT + "&usageStartDate=" + currentYearMonth +"&usageEndDate=" + nextYearMonth +"&instanceCartChecked="+ instanceCartChecked;
                         
+         	// Loading Start
+            loading.start();
+         
+            // 상품리스트 조회
             procCallAjax(reqUrl, "GET", null, null, callbackGetMyInstanceList);
         };
 
@@ -322,6 +326,9 @@
 
             // 총 사용금액 계산
 	        fncUsagePriceTotalRecalcul();
+            
+	     	// Loading Stop
+            loading.stop();
         };
 
      	// 페이지 이동

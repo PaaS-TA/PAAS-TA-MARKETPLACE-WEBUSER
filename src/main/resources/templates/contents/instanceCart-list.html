@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout-user}">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+
+</th:block>
+
+<div class="rightCnt" layout:fragment="content">
+    <!-- title area -->
+    <div class="titWrap">
+        <h2 class="h2">장바구니</h2>
+        <div class="breadWrap">
+            <ol class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">마이 페이지</a></li>
+                <li class="active">장바구니</li><!-- 마지막 li -->
+            </ol>
+        </div>
+    </div>
+    <!-- //title area -->
+
+    <!-- content -->
+    <div class="content">
+        <!-- Top 비주얼 -->
+        <div class="top_visualWrap">
+            <div class="top_visual">
+                <p class="top_title">Welcome to PaaS-TA Market place</p>
+                <p class="top_stitle">
+                    Thanks to our partnership with PaaS-TA, we have the ability to gain new revenues, and our customers will gain<br />
+                    access to all the new technologies and benefits those technologies bring. They are exceptionally forward thinking.<br />
+                    they've built their business around the cloud.
+                </p>
+            </div>
+        </div>
+        <!-- //Top 비주얼 -->
+
+        <!-- 검색 Form -->
+        <div class="searchWrap">
+            <div class="searchBox">
+                <!-- Form 그룹 -->
+                <div class="form-group">
+                    <div class="form-group-area">
+                        <div class="fm_label"><label class="label">장바구니 저장기간</label></div>
+                        <select name="selectDateYearStart" id="selectDateYearStart"></select>
+                        <label></label>
+                        <select name="selectDateMonthStart" id="selectDateMonthStart"></select>
+                        ~
+                        <select name="selectDateYearEnd" id="selectDateYearEnd"></select>
+                        <label></label>
+                        <select name="selectDateMonthEnd" id="selectDateMonthEnd"></select>
+                    </div>
+                </div>
+                <!-- //Form 그룹 -->
+                <!-- Form 그룹 -->
+                <div class="form-group">
+                    <div class="form-group-area">
+                        <div class="fm_label"><label for="" class="label">카테고리</label></div>
+                        <div class="fm_box">
+                            <select class="selectField" id="categoryList">
+                                <option value="">선택</option>
+                                <option th:each="category : ${categories}"
+                                        th:value="${category.id}"
+                                        th:utext="${category.name}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-group-area">
+                        <div class="fm_label"><label for="" class="label">상품명</label></div>
+                        <div class="fm_box">
+                        	<input type="text" id="srchSoftwareName" name="srchSoftwareName" maxlength="100"/>
+                        </div>
+                    </div>
+                </div>
+                <!-- //Form 그룹 -->
+                <button type="button" name="button" class="btn btn-sch" title="검색" id="searchBtn"><span class="ico">검색</span></button>
+            </div>
+        </div>
+        <!-- //검색 Form -->
+
+        <div class="cont-titWrap mt30">
+            <h3 class="h-tit3">총 건수 <span class="point4" id="totalElements"></span><span class="point_txt" id="totalPrice"></span></h3>
+        </div>
+
+        <!-- 테이블 -->
+        <!-- <div class="tbl type1 pt20"> -->
+        <div>
+            <table class="table">
+                <colgroup>
+                	<col style="width:5%;">
+                    <col style="width:5%;">
+                    <col style="width:12%;">
+                    <col style="width:12%;">
+                    <col style="width:12%;">
+                    <col style="width:12%;">
+                    <col style="width:12%;">
+                    <col style="width:12%;">
+                    <col style="width:auto;">
+                </colgroup>
+                <thead>
+	                <tr style="background-color: #333">
+	                	<th style="color: #ffff; text-align: center"><input type="checkbox" id="deleteCartCheckAll"></th>
+	                    <th style="color: #ffff; text-align: center">No.</th>
+	                    <th style="color: #ffff; text-align: center">카테고리</th>
+	                    <th style="color: #ffff; text-align: center">상품 명</th>
+	                    <th style="color: #ffff; text-align: center">버전</th>
+	                    <th style="color: #ffff; text-align: center">가격</th>
+	                    <th style="color: #ffff; text-align: center">장바구니 저장일</th>
+	                    <th style="color: #ffff; text-align: center">판매자</th>
+	                   	<th style="color: #ffff; text-align: center">구매</th>
+	                </tr>
+                </thead>
+                <tbody id="myInstanceListArea"></tbody>
+            </table>
+        </div>
+        <!-- //테이블 -->
+
+        <div class="pull-right mt10" style="display:">
+            <!-- <button type="button" class="btn btn-danger btn-lg">Click to toggle popover</button> -->
+            <button type="button" class="btn btn-success btn-sm" id="deleteCartBtn">선택상품 삭제</button>
+        </div>
+        
+        <!-- page -->
+        <nav class="pagiWrap">
+            <ul class="pagination" id="pageNumberList"></ul>
+        </nav>
+        <!-- //page -->
+    </div>
+    
+    <!-- 알림 팝업 Modal -->
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content modal-sm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><span style="color: #FF3366">알림!</span></h4>
+                </div>
+                <div class="modal-body">
+                    <p class="popTxt" id="alertModal-text">구매할 상품의 가격 정보가 없습니다.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" name="button" class="btn btn-color2" data-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //알림 팝업 Modal -->
+    
+    <!-- 상품구매 확인 팝업 Modal -->
+    <div class="modal fade" id="purchaseCartModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content modal-sm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">상품구매</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="popTxt">선택한 상품(<strong id="purchaseSoftwareNameModal"></strong>)을 구매 하시겠습니까?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" name="button" class="btn btn-color1" id="execPurchaseCartBtn">예</button>
+                    <button type="button" name="button" class="btn btn-color2" data-dismiss="modal">아니오</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //상품구매 확인 팝업 Modal -->
+    
+    <!-- 장바구니 삭제 확인 팝업 Modal -->
+    <div class="modal fade" id="deleteCartModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content modal-sm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">장바구니 삭제</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="popTxt">선택한 상품을 삭제하시겠습니까?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" name="button" class="btn btn-color1" id="execDeleteCartBtn">예</button>
+                    <button type="button" name="button" class="btn btn-color2" data-dismiss="modal">아니오</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //장바구니 삭제 확인 팝업 Modal -->
+    
+    <!-- InstanceCartList Template -->
+    <SCRIPT id="instanceCartTemplate" type="text/html">
+		<tr id="CART_ROW_${id}" style="background-color: #ffff;">
+			<td align="center"><input type="checkbox" name="deleteCartCheck" data-row-id="CART_ROW_${id}" data-instance-cart-id="${id}" onclick="fncDeleteCartCheck()"></td>
+			<td align="center">${rowNum}</td>
+			<td align="center"><span class="pn_cate type${software.category.id}">${software.category.name}</span></td>
+			<td align="center">${software.name}</td>
+			<td align="center">${software.version}</td>
+			<td align="center">${commonUtils.addComma(softwarePlanAmtMonth)} 원/월</td>
+			<td align="center">${saveDateView(createdDate)}</td>
+			<td align="center">${software.createdBy}</td>
+			<td align="center"><button type="button" class="btn btn-primary" data-instance-cart-id="${id}" data-software-id="${software.id}" data-software-plan-id="${softwarePlanId}" data-software-name="${software.name}" onclick="purchaseInstanceCartModal(this);">&nbsp;구매하기&nbsp;</button></td>
+		</tr>
+	</SCRIPT>
+    <!-- //InstanceCartList Template -->
+    
+    <!-- //content -->
+    <script th:inline="javascript" type="text/javascript">
+        /*<![CDATA[*/
+        var SORT = "id,desc";
+		var PURCHASE_DATA = {};
+        var DELETE_ID_LIST = [];
+        
+        // ON LOAD
+        $(document.body).ready(function () {
+            currentMenu('2_4');
+            selectCal('selectDateMonthStart', 'selectDateYearStart');
+            selectCal('selectDateMonthEnd', 'selectDateYearEnd');
+            srchInatanceCartPageList();
+        });
+        /*]]>*/
+        
+        function closeModalAll() {
+        	$("#purchaseCartModal").modal("hide");
+        	$("#deleteCartModal").modal("hide");
+        }
+
+        function srchInatanceCartPageList(pageNum) {
+        	closeModalAll();
+        	
+        	// Category
+            var selectedCategory = $("#categoryList option:selected").val();
+            if (selectedCategory === 'ALL' || selectedCategory === '') {
+                selectedCategory = '';
+            }
+            
+            // 상품명
+            var srchSoftwareName = $("#srchSoftwareName").val();
+
+			// Usage Date Range
+			var srchYearStart = $("#selectDateYearStart option:selected").val();
+			var srchMonthStart = $("#selectDateMonthStart option:selected").val();
+			var srchYearEnd = $("#selectDateYearEnd option:selected").val();
+			var srchMonthEnd = $("#selectDateMonthEnd option:selected").val();
+			
+			var startDateValue = Number(srchYearStart + commonUtils.dateValueDigit(srchMonthStart));
+			var endDateValue = Number(srchYearEnd + commonUtils.dateValueDigit(srchMonthEnd));
+			
+			if (startDateValue > endDateValue) {
+        		$("#alertModal-text").text("검색기간은 시작일자가 종료일자보다 클수는 없습니다.");
+        		$("#alertModal").modal("show");
+
+				$("#selectDateYearEnd").val(srchYearStart);
+				$("#selectDateMonthEnd").val(srchMonthStart);
+				return;
+			}
+			
+			// 조회 시작일자 생성
+			srchStartDate = srchYearStart +"-"+ commonUtils.dateValueDigit(srchMonthStart) +"-01T00:00:00";
+			
+			// 조회 마지막일자 생성 
+			var srchLastDay = (new Date(srchYearEnd, commonUtils.dateValueDigit(srchMonthEnd), 0)).getDate();
+			srchEndDate = srchYearEnd +"-"+ commonUtils.dateValueDigit(srchMonthEnd) +"-"+ srchLastDay +"T23:59:59";
+			
+            // 장바구니 목록 조회 url
+            var reqUrl = "/instances/cart/page/list?categoryId="+ selectedCategory +"&sort="+ SORT +"&srchStartDate="+ srchStartDate +"&srchEndDate="+ srchEndDate +"&srchSoftwareName="+ srchSoftwareName;
+
+            // Loading Start
+            loading.start();
+            
+           	// 장바구니 리스트 조회 호출
+            procCallAjax(reqUrl, "GET", null, null, callbackRender);
+        };
+
+        // 장바구니 CALLBACK
+        function callbackRender(data) {
+        	//console.log(">>>>>>> data: %o", data);
+        	
+        	// List 초기화
+        	$("#myInstanceListArea").html("");
+        	
+            // Template Loading
+            var instanceCartTemplateHtml = $("#instanceCartTemplate").text();
+            var instanceTemplateHtml = $("#instanceTemplate").text();
+            
+            // Cart List
+            var instanceCartChecked = $("#instanceCartView").is(":checked");
+            if (data.cartList != undefined && data.cartList.length > 0) {
+            	var rowNum = data.cartList.length;
+            	data.cartList.forEach(function(cartInfo){
+            		cartInfo.rowNum = rowNum;
+            		$.tmpl(instanceCartTemplateHtml, cartInfo).appendTo("#myInstanceListArea");
+            		rowNum--;
+				});
+                $("#totalElements").text("("+ data.cartList.length +")");
+                $("#deleteCartBtn").show();
+            } else {
+            	$("#myInstanceListArea").append($.parseHTML("<tr><td colspan='9' style='background-color: #ffff;' align='center'><p class='user_p'>장바구니에 상품이 존재하지 않습니다.</p></td></tr>"));
+            	$("#totalElements").text("(0)");
+            	$("#deleteCartBtn").hide();
+            }
+            
+         	// Loading Stop
+            loading.stop();
+        };
+
+        //장바구니 리스트 조회
+        $("#searchBtn").on("click", function () {
+        	srchInatanceCartPageList();
+        });
+        
+        //상품 구매 버튼
+        function purchaseInstanceCartModal(targetObj) {
+        	var dataObj = $(targetObj);
+        	PURCHASE_DATA = {};
+        	PURCHASE_DATA.instanceCartId = dataObj.data("instanceCartId");
+        	PURCHASE_DATA.softwareId = dataObj.data("softwareId");
+        	PURCHASE_DATA.softwareName = dataObj.data("softwareName");
+        	PURCHASE_DATA.softwarePlanId = dataObj.data("softwarePlanId");
+        	
+        	//console.log(">>>>>>> PURCHASE_DATA: %o", PURCHASE_DATA);
+        	
+        	$("#purchaseSoftwareNameModal").text(PURCHASE_DATA.softwareName);
+        	$("#purchaseCartModal").modal("show");
+        }
+        
+      	//상품 구매 확정
+        $("#execPurchaseCartBtn").on("click", function () {
+            var reqParam = {
+                "software": {
+                    "id": PURCHASE_DATA.softwareId
+                },
+                "softwarePlanId": PURCHASE_DATA.softwarePlanId,
+                "id": PURCHASE_DATA.instanceCartId,
+                "provisionTryCount": 0,
+                "deprovisionTryCount": 0
+            };
+            
+            //console.log(">>>>>>> purchase reqParam: %o", reqParam);
+            procCallAjax("/instances/cart/purchaseCart", "POST", JSON.stringify(reqParam), null, srchInatanceCartPageList);
+        });
+        
+        //장바구니 삭제 버튼
+        $("#deleteCartBtn").on("click", function () {
+        	if (commonUtils.isEmpty(DELETE_ID_LIST) || DELETE_ID_LIST.length == 0) {
+        		$("#alertModal-text").text("삭제할 장바구니 상품을 선택해주세요.");
+        		$("#alertModal").modal("show");
+        		return;
+        	}
+        	$("#deleteCartModal").modal("show");
+        });
+
+      	//장바구니 삭제 확정
+        $("#execDeleteCartBtn").on("click", function () {
+            var reqParam = {
+            	"inInstanceCartId": DELETE_ID_LIST
+			};
+			
+			console.log(">>>>>>> delete reqParam: %o", reqParam);
+			procCallAjax("/instances/cart/delete", "DELETE", JSON.stringify(reqParam), null, srchInatanceCartPageList);
+        });
+      	
+        // [공통] 년, 월 select box
+        function selectCal(monthfield, yearfield) {
+            var today = new Date();
+            yearValue = today.getFullYear();
+            monthValue = (today.getMonth() + 1);
+            
+            for (var i = 1; i < 13; i++) {
+                if ((today.getMonth() + 1) == i) $("#" + monthfield).append("<option value='" + i + "' selected='selected'>" + i + "</option>");
+                else $("#" + monthfield).append("<option value='" + i + "'>" + i + "</option>");
+            }
+
+            var thisyear = today.getFullYear();
+            //for (var y = thisyear - 10; y < thisyear + 10; y++) {
+            for (var y = thisyear; y < thisyear + 32; y++) {
+                if (thisyear == y) $("#" + yearfield).append("<option value='" + y + "' selected='selected'>" + y + "</option>");
+                else $("#" + yearfield).append("<option value='" + y + "'>" + y + "</option>");
+            }
+        }
+        
+        $("#deleteCartCheckAll").on("click", function () {
+        	var isChecked = $("#deleteCartCheckAll").is(":checked");
+			$("input:checkbox[name=deleteCartCheck]").each(function() {
+				$(this).prop("checked", isChecked);
+			});
+			fncDeleteCartCheck();
+        });
+        
+        $("#srchSoftwareName").keypress(function (e) {
+        	if (e.keyCode === 13 && !commonUtils.isBlank($("#srchSoftwareName").val())) {
+        		e.preventDefault(srchInatanceCartPageList());
+        	}
+        });
+        
+        function fncDeleteCartCheck() {
+        	DELETE_ID_LIST = [];
+        	$("input:checkbox[name=deleteCartCheck]").each(function() {
+        		var obj = $(this);
+			
+        		if (obj.is(":checked")) {
+					// 선택 Row 배경 White로 변경
+					$("#"+ obj.data("rowId")).css("background-color", "#dee2e6");
+					DELETE_ID_LIST[DELETE_ID_LIST.length] = obj.data("instanceCartId");
+				} else {
+					// 해제 Row 배경 회색으로 변경
+					$("#"+ obj.data("rowId")).css("background-color", "#ffff");
+				}
+			});
+        	//console.log("DELETE_ID_LIST: %o", DELETE_ID_LIST);
+        }
+        
+        function saveDateView(saveDate) {
+        	if (commonUtils.isBlank(saveDate)) {
+        		return saveDate;
+        	}
+        	var tempDate = saveDate.split("T");
+        	return tempDate[0];
+        }
+    </script>
+</div>
+</html>

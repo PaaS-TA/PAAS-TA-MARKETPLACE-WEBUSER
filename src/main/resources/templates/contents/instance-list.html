@@ -123,6 +123,10 @@
             var reqUrl = "/instances" + "?categoryId=" + categoryId + "&softwareNameLike=" + nameLike + "&size=" + PAGING_SIZE + "&sort=" + SORT + "&page=" + pageNum;
             if (pageNum != null) 
             	pageNumSave = pageNum;
+            
+         	// Loading Start
+            loading.start();
+         
             procCallAjax(reqUrl, "GET", null, null, callbackInstance);
         };
 
@@ -254,6 +258,9 @@
                                 
                 $("#pageNumberList").html(htmlStringPage);                      // 페이지 목록 생성                                     
             }
+        	
+        	// Loading Stop
+            loading.stop();
         };
 
         //eventBtn
