@@ -20,5 +20,4 @@ import org.openpaas.paasta.marketplace.web.user.service.SoftwareServiceTest;
         // @formatter:on
 })
 public class ServiceTests {
-
 }

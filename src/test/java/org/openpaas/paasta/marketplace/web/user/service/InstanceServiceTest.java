@@ -106,7 +106,6 @@ public class InstanceServiceTest extends AbstractMockTest {
 
         when(paasApiRest.exchange(startsWith("/instances/my/totalPage"), eq(HttpMethod.GET), eq(null),
                 any(ParameterizedTypeReference.class))).thenReturn(instancePageResponse);
-
         when(instancePageResponse.getBody()).thenReturn(instanceCustomPage);
         when(instanceCustomPage.getContent()).thenReturn(instanceList);
 
@@ -126,7 +125,6 @@ public class InstanceServiceTest extends AbstractMockTest {
 
         when(paasApiRest.exchange(startsWith("/instances/my/page"), eq(HttpMethod.GET), eq(null),
                 any(ParameterizedTypeReference.class))).thenReturn(instancePageResponse);
-
         when(instancePageResponse.getBody()).thenReturn(instanceCustomPage);
         when(instanceCustomPage.getContent()).thenReturn(instanceList);
 

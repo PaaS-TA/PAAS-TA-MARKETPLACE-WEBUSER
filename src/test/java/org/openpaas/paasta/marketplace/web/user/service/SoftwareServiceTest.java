@@ -28,7 +28,7 @@ public class SoftwareServiceTest extends AbstractMockTest {
     SoftwareService softwareService;
 
     @Mock
-    ResponseEntity<CustomPage<Software>> softearePageResponse;
+    ResponseEntity<CustomPage<Software>> softwarePageResponse;
 
     @Mock
     CustomPage<Software> softwareCustomPage;
@@ -94,9 +94,8 @@ public class SoftwareServiceTest extends AbstractMockTest {
         softwareList.add(software2);
 
         when(paasApiRest.exchange(startsWith("/softwares/page"), eq(HttpMethod.GET), eq(null),
-                any(ParameterizedTypeReference.class))).thenReturn(softearePageResponse);
-
-        when(softearePageResponse.getBody()).thenReturn(softwareCustomPage);
+                any(ParameterizedTypeReference.class))).thenReturn(softwarePageResponse);
+        when(softwarePageResponse.getBody()).thenReturn(softwareCustomPage);
         when(softwareCustomPage.toPage()).thenReturn(softwarePage);
         when(softwareCustomPage.getContent()).thenReturn(softwareList);
 

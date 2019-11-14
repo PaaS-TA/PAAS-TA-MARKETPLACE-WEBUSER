@@ -99,7 +99,6 @@ public class ProfileServiceTest extends AbstractMockTest {
 
         when(paasApiRest.exchange(startsWith("/profiles/page"), eq(HttpMethod.GET), eq(null),
                 any(ParameterizedTypeReference.class))).thenReturn(profilePageResponse);
-
         when(profilePageResponse.getBody()).thenReturn(profileCustomPage);
         when(profileCustomPage.toPage()).thenReturn(profilePage);
         when(profileCustomPage.getContent()).thenReturn(profileList);
