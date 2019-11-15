@@ -110,7 +110,7 @@
             var categoryId = $("#categoryId option:selected").val();
             var nameLike = $("#nameLike").val();
 
-            console.log("categoryId ::: " + categoryId + " ::: nameLike ::: " + nameLike);
+            //console.log("categoryId ::: " + categoryId + " ::: nameLike ::: " + nameLike);
 
             if (categoryId === 'ALL' || categoryId === '') {
                 categoryId = '';
@@ -131,7 +131,7 @@
         };
 
         var callbackInstance = function (data) {
-            console.log("data ::: " + JSON.stringify(data));
+            //console.log("data ::: " + JSON.stringify(data));
 
             $("#totalElements").text("(" + data.totalElements + ")");
 
@@ -197,7 +197,7 @@
         	paging(pageTotalNumber, pageSize, PAGING_SIZE, pageNumSave);
 
         	function paging(pageTotalNumber, pageSize, PAGING_SIZE, currentPage){
-            	console.log("currentPage : " + currentPage);
+            	//console.log("currentPage : " + currentPage);
             	currentPage = parseInt(currentPage);
                 
             	var totalPage = Math.ceil(pageTotalNumber/pageSize);           // 총 페이지 수
@@ -205,7 +205,7 @@
             		var pageGroup = Math.ceil((currentPage+1)/PAGING_SIZE);    // 페이지 그룹
             	else var pageGroup = 1;
                 
-                console.log("pageGroup : " + pageGroup);
+                //console.log("pageGroup : " + pageGroup);
                 
                 var last = pageGroup * PAGING_SIZE;        // 화면에 보여질 마지막 페이지 번호 (실제 페이지와 -1 차이)
                 if(last > totalPage)
@@ -216,10 +216,10 @@
                 var next = currentPage + 1;                // 다음 페이지
                 var prev = currentPage - 1;                // 이전 페이지
                 
-                console.log("last : " + last);
-                console.log("first : " + first);
-                console.log("next : " + next);
-                console.log("prev : " + prev);
+                //console.log("last : " + last);
+                //console.log("first : " + first);
+                //console.log("next : " + next);
+                //console.log("prev : " + prev);
                  
                 var htmlStringPage = "";
                 
