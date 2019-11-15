@@ -344,9 +344,9 @@
             };
             
             //console.log(">>>>>>> purchase reqParam: %o", reqParam);
-            procCallAjax("/instances/cart/purchaseCart", "POST", JSON.stringify(reqParam), null, srchInatanceCartPageList);
+            procCallAjax("/instances/cart/purchaseCart", "POST", JSON.stringify(reqParam), null, purchaseAfter);
         });
-        
+      	
         //장바구니 삭제 버튼
         $("#deleteCartBtn").on("click", function () {
         	if (commonUtils.isEmpty(DELETE_ID_LIST) || DELETE_ID_LIST.length == 0) {
@@ -424,6 +424,10 @@
         	var tempDate = saveDate.split("T");
         	return tempDate[0];
         }
+        
+      	function purchaseAfter() {
+      		procMovePage("/instances/my/page");
+      	}
     </script>
 </div>
 </html>
