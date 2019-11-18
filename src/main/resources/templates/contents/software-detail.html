@@ -229,6 +229,9 @@
         /*<![CDATA[*/
         // 구매하기 실행버튼
         $("#purchaseBtn").on("click", function () {
+        	
+        	if(doubleSubmitCheck()) return;
+        	
             var id = $("#softwareId").val();
             var softwarePlanId = $("#softwarePlanId").val();
             //console.log("여기 들어오니?" + id);
