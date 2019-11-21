@@ -243,6 +243,14 @@
 
         //eventBtn
         $("#searchBtn").on("click", function () {
+        	var srchStartDate = $("#selectDateYear1").val() + commonUtils.dateValueDigit($("#selectDateMonth1").val());
+        	var srchEndDate = $("#selectDateYear2").val() + commonUtils.dateValueDigit($("#selectDateMonth2").val());
+        	
+			if (srchStartDate > srchEndDate) {
+				commonAlert.show("조회 시작일자가 종료일자보다 클수가 없습니다.");
+				return;
+			}
+        	
             getMyInstanceStatsList();
         });
 
