@@ -121,25 +121,6 @@
         <!-- //page -->
     </div>
     
-    <!-- 알림 팝업 Modal -->
-    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content modal-sm">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"><span style="color: #FF3366">알림!</span></h4>
-                </div>
-                <div class="modal-body">
-                    <p class="popTxt" id="alertModal-text">구매할 상품의 가격 정보가 없습니다.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" name="button" class="btn btn-color2" data-dismiss="modal">닫기</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- //알림 팝업 Modal -->
-        
     <!-- InstanceCartList Template -->
     <SCRIPT id="instanceCartTemplate" type="text/html">
 		<tr id="CART_ROW_${id}" style="background-color: #ffff;">
@@ -195,8 +176,7 @@
 			var endDateValue = Number(usageYearEnd + commonUtils.dateValueDigit(usageMonthEnd));
 			
 			if (startDateValue > endDateValue) {
-        		$("#alertModal-text").text("사용기간은 시작일자가 종료일자보다 클수는 없습니다.");
-        		$("#alertModal").modal("show");
+				commonAlert.show("사용기간은 시작일자가 종료일자보다 클수는 없습니다.");
 
 				$("#selectDateYearEnd").val(usageYearStart);
 				$("#selectDateMonthEnd").val(usageMonthStart);

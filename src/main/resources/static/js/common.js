@@ -185,3 +185,15 @@ function doubleSubmitCheck(){
         return false;
     }
 }
+
+// 공통 알림 Modal
+var commonAlert = {
+	show: function(message) {
+		$("#commonAlertModal-Message").text(message);
+		$("#commonAlertModal").modal("show");
+	},
+	hide: function() {
+		$("#commonAlertModal-Message").text("");
+		$("#commonAlertModal").modal("hide");
+	}
+}
