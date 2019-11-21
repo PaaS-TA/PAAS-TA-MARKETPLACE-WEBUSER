@@ -130,7 +130,7 @@
             var yy = yearValueF;        			// 이전 해
             var yy2 = yearValueS;       			// 다음 해
             var mm = monthValueF;       			// 이전 달
-            var mm2 = parseInt(monthValueS);		// 다음 달(해당달 전체를 포함 위해 더하기 1)
+            var mm2 = parseInt(monthValueS) + 1;	// 다음 달(해당달 전체를 포함 위해 더하기 1)
             
             if (monthValueF < 10) {
                 mm = '0' + monthValueF;
@@ -142,6 +142,10 @@
                 mm2 = '0' + mm2;
             }else if(monthValueS >= 10 && monthValueS < 12) {
                 mm2 = mm2;
+            }
+            else {
+            	yy2 = parseInt(yy2) + 1;
+            	mm2 = '01';
             }
             
             var currentYearMonth = yy + "-" + mm + "-01";
