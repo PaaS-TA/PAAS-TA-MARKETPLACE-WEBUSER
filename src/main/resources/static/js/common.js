@@ -29,7 +29,9 @@ var procCallAjax = function(reqUrl, reqMethod, param, preFunc, callback) {
             // }
         },
         success: function(data) {
-            callback(data);
+        	if (!commonUtils.isEmpty(callback)) {
+                callback(data);        		
+        	}
         },
         error: function(jqXHR, exception) {
             if (jqXHR.status === 0) {
@@ -124,6 +126,12 @@ var commonUtils = {
     		return true;
     	}
     	return false;
+    },
+    contains: function(contents, findString) {
+    	if (this.isBlank(contents) || this.isBlank(findString)) {
+    		return false;
+    	}
+    	return contents.includes(findString);
     }
 }
 
@@ -132,15 +140,38 @@ var commonUtils = {
  * http://carlosbonetti.github.io/jquery-loading/
  * */
 var loading = {
-	start: function() {
+	timeoutList: [],
+	start: function(msg) {
+		var msgValue = "LOADING...";
+		
+		if (!commonUtils.isBlank(msg)) {
+			msgValue = msg;
+		}
+		
 		$('body').loading({
 			stoppable: false
 			,theme: 'dark'
-			//,message: 'Working...'
+			,message: msgValue
      	});
 	},
 	stop: function() {
+		if (!commonUtils.isEmpty(this.timeoutList) && this.timeoutList.length > 0) {
+			var timeoutObj = {};
+			for (var idx=0; idx<this.timeoutList.length ;idx++) {
+				timeoutObj = this.timeoutList[idx];
+				clearTimeout(timeoutObj);
+			}
+			this.timeoutList = [];
+		}
 		$('body').loading("stop");
+	},
+	interval: function(value, msg) {
+		var intervalTime = 1000 * value;
+		this.start(msg);
+		
+		this.timeoutList[this.timeoutList.length] = setTimeout(function() {
+			$('body').loading('toggle');
+		}, intervalTime);
 	}
 }
 
