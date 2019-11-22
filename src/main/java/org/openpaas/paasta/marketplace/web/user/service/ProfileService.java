@@ -41,22 +41,7 @@ public class ProfileService {
         ResponseEntity<CustomPage<Profile>> responseEntity = paasApiRest.exchange("/profiles/page" + queryParamString, HttpMethod.GET, null, new ParameterizedTypeReference<CustomPage<Profile>>() {});
         CustomPage<Profile> customPage = responseEntity.getBody();
         Page<Profile> page = customPage.toPage();
-
-        System.out.println("getContent ::: " + customPage.getContent());
-        System.out.println("getTotalElements ::: " + customPage.getTotalElements());
         return customPage;
     }
-
-/*
-    public Software getSoftware(Long id) {
-        String url = UriComponentsBuilder.newInstance().path("/softwares/{id}")
-                .build()
-                .expand(id)
-                .toString();
-
-        return paasApiRest.getForObject(url, Software.class);
-    }
-
- */
 
 }

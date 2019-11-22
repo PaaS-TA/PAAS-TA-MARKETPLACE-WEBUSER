@@ -314,7 +314,6 @@
         	var isChecked = $("#priceCalculationCheckAll").is(":checked");
 			$("input:checkbox[name=priceCalculationCheck]").each(function() {
 				$(this).prop("checked", isChecked);
-				// console.log(">>>>>>> isChecked: %s / obj: %o / price-per-instance: %s", isChecked, $(this), $(this).data("price-per-instance"));
 			});
 			fncUsagePriceTotalRecalcul();
         });
@@ -334,10 +333,8 @@
 					// 해제 Row 배경 회색으로 변경
 					$("#"+ obj.data("rowId")).css("background-color", "#dee2e6");
 				}
-				//console.log(">>>>>>>> checked: %s / pricePerInstance: %s", obj.is(":checked"), obj.data("pricePerInstance"));
 			});
 			
-        	//console.log(">>>>>>>> usagePriceTotal: %s", usagePriceTotal);
         	$("#totalPrice").text(" / 총 금액 ("+ commonUtils.addComma(usagePriceTotal) +" 원)");
         }
 		

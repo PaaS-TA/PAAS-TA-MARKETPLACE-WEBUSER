@@ -61,12 +61,8 @@ public class LoginController {
         }
 
         OAuth2AccessToken accessToken = client.getAccessToken();
-        
         OAuth2User user = authentication.getPrincipal();
         
-        System.out.println("authentication access Token value ::: " + accessToken.getTokenValue());
-        System.out.println("authentication getName ::: " + user.getAttributes().get("user_name"));
-
         httpSession.setAttribute("yourName", user.getAttributes().get("user_name"));
         httpSession.setAttribute("token", accessToken.getTokenValue());
 

@@ -261,8 +261,6 @@
 
         // 장바구니 CALLBACK
         function callbackRender(data) {
-        	//console.log(">>>>>>> data: %o", data);
-        	
         	// List 초기화
         	$("#myInstanceListArea").html("");
         	
@@ -305,8 +303,6 @@
         	PURCHASE_DATA.softwareName = dataObj.data("softwareName");
         	PURCHASE_DATA.softwarePlanId = dataObj.data("softwarePlanId");
         	
-        	//console.log(">>>>>>> PURCHASE_DATA: %o", PURCHASE_DATA);
-        	
         	$("#purchaseSoftwareNameModal").text(PURCHASE_DATA.softwareName);
         	$("#purchaseCartModal").modal("show");
         }
@@ -323,7 +319,6 @@
                 "deprovisionTryCount": 0
             };
             
-            //console.log(">>>>>>> purchase reqParam: %o", reqParam);
             procCallAjax("/instances/cart/purchaseCart", "POST", JSON.stringify(reqParam), null, purchaseAfter);
         });
       	
@@ -342,7 +337,6 @@
             	"inInstanceCartId": DELETE_ID_LIST
 			};
 			
-			console.log(">>>>>>> delete reqParam: %o", reqParam);
 			procCallAjax("/instances/cart/delete", "DELETE", JSON.stringify(reqParam), null, srchInatanceCartPageList);
         });
       	
@@ -393,7 +387,6 @@
 					$("#"+ obj.data("rowId")).css("background-color", "#ffff");
 				}
 			});
-        	//console.log("DELETE_ID_LIST: %o", DELETE_ID_LIST);
         }
         
         function saveDateView(saveDate) {

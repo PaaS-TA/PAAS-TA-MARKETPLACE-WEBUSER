@@ -41,12 +41,8 @@ public class SoftwareService {
         ResponseEntity<CustomPage<Software>> responseEntity = paasApiRest.exchange("/softwares/page" + queryParamString, HttpMethod.GET, null, new ParameterizedTypeReference<CustomPage<Software>>() {});
         CustomPage<Software> customPage = responseEntity.getBody();
         Page<Software> page = customPage.toPage();
-
-        System.out.println("getContent ::: " + customPage.getContent());
-        System.out.println("getTotalElements ::: " + customPage.getTotalElements());
         return customPage;
     }
-
 
     public Software getSoftware(Long id) {
         String url = UriComponentsBuilder.newInstance().path("/softwares/{id}")
@@ -64,13 +60,4 @@ public class SoftwareService {
     			.toString();
     	return paasApiRest.getForObject(url, List.class);
     }
-//
-//    public void updateSoftware(Software software) {
-//        String url = UriComponentsBuilder.newInstance().path("/softwares/{id}")
-//                .build()
-//                .expand(software.getId())
-//                .toString();
-//
-//        paasApiRest.put(url, software);
-//    }
 }

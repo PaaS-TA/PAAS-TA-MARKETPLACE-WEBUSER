@@ -137,7 +137,6 @@
         
         // ON LOAD
         $(document.body).ready(function () {
-            //console.log(':: instances-detail init::');
             currentMenu('2_1');
         });
 
@@ -148,7 +147,6 @@
         //instance Stop(=Delete)
         $("#stopInstanceBtn").on("click", function () {
             var id = $("#id").val();
-            //console.log(":: ID :: " + id);
             procCallAjax("/instances/" + id,"DELETE", null, null, callbackStoppedInstance);
         });
 

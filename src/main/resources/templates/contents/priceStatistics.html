@@ -123,9 +123,6 @@
             var yearValueS = $("#selectDateYear2 option:selected").val();
             var monthValueS = $("#selectDateMonth2 option:selected").val();
             
-            console.log("기본 이어F ::: " + yearValueF + "& 기본 몬쓰F ::: " + monthValueF);
-            console.log("기본 이어S ::: " + yearValueS + "& 기본 몬쓰S ::: " + monthValueS);
-
           	//[이용기간] 검색조건
             var yy = yearValueF;        			// 이전 해
             var yy2 = yearValueS;       			// 다음 해
@@ -156,10 +153,8 @@
                 nextYearMonth = '';
             }
             
-            console.log("start>>> "+ currentYearMonth + "  end>>> " + nextYearMonth);
             // 전체 구매 상품 목록 조회 url
             var reqUrl= "/stats/instances/my/price/total" + "?sort=" + SORT + "&usageStartDate=" + currentYearMonth +"&usageEndDate=" + nextYearMonth;
-            //console.log("전체 경로 ::: "  + reqUrl);
             
          	// Loading Start
             loading.start();
@@ -169,9 +164,6 @@
 
         // CALLBACK
         var callbackGetMyInstanceStatsList = function(data) {
-			
-        	//console.log(data);
-          	                        
             // 총 상품 수
             $("#totalElements").text("(" + Object.keys(data).length + ")");
 
@@ -181,19 +173,10 @@
 
             var listLength = 0; 
             var priceTotal = 0;
-            /*::data:: [index][beforeInstances, startInstances, stopInstances, totalUseDays, totalCharge] */            
-//             var beforeInstance = 0;
-//             var startInstance = 0;
-//             var stopInstance = 0;
-//             var avgCount = 0;
-//             var avgPrice = 0;
-//             var avgDays = 0;
-//             var totalCharge = 0;
             
 			if(data !== "") {
 				listLength = Object.keys(data).length;
 	        }
-            //console.log("length::" + listLength);
             
             if(listLength > 0){
                 for(var i = 0; i < listLength; i++){
@@ -205,7 +188,6 @@
                  	
                  	var lastDate = new Date(year, month, 0);
                  	var lastDay = lastDate.getDate();
-                 	console.log("lastDay .>> "+ lastDay);
 
                  	var instanceCount = data[i][1] + data[i][2];
                  	var avgCount = data[i][4] / lastDay;
@@ -265,11 +247,8 @@
             yearValueF = today.getFullYear();
             monthValueF = 1;
             
-            console.log("오늘?? " + (today.getMonth() + 1));
             yearValueS = today.getFullYear();
             monthValueS = (today.getMonth() + 1);
-
-            console.log("기본 이어2 ::: " + yearValueS + "& 기본 몬쓰2 ::: " + monthValueS);
 
             for (var i = 1; i < 13; i++) {
                 if (monthValueF == i) $("#" + monthfieldF).append("<option value='" + i + "' selected='selected'>" + i + "</option>");
@@ -301,7 +280,6 @@
 
             yearValueF = selectedYearValueF;
             yearValueS = selectedYearValueS;
-            console.log("Year ::: " + selectedYearValueF +"/"+ selectedYearValueS);
         };
 
         var selectMonth = function() {
@@ -310,8 +288,6 @@
 
             monthValueF = selectedMonthValueF;
             monthValueS = selectedMonthValueS;
-
-            console.log("Month ::: " + selectedMonthValueF +"/"+ selectedMonthValueS);
         };
 
         // ON LOAD
@@ -320,8 +296,6 @@
             getMyInstanceStatsList();
             currentMenu('2_3');
         });
-
-
         /*]]>*/
     </script>
 </div>
