@@ -196,7 +196,8 @@
                  	var totalChargeRound = Math.round(totalCharge);    
                  	var avgPrice = 0;
                  	if(avgCountRound == 0){
-                 		avgPrice = totalChargeRound / 0.03;   
+                 		avgCountRound = Math.round(avgCount*100)/100;
+                 		avgPrice = totalChargeRound / avgCountRound;   
                  	} else {
                  		avgPrice = totalChargeRound / avgCountRound;
                  	}
