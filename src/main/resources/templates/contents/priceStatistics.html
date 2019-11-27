@@ -193,11 +193,13 @@
                  	var avgCount = data[i][4] / lastDay;
                  	var avgCountRound = Math.round(avgCount*10)/10;
                  	var totalCharge = data[i][5];
-                 	var totalChargeRound = Math.round(totalCharge);                 	
+                 	var totalChargeRound = Math.round(totalCharge);    
+                 	var avgPrice = 0;
                  	if(avgCountRound == 0){
-                 		avgCountRound = 0.03;
-                 	}                		
-                 	var avgPrice = totalChargeRound / avgCountRound;                 	
+                 		avgPrice = totalChargeRound / 0.03;   
+                 	} else {
+                 		avgPrice = totalChargeRound / avgCountRound;
+                 	}
                  	var avgDays = data[i][4] / instanceCount;
                  	priceTotal += totalChargeRound;
                  	
