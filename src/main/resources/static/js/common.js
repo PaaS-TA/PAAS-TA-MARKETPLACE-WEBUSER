@@ -10,7 +10,6 @@
  * async: false 동기 처리
  */
 var procCallAjax = function(reqUrl, reqMethod, param, preFunc, callback) {
-    console.log("procCallAjax Init");
     var reqData = "";
     if (param != null) {
         reqData = param;
@@ -23,10 +22,6 @@ var procCallAjax = function(reqUrl, reqMethod, param, preFunc, callback) {
         async: false,
         contentType: "application/json",
         beforeSend: function(xhr){
-            // preFunc
-            // if(_csrf_header && _csrf_token) {
-            //     xhr.setRequestHeader(_csrf_header, _csrf_token);
-            // }
         },
         success: function(data) {
         	if (!commonUtils.isEmpty(callback)) {
@@ -34,6 +29,22 @@ var procCallAjax = function(reqUrl, reqMethod, param, preFunc, callback) {
         	}
         },
         error: function(jqXHR, exception) {
+        	try {
+        		// 열려있는 Modal Close
+        		$('.modal').each(function () {
+                    $(this).modal('hide');
+                });
+        		
+        		// 실행되고 있는 Loading처리 Stop
+        		if (loading.isLoading()) {
+        			loading.stop();
+        		}
+        		
+        		commonAlert.show("서버와의 통신 중 연결이 끊기거나 오류가 발생하였습니다.<br>새로고침을 하시거나 다시 한번 시도해주세요.");
+        	} catch (e) {
+        		console.log(e);
+        	}
+
             if (jqXHR.status === 0) {
                 console.log('Not connect.\n Verify Network.');
             }
@@ -193,6 +204,9 @@ var loading = {
 		this.timeoutList[this.timeoutList.length] = setTimeout(function() {
 			$('body').loading('toggle');
 		}, intervalTime);
+	},
+	isLoading: function() {
+		return $('body').is(':loading');
 	}
 }
 
