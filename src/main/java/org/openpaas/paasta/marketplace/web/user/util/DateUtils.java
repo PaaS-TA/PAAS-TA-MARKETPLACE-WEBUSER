@@ -1,12 +1,9 @@
 package org.openpaas.paasta.marketplace.web.user.util;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-@Slf4j
 public class DateUtils {
 
 	public static final String	TIME_ZONE_ID = "Asia/Seoul";
@@ -38,8 +35,6 @@ public class DateUtils {
 	 */
 	public static String getCurrentDate(String format) {
 		String today = LocalDateTime.now(ZoneId.of(TIME_ZONE_ID)).format(DateTimeFormatter.ofPattern(format));
-		log.info("today: " + today);
-
 		return today;
 	}
 
@@ -54,8 +49,6 @@ public class DateUtils {
 	 */
 	public static String getConvertDate(LocalDateTime target, String format) {
 		String result = target.atZone(ZoneId.of(TIME_ZONE_ID)).format(DateTimeFormatter.ofPattern(format));
-		log.info("date: " + result);
-
 		return result;
 	}
 

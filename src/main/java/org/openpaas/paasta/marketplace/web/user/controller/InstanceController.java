@@ -33,11 +33,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping(value = "/instances")
-@Slf4j
 @RequiredArgsConstructor
 public class InstanceController {
 

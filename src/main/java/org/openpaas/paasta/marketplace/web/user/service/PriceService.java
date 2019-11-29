@@ -1,6 +1,7 @@
 package org.openpaas.paasta.marketplace.web.user.service;
 
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -9,8 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.List;
-import java.util.Map;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -45,8 +45,6 @@ public class PriceService {
     public Map<Long, Object> purchaseAmount(String queryParamString) {
     	ResponseEntity<Map<Long, Object>> responseEntity = paasApiRest.exchange("/stats/instances/my/price/total" + queryParamString, HttpMethod.GET, null, new ParameterizedTypeReference<Map<Long, Object>>() {});
     	Map<Long, Object> customMap = responseEntity.getBody();
-
         return customMap;
-        //return paasApiRest.getForObject("/stats/instances/my/price/total"+ queryParamString, Map.class);
     }
 }

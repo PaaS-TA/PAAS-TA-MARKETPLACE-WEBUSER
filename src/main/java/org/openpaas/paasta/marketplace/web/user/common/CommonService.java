@@ -1,11 +1,12 @@
 package org.openpaas.paasta.marketplace.web.user.common;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 /**
  * Common Service 클래스
@@ -36,33 +37,6 @@ public class CommonService {
 
         return resultString;
     }
-
-//    public Map setParameters(HttpServletRequest httpServletRequest) {
-//        Map<String, String[]> parametersMap = httpServletRequest.getParameterMap();
-//        String[] parametersObject;
-//        String parametersKey;
-//        String resultString = "";
-//
-//        Map resultMap = new HashMap();
-//
-//        StringBuilder stringBuilder = new StringBuilder();
-//
-//        for (int i = 0; i < ParametersList.values().length; i++) {
-//            parametersKey = ParametersList.values()[i].actualValue;
-//            parametersObject = parametersMap.get(parametersKey);
-//
-//            if (parametersObject != null && !"".equals(parametersObject[0])) {
-//                resultMap.put(parametersKey, parametersObject[0]);
-//                //stringBuilder.append("&").append(parametersKey).append("=").append(parametersObject[0]);
-//            }
-//        }
-//
-//        if (stringBuilder.length() > 0) {
-//            resultString = "?" + stringBuilder.substring(1);
-//        }
-//
-//        return resultMap;
-//    }
 
     /**
      * Sets path variables.

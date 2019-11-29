@@ -28,7 +28,6 @@ public class AuthHeaderInterceptor implements ClientHttpRequestInterceptor {
     private static final String CONTENT_TYPE = "Content-Type";
 
     public AuthHeaderInterceptor(String authTokenHeaderName, String apiUsername, String apiPassword) {
-        log.info("AuthHeaderInterceptor: init");
         this.authTokenHeaderName = authTokenHeaderName;
         this.apiUsername = apiUsername;
         this.apiPassword = apiPassword;

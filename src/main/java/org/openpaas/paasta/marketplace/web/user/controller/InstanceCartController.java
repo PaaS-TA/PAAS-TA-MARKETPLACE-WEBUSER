@@ -27,11 +27,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping(value = "/instances/cart")
-@Slf4j
 @RequiredArgsConstructor
 public class InstanceCartController {
 

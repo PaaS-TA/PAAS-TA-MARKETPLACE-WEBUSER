@@ -1,6 +1,5 @@
 package org.openpaas.paasta.marketplace.web.user.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -19,9 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class PriceController {
@@ -59,7 +56,6 @@ public class PriceController {
         
         return "contents/priceCalculation";
     }
-
     
     /**
      * 요금통계 메인페이지로 이동한다.
@@ -68,7 +64,6 @@ public class PriceController {
      */
     @GetMapping(value = "/priceStatistics")
     public String getPriceStatsMain(Model model) {
-        
         return "contents/priceStatistics";
     }
     

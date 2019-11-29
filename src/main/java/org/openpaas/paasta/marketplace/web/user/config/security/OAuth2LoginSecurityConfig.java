@@ -1,6 +1,14 @@
 package org.openpaas.paasta.marketplace.web.user.config.security;
 
-import lombok.RequiredArgsConstructor;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -16,13 +24,7 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
 
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.X509Certificate;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Spring Security를 정의한 Class
@@ -48,7 +50,6 @@ public class OAuth2LoginSecurityConfig extends WebSecurityConfigurerAdapter {
                 	.antMatchers("/", "/login/**", "/error/**", "/static/**").permitAll()
                 	.anyRequest().authenticated()
                 .and()
-                //.oauth2Login().loginPage("/login").defaultSuccessUrl("/index", true).permitAll()
                 .oauth2Login()
                 	.clientRegistrationRepository(clientRegistrationRepository())
                 	.authorizedClientService(authorizedClientService())
