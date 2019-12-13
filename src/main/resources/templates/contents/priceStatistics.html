@@ -212,20 +212,20 @@
                         + "<td>" + data[i][2] + "</td>"
                         + "<td>" + data[i][3] + "</td>"
                         + "<td>" + avgCountRound + "</td>"
-                        + "<td>" + Math.round(avgPrice) + " 원</td>"
+                        + "<td>" + commonUtils.addComma(Math.round(avgPrice)) + " 원</td>"
                         + "<td>" + Math.round(avgDays*10)/10 + "</td>"
-                        + "<td>" + totalChargeRound + " 원</td>"
+                        + "<td>" + commonUtils.addComma(totalChargeRound) + " 원</td>"
                         +"</tr>"
                     );
                 }
-                htmlString += "<tr><td colspan='8'>합계</td><td>" + priceTotal + " 원</td></tr>"
+                htmlString += "<tr><td colspan='8'>합계</td><td>" + commonUtils.addComma(priceTotal) + " 원</td></tr>"
             }else{
                 htmlString = "<tr>"
                     + "<td colspan='9'><p class='user_p'>상품이 존재하지 않습니다.</p></td>" + "</tr>"
             }
 
             // 총 금액
-            $("#totalPrice").text(" / 총 금액 (" +  priceTotal +" 원)");
+            $("#totalPrice").text(" / 총 금액 (" +  commonUtils.addComma(priceTotal) +" 원)");
 
             myInstanceStatsListArea.html(htmlString);
             

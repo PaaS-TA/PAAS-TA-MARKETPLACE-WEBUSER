@@ -61,7 +61,7 @@
                             <ul>
                                 <li><div class="tit_area"><span class="ico ico01"></span><span class="tit">버전 :</span><span class="txt" th:text="${instance.software.version}"></span></div></li>
                                 <li><div class="tit_area"><span class="ico ico04"></span><span class="tit">개요 :</span><span class="txt m_line" th:text="${instance.software.summary}"></span></div></li>
-                                <li><div class="tit_area"><span class="ico ico05"></span><span class="tit">가격 :</span><span class="txt" th:text="${instance.software.pricePerMonth} +' 원/월'"></span></div></li>
+                                <li><div class="tit_area"><span class="ico ico05"></span><span class="tit">가격 :</span><span class="txt" th:text="${#numbers.formatInteger(instance.software.pricePerMonth, 0, 'COMMA')} +' 원/월'"></span></div></li>
                                 <li><div class="tit_area"><span class="ico ico02"></span><span class="tit">판매자 :</span><span class="txt" th:text="${instance.software.createdBy}"></span></div></li>
                             </ul>
                         </div>

@@ -58,7 +58,7 @@
                             <ul>
                                 <li><div class="tit_area"><span class="ico ico01"></span><span class="tit">버전 :</span><span class="txt" th:text="${software.version}"></span></div></li>
                                 <li><div class="tit_area"><span class="ico ico04"></span><span class="tit">개요 :</span><span class="txt m_line" th:text="${software.summary}"></span></div></li>
-                                <li><div class="tit_area"><span class="ico ico05"></span><span class="tit">가격 :</span><span class="txt" th:text="${software.pricePerMonth} +' 원/월 ~'"></span></div></li>
+                                <li><div class="tit_area"><span class="ico ico05"></span><span class="tit">가격 :</span><span class="txt" th:text="${#numbers.formatInteger(software.pricePerMonth, 0, 'COMMA')} +' 원/월 ~'"></span></div></li>
                                 <li><div class="tit_area"><span class="ico ico02"></span><span class="tit">판매자 :</span><span class="txt" th:text="${software.createdBy}"></span></div></li>
                             </ul>
                         </div>
@@ -187,7 +187,7 @@
 					   			</th:block>
 					      		<td class="text-center" th:text="${softwarePlan.name}"></td>
 					      		<td class="text-center" th:text="${softwarePlan.description}"></td>
-					      		<td class="text-center" th:text="${softwarePlan.cpuAmt}+${softwarePlan.memoryAmt}+${softwarePlan.diskAmt} + ' 원/월'"></td>
+					      		<td class="text-center" th:text="${#numbers.formatInteger((softwarePlan.cpuAmt+softwarePlan.memoryAmt+softwarePlan.diskAmt), 0, 'COMMA')} + ' 원/월'"></td>
 					    	</tr>
 					  	</tbody>
 					</table>
