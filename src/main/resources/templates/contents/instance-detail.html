@@ -100,9 +100,9 @@
         <!-- //cBox1 -->
 
         <div class="cont_btnBox">
-            <!-- <button name="button" class="btn btn-color7 btn-md" type="button" data-toggle="modal" data-target="#stopModal">정지</button> -->
             <button name="button" class="btn btn-color7 btn-md" type="button" id="servicStopBtn">정지</button>
-            <button name="button" class="btn btn-color1 btn-md " type="button" onclick="moveInstancesPage()">목록</button>
+            <button name="button" class="btn btn-danger btn-md" type="button" id="servicPowerStopBtn" data-toggle="modal" data-target="#powerStopModal" style="display:none;">강제정지</button>
+            <button name="button" class="btn btn-color1 btn-md" type="button" onclick="moveInstancesPage()">목록</button>
 
             <!-- 팝업 Modal -->
             <div class="modal fade" id="stopModal" tabindex="-1" role="dialog" aria-labelledby="stopModalLabel" aria-hidden="true">
@@ -117,6 +117,25 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" name="button" class="btn btn-color1" id="stopInstanceBtn">예</button>
+                            <button type="button" name="button" class="btn btn-color2" data-dismiss="modal">아니오</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 팝업 Modal -->
+            <div class="modal fade" id="powerStopModal" tabindex="-1" role="dialog" aria-labelledby="stopModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content modal-sm">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="stopModalLabel">강제사용 정지</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p class="popTxt">비정상 서비스를 강제정지 하시겠습니까? <br><br> <strong>Provision Status : [[ ${instance.provisionStatus} ]]</strong></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" name="button" class="btn btn-color1" id="powerStopInstanceBtn">예</button>
                             <button type="button" name="button" class="btn btn-color2" data-dismiss="modal">아니오</button>
                         </div>
                     </div>
@@ -138,6 +157,11 @@
         // ON LOAD
         $(document.body).ready(function () {
             currentMenu('2_1');
+            // 강제종료 버
+            if (PROVISION_STATUS !== "Successful") {
+        		$("#servicPowerStopBtn").show();
+        		$("#servicStopBtn").hide();
+        	}
         });
 
         var moveInstancesPage = function() {
@@ -146,6 +170,12 @@
 
         //instance Stop(=Delete)
         $("#stopInstanceBtn").on("click", function () {
+            var id = $("#id").val();
+            procCallAjax("/instances/" + id,"DELETE", null, null, callbackStoppedInstance);
+        });
+
+        //instance Power Stop(=Delete)
+        $("#powerStopInstanceBtn").on("click", function () {
             var id = $("#id").val();
             procCallAjax("/instances/" + id,"DELETE", null, null, callbackStoppedInstance);
         });
@@ -168,7 +198,7 @@
         	}
     		commonAlert.show(message);
         }
-        
+
         // 서비스 중지 버튼 클릭
         $("#servicStopBtn").on("click", function (e) {
         	if (PROVISION_STATUS !== "Successful") {
